@@ -38,6 +38,14 @@ namespace app.Data
             um.CreateAsync(user3, "Password1.");
 
             // Add dummy data here
+            var tools = new List<Tool>
+            {
+                new Tool("Skrujern", "available"),
+                new Tool("Hammer", "available"),
+                new Tool("Sag", "available")
+            };
+
+            db.AddRange(tools);
 
             db.SaveChanges();
         }

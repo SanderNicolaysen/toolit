@@ -1,5 +1,6 @@
 ﻿@model ExternalLoginViewModel
 @{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
     ViewData["Title"] = "Register";
 }
 
@@ -13,8 +14,8 @@
     logging in.
 </p>
 
-<div class="row">
-    <div class="col-md-4">
+<div class="">
+    <div class="">
         <form asp-action="ExternalLoginConfirmation" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">

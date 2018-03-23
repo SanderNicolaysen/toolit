@@ -10,56 +10,44 @@
     ViewData["Title"] = "Log in";
 }
 
-@section Styles {
-    <environment include="Development">
-        <link rel="stylesheet" href="~/css/login.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="~/css/login.min.css" asp-append-version="true" />
-    </environment>
-}
-
-<div class=" center-block" style="width: 380px; margin-top: 220px;">
-    <div class="">
-        <img src="~/images/toolit_logo.svg" alt="">
-        <h4>Sign in</h4>
-    </div>
-    <div id="login-form">
-        <section>
-            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                        <input asp-for="Email" class="form-control" placeholder="Username or email" />
-                    </div>
-                    <span asp-validation-for="Email" class="text-danger"></span>
+<div class="">
+    <h4>Sign in</h4>
+</div>
+<div id="login-form">
+    <section>
+        <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                    <input asp-for="Email" class="form-control" placeholder="Username or email" />
                 </div>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                        <input asp-for="Password" class="form-control" placeholder="Password" />
-                    </div>
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                    <a asp-action="ForgotPassword" id="password-forgot">Forgot your password?</a>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                    <input asp-for="Password" class="form-control" placeholder="Password" />
                 </div>
-                <!--
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="RememberMe">
-                            <input asp-for="RememberMe" />
-                            @Html.DisplayNameFor(m => m.RememberMe)
-                        </label>
-                    </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <a asp-action="ForgotPassword" id="password-forgot">Forgot your password?</a>
+            </div>
+            <!--
+            <div class="form-group">
+                <div class="checkbox">
+                    <label asp-for="RememberMe">
+                        <input asp-for="RememberMe" />
+                        @Html.DisplayNameFor(m => m.RememberMe)
+                    </label>
                 </div>
-                -->
-                <div class="form-group">
-                    <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
-                    <button type="submit" class="btn btn-default">Log in</button>
-                </div>
-            </form>
-        </section>
-    </div>
+            </div>
+            -->
+            <div class="form-group">
+                <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+                <button type="submit" class="btn btn-default">Sign in</button>
+            </div>
+        </form>
+    </section>
 </div>
 
 @section Scripts {

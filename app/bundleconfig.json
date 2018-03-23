@@ -27,5 +27,16 @@
     },
     // Optionally generate .map file
     "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/particle-network.min.js",
+    "inputFiles": [
+      "wwwroot/js/particle-network.js"
+    ],
+    // Optionally specify minification options
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
   }
 ]

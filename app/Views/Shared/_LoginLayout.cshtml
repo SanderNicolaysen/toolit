@@ -57,12 +57,11 @@
         var canvasDiv = document.getElementById('particle-canvas');
 
         var options = {
-            particleColor: '#6C5D53',
-            background: 'https://pixabay.com/get/e830b10b2ef1023ed1534705fb0938c9bd22ffd41cb3104994f4c578af/banner-1504653_1920.png',
-            /* Image source: https://pixabay.com/no/banner-bakgrunn-bannerbakgrunn-1504653/ */
+            particleColor: '#ff6600',
+            background: '/images/banner.png', /* Image source: https://pixabay.com/no/banner-bakgrunn-bannerbakgrunn-1504653/ */
             interactive: true,
-            speed: 'slow',
-            density: 'low'
+            speed: 'fast',
+            density: 'medium'
         };
         var particleCanvas = new ParticleNetwork(canvasDiv, options);
     </script>

@@ -82,7 +82,7 @@
     // Draw particle
     this.ctx.beginPath();
     this.ctx.fillStyle = this.particleColor;
-    this.ctx.globalAlpha = 0.7;
+    this.ctx.globalAlpha = 0.3;
     this.ctx.arc(this.x, this.y, 1.5, 0, 2 * Math.PI);
     this.ctx.fill();
   };
@@ -219,6 +219,8 @@
           y: (Math.random() - 0.5) * this.options.velocity
         };
         this.mouseParticle = new Particle(this);
+        this.mouseParticle.x = e.clientX - this.canvas.offsetLeft;
+        this.mouseParticle.y = e.clientY - this.canvas.offsetTop;
         this.mouseParticle.velocity = {
           x: 0,
           y: 0
@@ -239,19 +241,27 @@
       this.particles[i].update();
       this.particles[i].draw();
 
-      // Draw connections
-      for (var j = this.particles.length - 1; j > i; j--) {
-        var distance = Math.sqrt(
+      // Only draw lines on particles that are close to the mouseparticle
+      var distance = Math.sqrt(
+        Math.pow(this.particles[i].x - this.mouseParticle.x, 2)
+        + Math.pow(this.particles[i].y - this.mouseParticle.y, 2)
+      );
+      if (distance > 120) {
+        continue;
+      }
+      
+      for (var j = 0; j < this.particles.length; j++) {
+        var d = Math.sqrt(
           Math.pow(this.particles[i].x - this.particles[j].x, 2)
           + Math.pow(this.particles[i].y - this.particles[j].y, 2)
         );
-        if (distance > 120) {
+        if (d > 120) {
           continue;
         }
-
+  
         this.ctx.beginPath();
         this.ctx.strokeStyle = this.options.particleColor;
-        this.ctx.globalAlpha = (120 - distance) / 120;
+        this.ctx.globalAlpha = (120 - d) / 120;
         this.ctx.lineWidth = 0.7;
         this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
         this.ctx.lineTo(this.particles[j].x, this.particles[j].y);

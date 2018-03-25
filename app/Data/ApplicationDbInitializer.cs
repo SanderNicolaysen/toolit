@@ -24,11 +24,11 @@ namespace app.Data
             rm.CreateAsync(adminRole).Wait();
 
             // Add users
-            var admin = new ApplicationUser { UserName = "admin@uia.no", Email = "admin@uia.no" };
+            var admin = new ApplicationUser { UserName = "admin@uia.no", Email = "admin@uia.no", ChangePassword = true };
             um.CreateAsync(admin, "Password1.").Wait();
             um.AddToRoleAsync(admin, "Admin");
 
-            var user = new ApplicationUser { UserName = "user@uia.no", Email = "user@uia.no" };
+            var user = new ApplicationUser { UserName = "user@uia.no", Email = "user@uia.no", ChangePassword = true };
             um.CreateAsync(user, "Password1.");
 
             // Add dummy data here

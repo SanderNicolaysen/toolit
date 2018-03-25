@@ -71,6 +71,15 @@ namespace app.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    
+                    var user = _context.Users.Single(u => u.Email == model.Email);
+
+                    // If it is the user's first login, redirect the user to the "ChangePassword"-page
+                    if (user.ChangePassword)
+                    {
+                        return RedirectToAction(nameof(ManageController.ChangePassword), "Manage");
+                    }
+                    
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -226,7 +235,7 @@ namespace app.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, ChangePassword = true };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

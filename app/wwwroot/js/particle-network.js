@@ -1,4 +1,8 @@
 /*
+	Original file created by Julian Laval.
+    Modified by Erik Sandø for login-site of Toolit.
+  
+
     License
     The MIT License (MIT)
 

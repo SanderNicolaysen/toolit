@@ -11,41 +11,78 @@
 }
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Tool-List";
 }
 
-<h2>Tool List</h2>
+<div id="app" v-cloak>
+
+<h2>Tool-List</h2>
 
 @if (User.IsInRole("Admin"))
 {
-    <p><a asp-action="Create">Create New</a></p>
+    <p><a asp-action="Create">Add Tool</a></p>
 }
 
-<table class="table table-hover">
+<!--Search tools-->
+<form class="form-inline" role="form">
+  <div class="form-group has-feedback">
+    <input type="text" class="form-control" id="search" placeholder="Search tools" v-model="search">
+    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+  </div>
+</form>
+
+<table class="table table-hover table-striped">
     <thead> 
         <tr>
-                <th>@Html.DisplayNameFor(model => model.Name)</th>
-                <th>@Html.DisplayNameFor(model => model.Status)</th>
-                <th></th>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Status)</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.Status)</td>
-            @if(!User.IsInRole("Admin")) {
-                <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
-            }
-            @if(User.IsInRole("Admin"))
-            {
+        <tr v-for="tool in filteredTools">
+            <td>{{tool.name}}</td>
+            <td>{{tool.status}}</td>
+            @if (User.IsInRole("Admin")) {
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a v-bind:href="'Tool/Edit/' + tool.id">Edit</a> @Html.Raw("|")
+                    <a v-bind:href="'Tool/Details/' + tool.id">Details</a> @Html.Raw("|")
+                    <a v-bind:href="'Tool/Delete/' + tool.id">Delete</a>
                 </td>
             }
+            else {
+                <td><a v-bind:href="'Tool/Details/' + tool.id">Details</a></td>
+            }
         </tr>
-}
     </tbody>
 </table>
+</div>
+
+@section Scripts {
+<script>
+var app = new Vue({
+    el: '#app',
+    data: {
+        tools: [],
+        search: ''
+    },
+    created: function () {
+        var self = this;
+        axios.get('/api/tools')
+        .then(function (response) { 
+        self.tools = response.data; 
+        });    
+    },
+    computed: {
+        filteredTools: function() {
+            return this.tools.filter((tool) => {
+                return tool.name.toLowerCase().match(this.search.toLowerCase());
+            })
+        }
+    },
+    methods: {
+
+    }
+})
+</script>
+}

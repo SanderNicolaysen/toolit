@@ -42,7 +42,9 @@ namespace app.Data
             {
                 new Tool("Skrujern", "available"),
                 new Tool("Hammer", "available"),
-                new Tool("Sag", "available")
+                new Tool("Sag", "available"),
+                new Tool("Vater", "Not available"),
+                new Tool("Kniv", "available")
             };
 
             db.AddRange(tools);

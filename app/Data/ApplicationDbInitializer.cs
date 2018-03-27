@@ -28,8 +28,14 @@ namespace app.Data
             um.CreateAsync(admin, "Password1.").Wait();
             um.AddToRoleAsync(admin, "Admin");
 
-            var user = new ApplicationUser { UserName = "user@uia.no", Email = "user@uia.no", ChangePassword = true };
-            um.CreateAsync(user, "Password1.");
+            var user1 = new ApplicationUser { UserName = "ole@uia.no", Email = "ole@uia.no", ChangePassword = true };
+            um.CreateAsync(user1, "Password1.");
+
+            var user2 = new ApplicationUser { UserName = "dole@uia.no", Email = "dole@uia.no", ChangePassword = true };
+            um.CreateAsync(user2, "Password1.");
+
+            var user3 = new ApplicationUser { UserName = "doffen@uia.no", Email = "doffen@uia.no", ChangePassword = true };
+            um.CreateAsync(user3, "Password1.");
 
             // Add dummy data here
 

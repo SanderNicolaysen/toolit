@@ -1,0 +1,92 @@
+@model IEnumerable<app.Models.ApplicationUser>
+
+@section Styles
+{
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/userList.css" asp-append-version="true"/>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/userList.min.css" asp-append-version="true"/>
+    </environment>
+}
+
+@{
+    ViewData["Title"] = "User-List";
+}
+
+<div id="app" v-cloak>
+
+<h2>User-List</h2>
+
+<p>
+    <a asp-controller="Account" asp-action="Register">Add User</a>
+</p>
+
+<!--Search users-->
+<form class="form-inline" role="form">
+  <div class="form-group has-feedback">
+    <input type="text" class="form-control" id="search" placeholder="Search users" v-model="search">
+    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+  </div>
+</form>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="user in filteredUsers">
+            <td>{{ user.userName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phoneNumber }}</td>
+            <td>
+                <a v-bind:href="'User/Edit/' + user.id">Edit</a> @Html.Raw("|")
+                <a v-bind:href="'User/Details/' + user.id">Details</a> @Html.Raw("|")
+                <a v-bind:href="'User/Delete/' + user.id">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+@section Scripts {
+<script>
+var app = new Vue({
+    el: '#app',
+    data: {
+        users: [],
+        search: ''
+    },
+    created: function () {
+        var self = this;
+
+        // Fetch list of users
+        axios.get('/api/users')
+        .then(function (response) { 
+        self.users = response.data; 
+        });    
+    },
+    computed: {
+        filteredUsers: function() {
+            return this.users.filter((user) => {
+                return user.userName.toLowerCase().match(this.search.toLowerCase());
+            })
+        }
+    },
+    methods: {
+
+    }
+})
+</script>
+}

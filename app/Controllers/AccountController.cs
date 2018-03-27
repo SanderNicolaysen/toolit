@@ -246,7 +246,8 @@ namespace app.Controllers
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
                     _logger.LogInformation("User created a new account with password.");
-                    return View("Index", await _context.Users.ToListAsync());
+
+                    return RedirectToAction(nameof(UserController.Index), "User");
                 }
                 AddErrors(result);
             }

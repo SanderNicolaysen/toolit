@@ -36,18 +36,25 @@
         <tr>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
             <th>@Html.DisplayNameFor(model => model.Status)</th>
+            <th>@Html.DisplayNameFor(model => model.Reports)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         <tr v-for="tool in filteredTools">
-            <td>{{tool.name}}</td>
-            <td>{{tool.status}}</td>
+            <td>{{ tool.name }}</td>
+            <td>{{ tool.status }}</td>
+            <td>
+                <p v-for="report in tool.reports">
+                    - {{ report.error }}
+                </p>
+            </td>
             @if (User.IsInRole("Admin")) {
                 <td>
                     <a v-bind:href="'Edit/' + tool.id">Edit</a> @Html.Raw("|")
                     <a v-bind:href="'Details/' + tool.id">Details</a> @Html.Raw("|")
-                    <a v-bind:href="'Delete/' + tool.id">Delete</a>
+                    <a v-bind:href="'Delete/' + tool.id">Delete</a> @Html.Raw("|")
+                    <a v-bind:href="'Report/' + tool.id">Report error</a>
                 </td>
             }
             else {
@@ -64,7 +71,8 @@ var app = new Vue({
     el: '#app',
     data: {
         tools: [],
-        search: ''
+        search: '',
+        html: '<br>'
     },
     created: function () {
         var self = this;

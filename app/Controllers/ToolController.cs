@@ -24,7 +24,7 @@ namespace app.Controllers
         // GET: Tool
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tools.ToListAsync());
+            return View(await _context.Tools.Include(tool => tool.Reports).ToListAsync());
         }
 
         // GET: Tool/Details/5
@@ -156,6 +156,57 @@ namespace app.Controllers
         private bool ToolExists(int id)
         {
             return _context.Tools.Any(e => e.Id == id);
+        }
+
+        // GET: Tool/Report/5
+        public async Task<IActionResult> Report(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tool = await _context.Tools.SingleOrDefaultAsync(m => m.Id == id);
+            if (tool == null)
+            {
+                return NotFound();
+            }
+            return View(tool);
+        }
+
+        // POST: Tool/Report/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Report(int id, [Bind("Id,Report")] Tool tool)
+        {
+            if (id != tool.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(tool);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ToolExists(tool.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(tool);
         }
     }
 }

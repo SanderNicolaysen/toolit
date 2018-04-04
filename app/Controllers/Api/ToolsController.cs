@@ -25,7 +25,7 @@ namespace app.Controllers_Api
         [HttpGet]
         public IEnumerable<Tool> GetTools()
         {
-            return _context.Tools;
+            return _context.Tools.Include(tool => tool.Reports);
         }
 
         // GET: api/Tools/5

@@ -1,22 +1,22 @@
-@model app.Models.Tool
+@model app.Models.Report
 
 @{
-    ViewData["Title"] = "Report";
+    ViewData["Title"] = "Edit";
 }
 
-<h2>Report</h2>
+<h2>Edit</h2>
 
-<h4>Error</h4>
+<h4>Report</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Report">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Reports" class="control-label"></label>
-                <input asp-for="Reports" class="form-control" />
-                <span asp-validation-for="Reports" class="text-danger"></span>
+                <label asp-for="Error" class="control-label"></label>
+                <input asp-for="Error" class="form-control" />
+                <span asp-validation-for="Error" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

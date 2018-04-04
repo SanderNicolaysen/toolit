@@ -54,7 +54,7 @@
                     <a v-bind:href="'Edit/' + tool.id">Edit</a> @Html.Raw("|")
                     <a v-bind:href="'Details/' + tool.id">Details</a> @Html.Raw("|")
                     <a v-bind:href="'Delete/' + tool.id">Delete</a> @Html.Raw("|")
-                    <a v-bind:href="'Report/' + tool.id">Report error</a>
+                    <a v-bind:href="'/Reports/Create/' + tool.id">Report error</a>
                 </td>
             }
             else {

@@ -25,5 +25,6 @@ namespace app.Data
         }
 
         public DbSet<Tool> Tools { get; set; }
+        public DbSet<Report> Report { get; set; }
     }
 }

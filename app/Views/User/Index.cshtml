@@ -51,9 +51,9 @@
             <td>{{ user.email }}</td>
             <td>{{ user.phoneNumber }}</td>
             <td>
-                <a v-bind:href="'User/Edit/' + user.id">Edit</a> @Html.Raw("|")
-                <a v-bind:href="'User/Details/' + user.id">Details</a> @Html.Raw("|")
-                <a v-bind:href="'User/Delete/' + user.id">Delete</a>
+                <a v-bind:href="'Edit/' + user.id">Edit</a> @Html.Raw("|")
+                <a v-bind:href="'Details/' + user.id">Details</a> @Html.Raw("|")
+                <a v-bind:href="'Delete/' + user.id">Delete</a>
             </td>
         </tr>
     </tbody>

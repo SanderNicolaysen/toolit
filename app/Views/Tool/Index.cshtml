@@ -45,9 +45,9 @@
             <td>{{tool.status}}</td>
             @if (User.IsInRole("Admin")) {
                 <td>
-                    <a v-bind:href="'Tool/Edit/' + tool.id">Edit</a> @Html.Raw("|")
-                    <a v-bind:href="'Tool/Details/' + tool.id">Details</a> @Html.Raw("|")
-                    <a v-bind:href="'Tool/Delete/' + tool.id">Delete</a>
+                    <a v-bind:href="'Edit/' + tool.id">Edit</a> @Html.Raw("|")
+                    <a v-bind:href="'Details/' + tool.id">Details</a> @Html.Raw("|")
+                    <a v-bind:href="'Delete/' + tool.id">Delete</a>
                 </td>
             }
             else {

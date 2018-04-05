@@ -147,8 +147,14 @@ namespace app.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tool = await _context.Tools.SingleOrDefaultAsync(m => m.Id == id);
+            var tool = await _context.Tools.Include(t => t.Reports).SingleOrDefaultAsync(m => m.Id == id);
             _context.Tools.Remove(tool);
+
+            foreach (var report in tool.Reports)
+            {
+                _context.Report.Remove(report);
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

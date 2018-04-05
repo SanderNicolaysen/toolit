@@ -2,14 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+
 using app.Data;
 using app.Models;
 
 namespace app.Controllers
 {
+    [Authorize]
     public class ReportsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -59,8 +62,17 @@ namespace app.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(report);
+
+                var tool = await _context.Tools.Include(t => t.Reports).SingleOrDefaultAsync(m => m.Id == id);
+                if (tool == null)
+                {
+                    return NotFound();
+                }
+
+                tool.Reports.Add(report);
+
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ToolController.Index), "Tool");
             }
             return View(report);
         }

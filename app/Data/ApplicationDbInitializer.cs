@@ -40,11 +40,11 @@ namespace app.Data
             // Add dummy data here
             var tools = new List<Tool>
             {
-                new Tool("Skrujern", "available", new List<Report>(new Report[] { new Report("It misses a handle!"), new Report("It is old."), new Report("Should be red instead") })),
-                new Tool("Hammer", "available", new List<Report>() { new Report("Could have been better.") }),
+                new Tool("Skrujern", "available", new List<Report>(new Report[] { new Report("It misses a handle!"), new Report("Should be replaced."), new Report("It doesn't work") })),
+                new Tool("Hammer", "available", new List<Report>() { new Report("How does it work?") }),
                 new Tool("Sag", "available", new List<Report>()),
-                new Tool("Vater", "Not available", new List<Report>(new Report[] { new Report("Bad!"), new Report("Nothing!"), new Report("What is this thing?") })),
-                new Tool("Kniv", "available", new List<Report>() { new Report("What do you do!?") })
+                new Tool("Vater", "Not available", new List<Report>(new Report[] { new Report("Random report."), new Report("What is this thing?") })),
+                new Tool("Kniv", "available", new List<Report>() { new Report("Test") })
             };
 
             db.AddRange(tools);

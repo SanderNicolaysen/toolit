@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="~/css/toolList.css" asp-append-version="true"/>
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="~/css/blog.min.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/toolList.min.css" asp-append-version="true"/>
     </environment>
 }
 
@@ -58,7 +58,10 @@
                 </td>
             }
             else {
-                <td><a v-bind:href="'Tool/Details/' + tool.id">Details</a></td>
+                <td>
+                    <a v-bind:href="'Details/' + tool.id">Details</a> @Html.Raw("|")
+                    <a v-bind:href="'/Reports/Create/' + tool.id">Report error</a>
+                </td>   
             }
         </tr>
     </tbody>

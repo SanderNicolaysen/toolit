@@ -35,7 +35,7 @@ namespace app.Controllers
                 return NotFound();
             }
 
-            var tool = await _context.Tools
+            var tool = await _context.Tools.Include(t => t.Reports)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (tool == null)
             {
@@ -152,7 +152,7 @@ namespace app.Controllers
 
             foreach (var report in tool.Reports)
             {
-                _context.Report.Remove(report);
+                _context.Reports.Remove(report);
             }
 
             await _context.SaveChangesAsync();

@@ -25,7 +25,7 @@ namespace app.Controllers
         // GET: Reports
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Report.ToListAsync());
+            return View(await _context.Reports.ToListAsync());
         }
 
         // GET: Reports/Details/5
@@ -36,7 +36,7 @@ namespace app.Controllers
                 return NotFound();
             }
 
-            var report = await _context.Report
+            var report = await _context.Reports
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (report == null)
             {
@@ -85,7 +85,7 @@ namespace app.Controllers
                 return NotFound();
             }
 
-            var report = await _context.Report.SingleOrDefaultAsync(m => m.Id == id);
+            var report = await _context.Reports.SingleOrDefaultAsync(m => m.Id == id);
             if (report == null)
             {
                 return NotFound();
@@ -136,7 +136,7 @@ namespace app.Controllers
                 return NotFound();
             }
 
-            var report = await _context.Report
+            var report = await _context.Reports
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (report == null)
             {
@@ -151,15 +151,15 @@ namespace app.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var report = await _context.Report.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Report.Remove(report);
+            var report = await _context.Reports.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Reports.Remove(report);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ReportExists(int id)
         {
-            return _context.Report.Any(e => e.Id == id);
+            return _context.Reports.Any(e => e.Id == id);
         }
     }
 }

@@ -51,15 +51,15 @@
             </td>
             @if (User.IsInRole("Admin")) {
                 <td>
-                    <a v-bind:href="'Edit/' + tool.id">Edit</a> @Html.Raw("|")
-                    <a v-bind:href="'Details/' + tool.id">Details</a> @Html.Raw("|")
-                    <a v-bind:href="'Delete/' + tool.id">Delete</a> @Html.Raw("|")
+                    <a v-bind:href="'Tool/Edit/' + tool.id">Edit</a> @Html.Raw("|")
+                    <a v-bind:href="'Tool/Details/' + tool.id">Details</a> @Html.Raw("|")
+                    <a v-bind:href="'Tool/Delete/' + tool.id">Delete</a> @Html.Raw("|")
                     <a v-bind:href="'/Reports/Create/' + tool.id">Report error</a>
                 </td>
             }
             else {
                 <td>
-                    <a v-bind:href="'Details/' + tool.id">Details</a> @Html.Raw("|")
+                    <a v-bind:href="'Tool/Details/' + tool.id">Details</a> @Html.Raw("|")
                     <a v-bind:href="'/Reports/Create/' + tool.id">Report error</a>
                 </td>   
             }
@@ -74,8 +74,7 @@ var app = new Vue({
     el: '#app',
     data: {
         tools: [],
-        search: '',
-        html: '<br>'
+        search: ''
     },
     created: function () {
         var self = this;

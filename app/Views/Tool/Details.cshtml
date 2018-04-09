@@ -4,18 +4,25 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<style>
+    .glyphicon-star {
+        color: #ff6600;
+    }
+</style>
 
-<div>
-    <h4>Tool</h4>
+<h2>Detaljer</h2>
+
+<div id="app">
+    <h4 style="display: inline-block;">@Model.Name</h4>
+    <span v-bind:class="{ 'glyphicon-star': faviconhover, 'glyphicon-star-empty' : !faviconhover }"
+        @@mouseover="faviconhover = true"
+        @@mouseleave="faviconhover = false"
+        class="glyphicon" style="font-size: 2em; vertical-align: text-bottom;"
+        aria-hidden="true">
+    </span>
     <hr />
+    <span class="glyphicon glyphicon-wrench" style="font-size: 100px;" aria-hidden="true"></span>
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Status)
         </dt>
@@ -33,7 +40,34 @@
         }
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="buttons">
+    <a class="btn btn-primary">Reservér</a>
+    <a class="btn btn-warning">Rapporter feil</a>
 </div>
+
+<br>
+<a asp-action="Index">Tilbake til verktøyliste</a>
+
+<style>
+    .buttons .btn {
+        margin-top: 5px;
+    }
+</style>
+
+    
+
+@section Scripts {
+<script>
+var app = new Vue({
+    el: '#app',
+    data: {
+        faviconhover: false
+    },
+    created: function () {},
+    methods: {
+
+    }
+})
+</script>
+}

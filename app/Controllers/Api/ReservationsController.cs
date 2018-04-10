@@ -25,7 +25,7 @@ namespace app.Controllers_Api
         [HttpGet]
         public IEnumerable<Reservation> GetReservation()
         {
-            return _context.Reservation;
+            return _context.Reservations.Include(r => r.User);
         }
 
         // GET: api/Reservations/5
@@ -37,7 +37,7 @@ namespace app.Controllers_Api
                 return BadRequest(ModelState);
             }
 
-            var reservation = await _context.Reservation.SingleOrDefaultAsync(m => m.Id == id);
+            var reservation = await _context.Reservations.SingleOrDefaultAsync(m => m.Id == id);
 
             if (reservation == null)
             {
@@ -91,7 +91,7 @@ namespace app.Controllers_Api
                 return BadRequest(ModelState);
             }
 
-            _context.Reservation.Add(reservation);
+            _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetReservation", new { id = reservation.Id }, reservation);
@@ -106,13 +106,13 @@ namespace app.Controllers_Api
                 return BadRequest(ModelState);
             }
 
-            var reservation = await _context.Reservation.SingleOrDefaultAsync(m => m.Id == id);
+            var reservation = await _context.Reservations.SingleOrDefaultAsync(m => m.Id == id);
             if (reservation == null)
             {
                 return NotFound();
             }
 
-            _context.Reservation.Remove(reservation);
+            _context.Reservations.Remove(reservation);
             await _context.SaveChangesAsync();
 
             return Ok(reservation);
@@ -120,7 +120,7 @@ namespace app.Controllers_Api
 
         private bool ReservationExists(int id)
         {
-            return _context.Reservation.Any(e => e.Id == id);
+            return _context.Reservations.Any(e => e.Id == id);
         }
     }
 }

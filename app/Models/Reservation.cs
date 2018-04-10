@@ -19,6 +19,8 @@ namespace app.Models
 
         [Required]
         public int ToolId { get; set; }
+        
+        public Tool Tool { get; set; }
 
         public string UserId { get; set; }
 

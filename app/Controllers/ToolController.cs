@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using app.Data;
 using app.Models;
 using Microsoft.AspNetCore.Authorization;
+using app.Models.ToolViewModels;
 
 namespace app.Controllers
 {
@@ -213,6 +214,15 @@ namespace app.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(tool);
+        }
+
+        // POST: Tool/Reserve/5
+        [HttpGet]
+        public async Task<IActionResult> Reserve(int id)
+        {
+            var viewmodel = new ReserveViewModel();
+            viewmodel.Tool = await _context.Tools.SingleOrDefaultAsync(t => t.Id == id);
+            return View(viewmodel);
         }
     }
 }

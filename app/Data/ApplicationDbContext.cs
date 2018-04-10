@@ -26,6 +26,6 @@ namespace app.Data
 
         public DbSet<Tool> Tools { get; set; }
         public DbSet<Report> Reports { get; set; }
-        public DbSet<Reservation> Reservation { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
     }
 }

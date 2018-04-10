@@ -26,5 +26,6 @@ namespace app.Data
 
         public DbSet<Tool> Tools { get; set; }
         public DbSet<Report> Reports { get; set; }
+        public DbSet<Alarm> Alarms { get; set; }
     }
 }

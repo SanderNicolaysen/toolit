@@ -20,3 +20,12 @@ nav.navbar a, nav.navbar button {
 nav.navbar a:hover, nav.navbar button:hover {
     color: #ff6600;
 }
+
+[v-cloak] {
+	display: none;
+}
+
+/* Favorites star! */
+.glyphicon-star {
+    color: #ff6600;
+}

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 using app.Data;
@@ -40,11 +41,11 @@ namespace app.Data
             // Add dummy data here
             var tools = new List<Tool>
             {
-                new Tool("Skrujern", "available", new List<Report>(new Report[] { new Report("It misses a handle!"), new Report("Should be replaced."), new Report("It doesn't work") })),
-                new Tool("Hammer", "available", new List<Report>() { new Report("How does it work?") }),
-                new Tool("Sag", "available", new List<Report>()),
-                new Tool("Vater", "Not available", new List<Report>(new Report[] { new Report("Random report."), new Report("What is this thing?") })),
-                new Tool("Kniv", "available", new List<Report>() { new Report("Test") })
+                new Tool("Skrujern", "available", new List<Report>(new Report[] { new Report("It misses a handle!"), new Report("Should be replaced."), new Report("It doesn't work") }), new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,11)), new Alarm("Årskontroll", new DateTime(2018,4,15))})),
+                new Tool("Hammer", "available", new List<Report>() { new Report("How does it work?") }, new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,13))})),
+                new Tool("Sag", "available", new List<Report>(), new List<Alarm>()),
+                new Tool("Vater", "Not available", new List<Report>(new Report[] { new Report("Random report."), new Report("What is this thing?") }), new List<Alarm>(new Alarm[] { new Alarm("Årskontroll", new DateTime(2018,4,12))})),
+                new Tool("Kniv", "available", new List<Report>() { new Report("Test") }, new List<Alarm>())
             };
 
             db.AddRange(tools);

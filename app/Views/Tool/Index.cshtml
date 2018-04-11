@@ -1,15 +1,5 @@
 @model IEnumerable<app.Models.Tool>
 
-@section Styles
-{
-    <environment include="Development">
-        <link rel="stylesheet" href="~/css/toolList.css" asp-append-version="true"/>
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="~/css/toolList.min.css" asp-append-version="true"/>
-    </environment>
-}
-
 @{
     ViewData["Title"] = "Tool-List";
 }
@@ -26,7 +16,7 @@
 <!--Search tools-->
 <form class="form-inline" role="form">
   <div class="form-group has-feedback">
-    <input type="text" class="form-control" id="search" placeholder="Search tools" v-model="search">
+    <input type="text" class="form-control" id="search" placeholder="Search tools" v-model="search" autocomplete="off">
     <span class="glyphicon glyphicon-search form-control-feedback"></span>
   </div>
 </form>

@@ -1,12 +1,14 @@
 @model app.Models.Tool
 
+@inject UserManager<ApplicationUser> UserManager
+
 @{
     ViewData["Title"] = "Details";
 }
 
 <h2>Detaljer</h2>
 
-<div id="app">
+<div id="app" v-cloak>
     <h4 style="display: inline-block;">@Model.Name</h4>
     <span v-bind:class="{ 'glyphicon-star': faviconhover, 'glyphicon-star-empty' : !faviconhover }"
         @@mouseover="faviconhover = true"
@@ -33,15 +35,48 @@
             </dd>
         }
     </dl>
-</div>
 
-<div class="buttons">
-    <a href="/Tool/Reserve/@Model.Id" class="btn btn-primary">Reservér</a>
-    <a href="/Reports/Create/@Model.Id" class="btn btn-warning">Rapporter feil</a>
-</div>
+    <div class="buttons">
+        <!-- Button to trigger reservation dialog to popup -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reservationDialog">
+            Reservér
+        </button>
+        <a href="/Reports/Create/@Model.Id" class="btn btn-warning">Rapporter feil</a>
+    </div>
 
-<br>
-<a asp-action="Index">Tilbake til verktøyliste</a>
+    <br>
+    <a asp-action="Index">Tilbake til verktøyliste</a>
+
+    <h3>Reservasjoner</h3>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Reservert av</th>
+                <th>Start</th>
+                <th>Slutt</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="r in reservations">
+                <td>{{ r.user.userName }}</td>
+                <td>{{ r.fromDate }}</td>
+                <td>{{ r.toDate }}</td>
+                <td>
+                    <button v-if="r.userId == '@UserManager.GetUserId(User)'" v-on:click="deleteReservation(r.id)" class="close" style="color: red;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <!-- Reservation dialog -->
+    @await Html.PartialAsync("ReserveDialogPartial", new app.Models.Reservation())
+    
+    <!-- Confirmation dialog -->
+    @await Html.PartialAsync("ConfirmDialogPartial")
+</div>
 
 <style>
     .buttons .btn {
@@ -49,18 +84,81 @@
     }
 </style>
 
-    
-
 @section Scripts {
+<!-- Script for custom confirmation dialog -->
+<script src="~/js/confirm-dialog.js"></script>
+
 <script>
 var app = new Vue({
     el: '#app',
     data: {
-        faviconhover: false
+        faviconhover: false,
+        reservations: [],
+        reservationForm: {
+            FromDate: '',
+            ToDate: ''
+        }
     },
-    created: function () {},
+    created: function () {
+        this.loadReservations();
+    },
     methods: {
+        loadReservations: function() {
+            var self = this;
 
+            // Fetch list of users
+            axios.get('/api/reservations/?toolid=@Model.Id')
+            .then(function (response) {
+                self.reservations = response.data;
+            }); 
+        },
+        saveReservation: function() {
+            var self = this;
+
+            var data = {
+                ToolId: @Model.Id,
+                FromDate: this.reservationForm.FromDate,
+                ToDate: this.reservationForm.ToDate
+            };
+
+            axios.post('/api/reservations', JSON.stringify(data), { headers: { 'content-type': 'application/json; charset=utf-8' } })
+            .then(function (response) {
+                if (response.status == 201)
+                    $('#reservationDialog').modal('hide');
+
+                // TODO: Error reporting
+
+                // Reload reservations
+                self.loadReservations();
+            });
+        },
+        cancelReservation: function() {
+            $('#reservationDialog').modal('hide');
+            this.reservationForm.FromDate = '';
+            this.reservationForm.ToDate = '';
+        },
+        deleteReservation: function(id) {
+            var self = this;
+
+            var options = {
+                title: 'Slett resevasjon',
+                message: 'Er du sikker på at du vil slette reservasjonen?'
+            }
+
+            ConfirmDialog(options, function(){
+                axios.delete('/api/reservations/' + id)
+                .then(function(response) {
+                    if (response.status == 200) {
+                        for (var i = 0; i < self.reservations.length; i++) {
+                            if (self.reservations[i].id == id) {
+                                self.reservations.splice(i, 1);
+                                return;
+                            }
+                        }
+                    }
+                });
+            })
+        }
     }
 })
 </script>

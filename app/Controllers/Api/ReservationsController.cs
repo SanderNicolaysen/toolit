@@ -7,24 +7,38 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using app.Data;
 using app.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace app.Controllers_Api
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/Reservations")]
     public class ReservationsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _um;
 
-        public ReservationsController(ApplicationDbContext context)
+        public ReservationsController(ApplicationDbContext context, UserManager<ApplicationUser> um)
         {
             _context = context;
+            _um = um;
         }
 
         // GET: api/Reservations
         [HttpGet]
-        public IEnumerable<Reservation> GetReservation()
+        public IEnumerable<Reservation> GetReservation(int? toolid)
         {
+            if (toolid != null)
+            {
+                var reservations = _context.Reservations
+                    .Where(r => r.ToolId == toolid)
+                    .Include(r => r.User);
+
+                return reservations.ToList();
+            }
+
             return _context.Reservations.Include(r => r.User);
         }
 
@@ -36,7 +50,6 @@ namespace app.Controllers_Api
             {
                 return BadRequest(ModelState);
             }
-
             var reservation = await _context.Reservations.SingleOrDefaultAsync(m => m.Id == id);
 
             if (reservation == null)
@@ -57,6 +70,13 @@ namespace app.Controllers_Api
             }
 
             if (id != reservation.Id)
+            {
+                return BadRequest();
+            }
+
+            var res = await _context.Reservations.AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
+            // Make sure the user is either an administrator or the owner of the reservation
+            if (res.UserId != _um.GetUserId(User) && !User.IsInRole("Admin"))
             {
                 return BadRequest();
             }
@@ -84,13 +104,14 @@ namespace app.Controllers_Api
 
         // POST: api/Reservations
         [HttpPost]
-        public async Task<IActionResult> PostReservation([FromBody] Reservation reservation)
+        public async Task<IActionResult> PostReservation([FromBody][Bind("ToolId", "FromDate", "ToDate")] Reservation reservation)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid )
             {
                 return BadRequest(ModelState);
             }
 
+            reservation.UserId = _um.GetUserId(User);
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
 
@@ -107,9 +128,16 @@ namespace app.Controllers_Api
             }
 
             var reservation = await _context.Reservations.SingleOrDefaultAsync(m => m.Id == id);
+
             if (reservation == null)
             {
                 return NotFound();
+            }
+
+            // Make sure the user is either an administrator or the owner of the reservation
+            if (reservation.UserId != _um.GetUserId(User) && !User.IsInRole("Admin"))
+            {
+                return BadRequest();
             }
 
             _context.Reservations.Remove(reservation);

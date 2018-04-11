@@ -1,15 +1,5 @@
 @model IEnumerable<app.Models.ApplicationUser>
 
-@section Styles
-{
-    <environment include="Development">
-        <link rel="stylesheet" href="~/css/userList.css" asp-append-version="true"/>
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="~/css/userList.min.css" asp-append-version="true"/>
-    </environment>
-}
-
 @{
     ViewData["Title"] = "User-List";
 }

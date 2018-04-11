@@ -1,0 +1,39 @@
+@model app.Models.Reservation
+
+<div class="modal fade" id="reservationDialog" tabindex="-1" role="dialog">  
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Reservér</h4>
+            </div>
+
+            <!-- RESERVATION FORM start -->
+            <form v-on:submit.prevent="saveReservation">
+            
+            <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="control-label">Fra dato/tid</label>
+                        <input asp-for="FromDate" class="form-control" v-model="reservationForm.FromDate" />
+                        <span asp-validation-for="FromDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Til dato/tid</label>
+                        <input asp-for="ToDate" class="form-control" v-model="reservationForm.ToDate" />
+                        <span asp-validation-for="ToDate" class="text-danger"></span>
+                    </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" v-on:click="cancelReservation">Avbryt</button>
+                <button type="submit" class="btn btn-primary" formtarget="Reserve">Lagre</button>
+            </div>
+
+            </form>
+            <!-- RESERVATION FORM end -->
+
+        </div>
+    </div>
+</div>

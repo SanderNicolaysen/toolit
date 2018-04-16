@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+
 using app.Data;
 using app.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace app.Controllers
 {
@@ -36,11 +37,24 @@ namespace app.Controllers
             }
 
             var tool = await _context.Tools.Include(t => t.Reports)
+                .Include(t => t.Alarms)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (tool == null)
             {
                 return NotFound();
             }
+
+            DateTime localTime = DateTime.Now;
+
+            tool.Status = "Available";
+
+            foreach (var alarm in tool.Alarms)
+            {
+                if (alarm.Date.CompareTo(localTime) < 0)
+                    tool.Status = "Not available";
+            }
+
+            await _context.SaveChangesAsync();
 
             return View(tool);
         }

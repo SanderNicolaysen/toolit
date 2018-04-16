@@ -47,7 +47,7 @@ namespace app.Controllers
         }
 
         // GET: Alarms/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
             return View();
         }
@@ -57,13 +57,22 @@ namespace app.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Date")] Alarm alarm)
+        public async Task<IActionResult> Create(int id, [Bind("Name,Date")] Alarm alarm)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(alarm);
+
+                var tool = await _context.Tools.Include(t => t.Alarms).SingleOrDefaultAsync(m => m.Id == id);
+                if (tool == null)
+                {
+                    return NotFound();
+                }
+
+                tool.Alarms.Add(alarm);
+
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ToolController.Index), "Tool");
             }
             return View(alarm);
         }

@@ -28,11 +28,34 @@
         <dt>
             @Html.DisplayNameFor(model => model.Reports)
         </dt>
-        @foreach (var report in Model.Reports)
+        @if (!Model.Reports.Any())
         {
-            <dd>
-                - @report.Error
-            </dd>
+            <dd></dd>
+        }
+        else
+        {
+           @foreach (var report in Model.Reports)
+            {
+                <dd>
+                    - @report.Error
+                </dd>
+            }
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.Alarms)
+        </dt>
+        @if (!Model.Alarms.Any())
+        {
+            <dd></dd>
+        }
+        else
+        {
+            @foreach (var alarm in Model.Alarms)
+            {
+                <dd>
+                    - @alarm.Name: @alarm.Date
+                </dd>
+            }
         }
     </dl>
 
@@ -43,6 +66,12 @@
         </button>
         <a href="/Reports/Create/@Model.Id" class="btn btn-warning">Rapporter feil</a>
     </div>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="/Alarms/Create/@Model.Id" class="btn btn-info">Registrer alarm</a>
+    }
+</div>
 
     <br>
     <a asp-action="Index">Tilbake til verktøyliste</a>

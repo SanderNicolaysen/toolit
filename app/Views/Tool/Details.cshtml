@@ -38,9 +38,12 @@
             {
                 <dd>
                     - @report.Error
-                    <a asp-controller="Reports" asp-action="Edit" asp-route-id="@report.Id">Edit</a> |
-                    <a asp-controller="Reports" asp-action="Details" asp-route-id="@report.Id">Details</a> |
-                    <a asp-controller="Reports" asp-action="Delete" asp-route-id="@report.Id">Delete</a> 
+                    @if (@report.UserId == @UserManager.GetUserId(User) || User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="Reports" asp-action="Edit" asp-route-id="@report.Id">Edit</a> @Html.Raw("|")
+                        <a asp-controller="Reports" asp-action="Details" asp-route-id="@report.Id">Details</a> @Html.Raw("|")
+                        <a asp-controller="Reports" asp-action="Delete" asp-route-id="@report.Id">Delete</a> 
+                    }
                 </dd>
             }
         }
@@ -57,9 +60,12 @@
             {
                 <dd>
                     - @alarm.Name: @alarm.Date
-                    <a asp-controller="Alarms" asp-action="Edit" asp-route-id="@alarm.Id">Edit</a> |
-                    <a asp-controller="Alarms" asp-action="Details" asp-route-id="@alarm.Id">Details</a> |
-                    <a asp-controller="Alarms" asp-action="Delete" asp-route-id="@alarm.Id">Delete</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="Alarms" asp-action="Edit" asp-route-id="@alarm.Id">Edit</a> @Html.Raw("|")
+                        <a asp-controller="Alarms" asp-action="Details" asp-route-id="@alarm.Id">Details</a> @Html.Raw("|")
+                        <a asp-controller="Alarms" asp-action="Delete" asp-route-id="@alarm.Id">Delete</a>
+                    }
                 </dd>
             }
         }

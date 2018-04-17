@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,10 +17,12 @@ namespace app.Controllers
     public class ReportsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _um;
 
-        public ReportsController(ApplicationDbContext context)
+        public ReportsController(ApplicationDbContext context, UserManager<ApplicationUser> um)
         {
             _context = context;
+            _um = um;
         }
 
         // GET: Reports
@@ -43,6 +46,12 @@ namespace app.Controllers
                 return NotFound();
             }
 
+            // Make sure the user is either an administrator or the owner of the report
+            if (report.UserId != _um.GetUserId(User) && !User.IsInRole("Admin"))
+            {
+                return BadRequest();
+            }
+
             return View(report);
         }
 
@@ -61,6 +70,7 @@ namespace app.Controllers
         {
             if (ModelState.IsValid)
             {
+                report.UserId = _um.GetUserId(User);
                 _context.Add(report);
 
                 var tool = await _context.Tools.Include(t => t.Reports).SingleOrDefaultAsync(m => m.Id == id);
@@ -90,6 +100,13 @@ namespace app.Controllers
             {
                 return NotFound();
             }
+
+            // Make sure the user is either an administrator or the owner of the report
+            if (report.UserId != _um.GetUserId(User) && !User.IsInRole("Admin"))
+            {
+                return BadRequest();
+            }
+
             return View(report);
         }
 
@@ -109,6 +126,7 @@ namespace app.Controllers
             {
                 try
                 {
+                    report.UserId = _um.GetUserId(User);
                     _context.Update(report);
                     await _context.SaveChangesAsync();
                 }
@@ -123,7 +141,7 @@ namespace app.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ToolController.Index), "Tool");
             }
             return View(report);
         }
@@ -143,6 +161,12 @@ namespace app.Controllers
                 return NotFound();
             }
 
+            // Make sure the user is either an administrator or the owner of the report
+            if (report.UserId != _um.GetUserId(User) && !User.IsInRole("Admin"))
+            {
+                return BadRequest();
+            }
+
             return View(report);
         }
 
@@ -154,7 +178,7 @@ namespace app.Controllers
             var report = await _context.Reports.SingleOrDefaultAsync(m => m.Id == id);
             _context.Reports.Remove(report);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ToolController.Index), "Tool");
         }
 
         private bool ReportExists(int id)

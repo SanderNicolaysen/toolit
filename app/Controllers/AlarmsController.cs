@@ -123,7 +123,7 @@ namespace app.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ToolController.Index), "Tool");
             }
             return View(alarm);
         }
@@ -154,7 +154,7 @@ namespace app.Controllers
             var alarm = await _context.Alarms.SingleOrDefaultAsync(m => m.Id == id);
             _context.Alarms.Remove(alarm);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ToolController.Index), "Tool");
         }
 
         private bool AlarmExists(int id)

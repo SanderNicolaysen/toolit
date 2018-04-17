@@ -26,7 +26,6 @@
         <tr>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
             <th>@Html.DisplayNameFor(model => model.Status)</th>
-            <th>@Html.DisplayNameFor(model => model.Reports)</th>
             <th></th>
         </tr>
     </thead>
@@ -34,23 +33,17 @@
         <tr v-for="tool in filteredTools">
             <td>{{ tool.name }}</td>
             <td>{{ tool.status }}</td>
-            <td>
-                <p v-for="report in tool.reports">
-                    - {{ report.error }}
-                </p>
-            </td>
             @if (User.IsInRole("Admin")) {
                 <td>
                     <a v-bind:href="'Tool/Edit/' + tool.id">Edit</a> @Html.Raw("|")
                     <a v-bind:href="'Tool/Details/' + tool.id">Details</a> @Html.Raw("|")
-                    <a v-bind:href="'Tool/Delete/' + tool.id">Delete</a> @Html.Raw("|")
-                    <a v-bind:href="'/Reports/Create/' + tool.id">Report error</a>
+                    <a v-bind:href="'Tool/Delete/' + tool.id">Delete</a>
                 </td>
             }
-            else {
+            else 
+            {
                 <td>
-                    <a v-bind:href="'Tool/Details/' + tool.id">Details</a> @Html.Raw("|")
-                    <a v-bind:href="'/Reports/Create/' + tool.id">Report error</a>
+                    <a v-bind:href="'Tool/Details/' + tool.id">Details</a>
                 </td>   
             }
         </tr>

@@ -22,11 +22,16 @@ namespace app.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+
+            // Configure primary key constraint (userid and toolid) on Favorite class
+            builder.Entity<Favorite>()
+                .HasKey(f => new { f.UserId, f.ToolId });
         }
 
         public DbSet<Tool> Tools { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Alarm> Alarms { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
     }
 }

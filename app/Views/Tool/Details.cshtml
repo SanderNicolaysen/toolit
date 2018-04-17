@@ -10,9 +10,8 @@
 
 <div id="app" v-cloak>
     <h4 style="display: inline-block;">@Model.Name</h4>
-    <span v-bind:class="{ 'glyphicon-star': faviconhover, 'glyphicon-star-empty' : !faviconhover }"
-        @@mouseover="faviconhover = true"
-        @@mouseleave="faviconhover = false"
+    <span v-on:click="toggleFavorite" v-bind:class="{ 'glyphicon-star': faviconhover, 'glyphicon-star-empty' : !faviconhover }"
+        @@mouseover="faviconhover = true" @@mouseleave="faviconhover = false"
         class="glyphicon" style="font-size: 2em; vertical-align: text-bottom;"
         aria-hidden="true">
     </span>
@@ -133,6 +132,7 @@ var app = new Vue({
     el: '#app',
     data: {
         faviconhover: false,
+        favorite: false,
         reservations: [],
         reservationForm: {
             FromDate: '',
@@ -198,6 +198,20 @@ var app = new Vue({
                     }
                 });
             })
+        },
+        toggleFavorite: function() {
+            var self = this;
+            
+            if (!this.favorite) {
+                axios.post('/api/favorites', { ToolId: @Model.Id })
+                .then(function(response) {
+                    console.log(response)
+                    self.favorite = !self.favorite;
+                });
+            }
+            else {
+                axios.delete('/api/favorites', { ToolId: @Model.Id });
+            }
         }
     }
 })

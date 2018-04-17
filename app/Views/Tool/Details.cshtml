@@ -77,13 +77,12 @@
             Reservér
         </button>
         <a href="/Reports/Create/@Model.Id" class="btn btn-warning">Rapporter feil</a>
-    </div>
 
-    @if (User.IsInRole("Admin"))
-    {
-        <a href="/Alarms/Create/@Model.Id" class="btn btn-info">Registrer alarm</a>
-    }
-</div>
+        @if (User.IsInRole("Admin"))
+        {
+            <a href="/Alarms/Create/@Model.Id" class="btn btn-info">Registrer alarm</a>
+        }
+    </div>
 
     <br>
     <a asp-action="Index">Tilbake til verktøyliste</a>

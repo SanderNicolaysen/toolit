@@ -41,11 +41,11 @@ namespace app.Data
             // Add dummy data here
             var tools = new List<Tool>
             {
-                new Tool("Skrujern", "Available", new List<Report>(new Report[] { new Report("It misses a handle!"), new Report("Should be replaced."), new Report("It doesn't work") }), new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,11)), new Alarm("Årskontroll", new DateTime(2018,4,15))})),
-                new Tool("Hammer", "Available", new List<Report>() { new Report("How does it work?") }, new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,13))})),
+                new Tool("Skrujern", "Available", new List<Report>(new Report[] { new Report("It misses a handle!", admin.Id), new Report("Should be replaced.", user1.Id), new Report("It doesn't work", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,11)), new Alarm("Årskontroll", new DateTime(2018,4,15))})),
+                new Tool("Hammer", "Available", new List<Report>() { new Report("How does it work?", user3.Id) }, new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,13))})),
                 new Tool("Sag", "Available", new List<Report>(), new List<Alarm>()),
-                new Tool("Vater", "Not available", new List<Report>(new Report[] { new Report("Random report."), new Report("What is this thing?") }), new List<Alarm>(new Alarm[] { new Alarm("Årskontroll", new DateTime(2018,4,12))})),
-                new Tool("Kniv", "Available", new List<Report>() { new Report("Test") }, new List<Alarm>())
+                new Tool("Vater", "Not available", new List<Report>(new Report[] { new Report("Random report.", admin.Id), new Report("What is this thing?", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Årskontroll", new DateTime(2018,4,12))})),
+                new Tool("Kniv", "Available", new List<Report>() { new Report("Test", user1.Id) }, new List<Alarm>())
             };
 
             db.AddRange(tools);

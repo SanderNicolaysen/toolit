@@ -36,7 +36,8 @@ namespace app.Controllers
                 return NotFound();
             }
 
-            var tool = await _context.Tools.Include(t => t.Reports)
+            var tool = await _context.Tools
+                .Include(t => t.Reports)
                 .Include(t => t.Alarms)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (tool == null)
@@ -48,6 +49,7 @@ namespace app.Controllers
 
             tool.Status = "Available";
 
+            // If at least one of the alarm-dates have been surpassed, change the tool-status to "Not available" 
             foreach (var alarm in tool.Alarms)
             {
                 if (alarm.Date.CompareTo(localTime) < 0)
@@ -161,12 +163,20 @@ namespace app.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tool = await _context.Tools.Include(t => t.Reports).SingleOrDefaultAsync(m => m.Id == id);
+            var tool = await _context.Tools
+            .Include(t => t.Reports)
+            .Include(t => t.Alarms)
+            .SingleOrDefaultAsync(m => m.Id == id);
             _context.Tools.Remove(tool);
 
             foreach (var report in tool.Reports)
             {
                 _context.Reports.Remove(report);
+            }
+
+            foreach (var alarm in tool.Alarms)
+            {
+                _context.Alarms.Remove(alarm);
             }
 
             await _context.SaveChangesAsync();

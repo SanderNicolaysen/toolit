@@ -37,3 +37,17 @@ nav.navbar .navbar-toggle .icon-bar {
 .glyphicon-star {
     color: #ff6600;
 }
+
+.glyphicon-star:hover {
+    text-shadow: rgba(255, 102, 00, 0.4) 0px 0px 6px;
+}
+
+.glyphicon-star-empty:hover {
+    color: #ff6600;
+}
+
+.glyphicon-star, .glyphicon-star-empty {
+    vertical-align: text-bottom;
+    font-size: 2em;
+    cursor: pointer;
+}

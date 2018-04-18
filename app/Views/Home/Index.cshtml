@@ -1,5 +1,29 @@
-﻿@{
+﻿@model IEnumerable<app.Models.Favorite>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <h2>@ViewData["Title"]</h2>
+
+<h3>Favoritter</h3>
+@foreach (var fav in Model)
+{
+    <div>
+        <a asp-controller="tool" asp-action="details" asp-route-id="@fav.ToolId">@fav.Tool.Name</a>
+    </div>
+}
+
+@if (Model.Count() == 0)
+{
+    <text>
+    <div class="alert alert-info">
+        <p>Du har ingen favoritter!</p>
+        <p>
+            Legg til favoritter ved å trykke på favoritt-ikonet
+            (<span class="glyphicon glyphicon-star-empty" style="font-size: 1em;"></span>)
+            på verktøysiden.
+        </p>
+    </div>
+    </text>
+}

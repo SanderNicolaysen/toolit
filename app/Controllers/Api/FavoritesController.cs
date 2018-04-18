@@ -35,7 +35,7 @@ namespace app.Controllers_Api
 
         // POST: api/Favorites
         [HttpPost]
-        public async Task<IActionResult> PostFavorite([FromBody] int toolid)
+        public async Task<IActionResult> PostFavorite([FromBody][Bind("ToolId")] Favorite favorite)
         {
             if (!ModelState.IsValid )
             {
@@ -43,16 +43,16 @@ namespace app.Controllers_Api
             }
 
             var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == _um.GetUserId(User));
-            var tool = await _context.Tools.SingleOrDefaultAsync(t => t.Id == toolid);
+            var tool = await _context.Tools.SingleOrDefaultAsync(t => t.Id == favorite.ToolId);
             _context.Favorites.Add(new Favorite{UserId=user.Id, ToolId=tool.Id});
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFavorites", new { id = toolid });
+            return CreatedAtAction("GetFavorites", new { id = favorite.ToolId });
         }
 
         // DELETE: api/Favorites
         [HttpDelete]
-        public async Task<IActionResult> DeleteFavorite([FromBody] int toolid)
+        public async Task<IActionResult> DeleteFavorite([FromBody][Bind("ToolId")] Favorite favorite)
         {
             if (!ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace app.Controllers_Api
                 return NotFound();
             }
 
-            var fav = await _context.Favorites.Where(f => f.UserId == user.Id).SingleOrDefaultAsync(f => f.ToolId == toolid);
+            var fav = await _context.Favorites.Where(f => f.UserId == user.Id).SingleOrDefaultAsync(f => f.ToolId == favorite.ToolId);
             _context.Favorites.Remove(fav);
             await _context.SaveChangesAsync();
 

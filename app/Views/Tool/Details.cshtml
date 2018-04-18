@@ -10,10 +10,9 @@
 
 <div id="app" v-cloak>
     <h4 style="display: inline-block;">@Model.Name</h4>
-    <span v-on:click="toggleFavorite" v-bind:class="{ 'glyphicon-star': faviconhover, 'glyphicon-star-empty' : !faviconhover }"
-        @@mouseover="faviconhover = true" @@mouseleave="faviconhover = false"
-        class="glyphicon" style="font-size: 2em; vertical-align: text-bottom;"
-        aria-hidden="true">
+    <span class="glyphicon" aria-hidden="true"
+          v-on:click="toggleFavorite"
+          v-bind:class="{ 'glyphicon-star': favorite, 'glyphicon-star-empty' : !favorite}">
     </span>
     <hr />
     <span class="glyphicon glyphicon-wrench" style="font-size: 100px;" aria-hidden="true"></span>
@@ -141,6 +140,17 @@ var app = new Vue({
     },
     created: function () {
         this.loadReservations();
+
+        var self = this;
+        axios.get('/api/favorites')
+        .then(function (response) {
+            for (var i = 0; i < response.data.length; i++) {
+                if (response.data[i].toolId == @Model.Id) {
+                    self.favorite = true;
+                    return;
+                }
+            }
+        }); 
     },
     methods: {
         loadReservations: function() {
@@ -201,16 +211,20 @@ var app = new Vue({
         },
         toggleFavorite: function() {
             var self = this;
-            
+
             if (!this.favorite) {
-                axios.post('/api/favorites', { ToolId: @Model.Id })
-                .then(function(response) {
-                    console.log(response)
-                    self.favorite = !self.favorite;
+                axios.post('/api/Favorites', JSON.stringify({ toolid: @Model.Id }), { headers: { 'Content-Type': 'application/json' }})
+                .then(function (response) {
+                    if (response.status == 201)
+                        self.favorite = true;
                 });
             }
             else {
-                axios.delete('/api/favorites', { ToolId: @Model.Id });
+                axios.delete('/api/Favorites', { data: JSON.stringify({ toolid: @Model.Id }), headers: { 'Content-Type': 'application/json' }})
+                .then(function (response) {
+                    if (response.status == 200)
+                        self.favorite = false;
+                });
             }
         }
     }

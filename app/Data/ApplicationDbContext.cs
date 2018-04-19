@@ -33,5 +33,6 @@ namespace app.Data
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Alarm> Alarms { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<Status> Statuses { get; set; }
     }
 }

@@ -36,7 +36,8 @@ namespace app.Controllers
         // GET: Tool
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tools.Include(tool => tool.Reports).ToListAsync());
+            var a = await _context.Tools.Include(tool => tool.Reports).Include(tool => tool.Status).ToListAsync();
+            return View(a);
         }
 
         // GET: Tool/Details/5
@@ -50,6 +51,7 @@ namespace app.Controllers
             var tool = await _context.Tools
                 .Include(t => t.Reports)
                 .Include(t => t.Alarms)
+                .Include(t => t.Status)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (tool == null)
             {
@@ -58,13 +60,11 @@ namespace app.Controllers
 
             DateTime localTime = DateTime.Now;
 
-            tool.Status = "Available";
-
             // If at least one of the alarm-dates have been surpassed, change the tool-status to "Not available" 
             foreach (var alarm in tool.Alarms)
             {
                 if (alarm.Date.CompareTo(localTime) < 0)
-                    tool.Status = "Not available";
+                    tool.Status = _context.Statuses.Find(2);
             }
 
             await _context.SaveChangesAsync();

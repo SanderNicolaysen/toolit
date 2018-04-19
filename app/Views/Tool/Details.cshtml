@@ -28,7 +28,7 @@
             @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Status)
+            <i style="@Model.Status.Style" class="@Model.Status.Glyphicon"></i> @Html.DisplayFor(model => model.Status.StatusName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Reports)

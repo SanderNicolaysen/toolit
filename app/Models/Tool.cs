@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace app.Models
 {
@@ -6,10 +7,10 @@ namespace app.Models
     {
         public Tool() { }
 
-        public Tool(string name, string status, List<Report> reports, List<Alarm> alarms, string alias)
+        public Tool(string name, Status status, List<Report> reports, List<Alarm> alarms, string alias)
         {
             Name = name;
-            Status = status;
+            StatusId = status.Id;
             Reports = reports;
             Alarms = alarms;
             Alias = alias;
@@ -17,9 +18,10 @@ namespace app.Models
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Status { get; set; }
         public string Image { get; set; }
         public string Thumbnail { get; set; }
+        public int StatusId { get; set; }
+        public Status Status { get; set; }
         public List<Report> Reports { get; set; }
         public List<Alarm> Alarms { get; set; }
         public string Alias { get; set; }

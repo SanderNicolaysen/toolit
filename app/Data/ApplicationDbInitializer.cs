@@ -38,14 +38,23 @@ namespace app.Data
             var user3 = new ApplicationUser { UserName = "doffen@uia.no", Email = "doffen@uia.no", ChangePassword = true };
             um.CreateAsync(user3, "Password1.");
 
+            var statusAvailable = new Status { StatusName = "Available", Style = "color: #8EE783", Glyphicon = "glyphicon glyphicon-ok-sign" };
+            db.Add(statusAvailable);
+
+            var statusBusy = new Status { StatusName = "Busy", Style = "color: #FA7D12", Glyphicon = "glyphicon glyphicon-remove-sign" };
+            db.Add(statusBusy);
+
+            var statusBooked = new Status { StatusName = "Booked", Style = "color: #F6D846", Glyphicon = "glyphicon glyphicon-minus-sign" };
+            db.Add(statusBooked);
+
             // Add dummy data here
             var tools = new List<Tool>
             {
-                new Tool("Skrujern", "Available", new List<Report>(new Report[] { new Report("It misses a handle!", admin.Id), new Report("Should be replaced.", user1.Id), new Report("It doesn't work", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,11)), new Alarm("Årskontroll", new DateTime(2018,4,15))}), "playboy"),
-                new Tool("Hammer", "Available", new List<Report>() { new Report("How does it work?", user3.Id) }, new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,13))}), "banger"),
-                new Tool("Sag", "Available", new List<Report>(), new List<Alarm>(), "cutter"),
-                new Tool("Vater", "Not available", new List<Report>(new Report[] { new Report("Random report.", admin.Id), new Report("What is this thing?", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Årskontroll", new DateTime(2018,4,12))}), "måler"),
-                new Tool("Kniv", "Available", new List<Report>() { new Report("Test", user1.Id) }, new List<Alarm>(), "stikker")
+                new Tool("Skrujern", statusAvailable, new List<Report>(new Report[] { new Report("It misses a handle!", admin.Id), new Report("Should be replaced.", user1.Id), new Report("It doesn't work", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,11)), new Alarm("Årskontroll", new DateTime(2018,4,15))}), "playboy"),
+                new Tool("Hammer", statusAvailable, new List<Report>() { new Report("How does it work?", user3.Id) }, new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,13))}), "banger"),
+                new Tool("Sag", statusBooked, new List<Report>(), new List<Alarm>(), "cutter"),
+                new Tool("Vater", statusBusy, new List<Report>(new Report[] { new Report("Random report.", admin.Id), new Report("What is this thing?", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Årskontroll", new DateTime(2018,4,12))}), "måler"),
+                new Tool("Kniv", statusAvailable, new List<Report>() { new Report("Test", user1.Id) }, new List<Alarm>(), "stikker")
             };
 
             foreach (var tool in tools)

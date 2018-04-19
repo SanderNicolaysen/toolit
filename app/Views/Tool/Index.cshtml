@@ -37,7 +37,7 @@
                 <img v-if="tool.thumbnail" v-bind:src="tool.thumbnail" alt="oh">
             </td>
             <td>{{ tool.name }}</td>
-            <td>{{ tool.status }}</td>
+            <td><i :style="tool.status.style" :class="tool.status.glyphicon"></i> {{ tool.status.statusName }}</td>
             <td>{{ tool.alias }}</td>
             @if (User.IsInRole("Admin")) {
                 <td>

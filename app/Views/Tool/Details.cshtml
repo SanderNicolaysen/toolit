@@ -81,6 +81,10 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reservationDialog">
             Reservér
         </button>
+        <button type="button" class="btn btn-danger" v-on:click="checkOut(@Model.Id)">
+            Sjekk ut
+        </button>
+        <a class="btn btn-success">Sjekk inn</a>
         <a href="/Reports/Create/@Model.Id" class="btn btn-warning">Rapporter feil</a>
 
         @if (User.IsInRole("Admin"))
@@ -198,7 +202,7 @@ var app = new Vue({
             var self = this;
 
             var options = {
-                title: 'Slett resevasjon',
+                title: 'Slett reservasjon',
                 message: 'Er du sikker på at du vil slette reservasjonen?'
             }
 
@@ -233,6 +237,28 @@ var app = new Vue({
                         self.favorite = false;
                 });
             }
+        },
+        checkOut: function(id) {
+            var self = this;
+
+            var options = {
+                title: 'Advarsel',
+                message: 'Dette verktøyet er reservert. Er du sikker på at du vil sjekke ut verktøyet?'
+            }
+
+            var currentDate = new Date();
+
+            self.reservations.forEach(function(reservation){
+
+                var toDate = new Date(reservation.toDate);    
+                var fromDate = new Date(reservation.fromDate);    
+
+                if (currentDate.getTime() <= toDate.getTime() 
+                && currentDate.getTime() >= fromDate.getTime())
+                ConfirmDialog(options, function(){
+                
+            })
+            })
         }
     }
 })

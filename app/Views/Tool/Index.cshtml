@@ -35,9 +35,15 @@
             <td>{{ tool.status }}</td>
             @if (User.IsInRole("Admin")) {
                 <td>
-                    <a v-bind:href="'Tool/Edit/' + tool.id">Edit</a> @Html.Raw("|")
-                    <a v-bind:href="'Tool/Details/' + tool.id">Details</a> @Html.Raw("|")
-                    <a v-bind:href="'Tool/Delete/' + tool.id">Delete</a>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">options
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a v-bind:href="'Tool/Edit/' + tool.id">Edit</a></li>
+                            <li><a v-bind:href="'Tool/Details/' + tool.id">Details</a></li>
+                            <li><a v-bind:href="'Tool/Delete/' + tool.id">Delete</a></li>
+                        </ul>
+                    </div>
                 </td>
             }
             else 

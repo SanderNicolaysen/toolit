@@ -41,9 +41,15 @@
             <td>{{ user.email }}</td>
             <td>{{ user.phoneNumber }}</td>
             <td>
-                <a v-bind:href="'User/Edit/' + user.id">Edit</a> @Html.Raw("|")
-                <a v-bind:href="'User/Details/' + user.id">Details</a> @Html.Raw("|")
-                <a v-bind:href="'User/Delete/' + user.id">Delete</a>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Options
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a v-bind:href="'User/Edit/' + user.id">Edit</a></li>
+                        <li><a v-bind:href="'User/Details/' + user.id">Details</a></li>
+                        <li><a v-bind:href="'User/Delete/' + user.id">Delete</a></li>
+                    </ul>
+                </div>
             </td>
         </tr>
     </tbody>

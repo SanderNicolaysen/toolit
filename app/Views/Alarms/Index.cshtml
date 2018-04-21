@@ -28,9 +28,15 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">options
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a asp-action="Edit" asp-route-id="@item.Id">Edit</a></li>
+                        <li><a asp-action="Details" asp-route-id="@item.Id">Details</a></li>
+                        <li><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></li>
+                    </ul>
+                </div>
             </td>
         </tr>
 }

@@ -24,6 +24,7 @@
 <table class="table table-hover table-striped">
     <thead> 
         <tr>
+            <th></th>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
             <th>@Html.DisplayNameFor(model => model.Status)</th>
             <th></th>
@@ -31,6 +32,9 @@
     </thead>
     <tbody>
         <tr v-for="tool in filteredTools">
+            <td class="fit">
+                <img v-if="tool.thumbnail" v-bind:src="tool.thumbnail" alt="oh">
+            </td>
             <td>{{ tool.name }}</td>
             <td>{{ tool.status }}</td>
             @if (User.IsInRole("Admin")) {

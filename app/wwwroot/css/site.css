@@ -51,3 +51,9 @@ nav.navbar .navbar-toggle .icon-bar {
     font-size: 2em;
     cursor: pointer;
 }
+
+/* Make table column fit the widht of the content */
+.table td.fit, .table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}

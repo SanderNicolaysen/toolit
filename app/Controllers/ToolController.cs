@@ -92,20 +92,31 @@ namespace app.Controllers
                 return View(tool);
             }
 
-            var filename = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + Path.GetExtension(image.FileName);
-            var path = Path.Combine(_hostingEnvironment.WebRootPath, "images\\uploads\\" + filename);
-            //var fileStream = System.IO.File.Create(path);            
-            //image.OpenReadStream().CopyTo(fileStream);
-            //fileStream.Close();
+            // Generate a random filename and find destination path
+            var filename = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+            var path = Path.Combine(_hostingEnvironment.WebRootPath, "images\\uploads\\" + filename + ".jpg");
 
-            using (Image<Rgba32> img = Image.Load(image.OpenReadStream())) //open the file and detect the file type and decode it
+            // Resize the image to 100 pixels wide and save it
+            using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))
             {
-                // image is now in a file format agnostic structure in memory as a series of Rgba32 pixels
-                img.Mutate(ctx => ctx.Resize(100, 0)); // resize the image in place and return it for chaining
-                img.Save(path); // based on the file extension pick an encoder then encode and write the data to disk
-            } // dispose - releasing memory into a memory pool ready for the next image you wish to process
+                var filestream = System.IO.File.Create(path);
+                img.Mutate(ctx => ctx.Resize(100, 0));
+                img.SaveAsJpeg(filestream);
+                filestream.Close();
+            }
 
-            tool.ImagePath = Path.GetRelativePath(_hostingEnvironment.WebRootPath, path);
+            // Create another copy 50 pixels wide for thumbnail
+            var thumbnailPath = path.Replace(".jpg", "_thumb.jpg");
+            using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))
+            {
+                var filestream = System.IO.File.Create(thumbnailPath);
+                img.Mutate(ctx => ctx.Resize(50, 0));
+                img.SaveAsJpeg(filestream);
+                filestream.Close();
+            }
+
+            tool.Image = Path.GetRelativePath(_hostingEnvironment.WebRootPath, path);
+            tool.Thumbnail = Path.GetRelativePath(_hostingEnvironment.WebRootPath, thumbnailPath);
             _context.Add(tool);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

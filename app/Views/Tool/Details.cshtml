@@ -15,9 +15,9 @@
           v-bind:class="{ 'glyphicon-star': favorite, 'glyphicon-star-empty' : !favorite}">
     </span>
     <hr />
-    @if (Model.ImagePath != "")
+    @if (Model.Image != "")
     {
-        <img src="~/@Model.ImagePath" style="">
+        <img src="~/@Model.Image" style="">
     }
     else
     {

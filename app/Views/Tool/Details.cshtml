@@ -253,16 +253,9 @@ var app = new Vue({
 
             var stopLoop = false;
 
-            if (self.reservations.length == 0) {
-                axios.put('/api/Tools/' + id, {
-                        id: id,
-                        name: '@Model.Name',
-                        status: '@Model.Status',
-                        checkedOut: true
-                    })
-
-                    self.checkedOut = true;
-            }
+            // If there currently are no reservations for the tool, a user is free to check out the tool
+            if (self.reservations.length == 0)
+                self.updateTool(id);
             else {
                 self.reservations.forEach(function(reservation) {
 
@@ -276,14 +269,7 @@ var app = new Vue({
                 if (reservation.userId == '@UserManager.GetUserId(User)'
                 && reservation == self.reservations[self.reservations.length - 1])
                 {
-                    axios.put('/api/Tools/' + id, {
-                        id: id,
-                        name: '@Model.Name',
-                        status: '@Model.Status',
-                        checkedOut: true
-                    })
-
-                    self.checkedOut = true;
+                    self.updateTool(id);
 
                     return;
                 }
@@ -291,23 +277,17 @@ var app = new Vue({
                 var toDate = new Date(reservation.toDate);    
                 var fromDate = new Date(reservation.fromDate);    
 
+                // If a user tries to check out a tool, but the tool is currently reserved for someone else, he/she gets a warning
                 if (currentDate.getTime() <= toDate.getTime() 
                 && currentDate.getTime() >= fromDate.getTime())
                 {       
                         var options = {
                             title: 'Advarsel',
-                            message: 'Dette verktøyet er reservert av ' + reservation.userName + '. Er du sikker på at du vil sjekke ut verktøyet?'
+                            message: 'Dette verktøyet er reservert av ' + reservation.user.userName + '. Er du sikker på at du vil sjekke ut verktøyet?'
                         }
 
                         ConfirmDialog(options, function(){
-                            axios.put('/api/Tools/' + id, {
-                                id: id,
-                                name: '@Model.Name',
-                                status: '@Model.Status',
-                                checkedOut: true
-                            })
-
-                            self.checkedOut = true;
+                            self.updateTool(id);
                     })
                     
                     stopLoop = true;
@@ -315,16 +295,7 @@ var app = new Vue({
 
                 if (reservation == self.reservations[self.reservations.length - 1]
                 && !stopLoop)
-                {
-                    axios.put('/api/Tools/' + id, {
-                    id: id,
-                    name: '@Model.Name',
-                    status: '@Model.Status',
-                    checkedOut: true
-                })
-
-                self.checkedOut = true;
-                }
+                    self.updateTool(id);
             })
             }
         },
@@ -339,6 +310,16 @@ var app = new Vue({
             })
 
             self.checkedOut = false;
+        },
+        updateTool: function(id) {
+            axios.put('/api/Tools/' + id, {
+            id: id,
+            name: '@Model.Name',
+            status: '@Model.Status',
+            checkedOut: true
+            })
+
+            this.checkedOut = true;
         }
     }
 })

@@ -241,23 +241,28 @@ var app = new Vue({
         checkOut: function(id) {
             var self = this;
 
-            var options = {
-                title: 'Advarsel',
-                message: 'Dette verktøyet er reservert. Er du sikker på at du vil sjekke ut verktøyet?'
-            }
-
             var currentDate = new Date();
 
             self.reservations.forEach(function(reservation){
+
+                if (reservation.userId == '@UserManager.GetUserId(User)')
+                    return;
 
                 var toDate = new Date(reservation.toDate);    
                 var fromDate = new Date(reservation.fromDate);    
 
                 if (currentDate.getTime() <= toDate.getTime() 
                 && currentDate.getTime() >= fromDate.getTime())
-                ConfirmDialog(options, function(){
-                
-            })
+                {       
+                        var options = {
+                            title: 'Advarsel',
+                            message: 'Dette verktøyet er reservert av ' + reservation.userName + '. Er du sikker på at du vil sjekke ut verktøyet?'
+                        }
+
+                        ConfirmDialog(options, function(){
+                            
+                    })
+                }
             })
         }
     }

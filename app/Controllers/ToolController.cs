@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing.Transforms;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.Primitives;
 
 using app.Data;
 using app.Models;
@@ -16,10 +25,12 @@ namespace app.Controllers
     public class ToolController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ToolController(ApplicationDbContext context)
+        public ToolController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: Tool
@@ -74,15 +85,30 @@ namespace app.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,Name,Status")] Tool tool)
+        public async Task<IActionResult> Create([Bind("Id,Name,Status")] Tool tool, IFormFile image)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(tool);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(tool);
             }
-            return View(tool);
+
+            var filename = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + Path.GetExtension(image.FileName);
+            var path = Path.Combine(_hostingEnvironment.WebRootPath, "images\\uploads\\" + filename);
+            //var fileStream = System.IO.File.Create(path);            
+            //image.OpenReadStream().CopyTo(fileStream);
+            //fileStream.Close();
+
+            using (Image<Rgba32> img = Image.Load(image.OpenReadStream())) //open the file and detect the file type and decode it
+            {
+                // image is now in a file format agnostic structure in memory as a series of Rgba32 pixels
+                img.Mutate(ctx => ctx.Resize(100, 0)); // resize the image in place and return it for chaining
+                img.Save(path); // based on the file extension pick an encoder then encode and write the data to disk
+            } // dispose - releasing memory into a memory pool ready for the next image you wish to process
+
+            tool.ImagePath = Path.GetRelativePath(_hostingEnvironment.WebRootPath, path);
+            _context.Add(tool);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Tool/Edit/5

@@ -17,6 +17,7 @@ namespace app.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }
+        public string ImagePath { get; set; }
         public List<Report> Reports { get; set; }
         public List<Alarm> Alarms { get; set; }
     }

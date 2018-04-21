@@ -15,7 +15,14 @@
           v-bind:class="{ 'glyphicon-star': favorite, 'glyphicon-star-empty' : !favorite}">
     </span>
     <hr />
-    <span class="glyphicon glyphicon-wrench" style="font-size: 100px;" aria-hidden="true"></span>
+    @if (Model.ImagePath != "")
+    {
+        <img src="~/@Model.ImagePath" style="">
+    }
+    else
+    {
+        <span class="glyphicon glyphicon-wrench" style="font-size: 100px;" aria-hidden="true"></span>
+    }
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Status)

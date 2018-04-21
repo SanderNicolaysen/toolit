@@ -81,10 +81,12 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reservationDialog">
             Reservér
         </button>
-        <button type="button" class="btn btn-danger" v-on:click="checkOut(@Model.Id)">
+        <button type="button" class="btn btn-success" v-on:click="checkIn(@Model.Id)" v-if="checkedOut">
+            Sjekk inn
+        </button>
+        <button type="button" class="btn btn-danger" v-on:click="checkOut(@Model.Id)" v-else>
             Sjekk ut
         </button>
-        <a class="btn btn-success">Sjekk inn</a>
         <a href="/Reports/Create/@Model.Id" class="btn btn-warning">Rapporter feil</a>
 
         @if (User.IsInRole("Admin"))
@@ -143,6 +145,7 @@ var app = new Vue({
     data: {
         faviconhover: false,
         favorite: false,
+        checkedOut: false,
         reservations: [],
         reservationForm: {
             FromDate: '',
@@ -161,6 +164,11 @@ var app = new Vue({
                     return;
                 }
             }
+        }); 
+
+        axios.get('/api/Tools/' + @Model.Id)
+        .then(function (response) {
+            self.checkedOut = response.data.checkedOut;
         }); 
     },
     methods: {
@@ -243,10 +251,42 @@ var app = new Vue({
 
             var currentDate = new Date();
 
-            self.reservations.forEach(function(reservation){
+            var stopLoop = false;
 
-                if (reservation.userId == '@UserManager.GetUserId(User)')
+            if (self.reservations.length == 0) {
+                axios.put('/api/Tools/' + id, {
+                        id: id,
+                        name: '@Model.Name',
+                        status: '@Model.Status',
+                        checkedOut: true
+                    })
+
+                    self.checkedOut = true;
+            }
+            else {
+                self.reservations.forEach(function(reservation) {
+
+                if (stopLoop)
                     return;
+
+                if (reservation.userId == '@UserManager.GetUserId(User)'
+                && reservation != self.reservations[self.reservations.length - 1])
+                    return;
+
+                if (reservation.userId == '@UserManager.GetUserId(User)'
+                && reservation == self.reservations[self.reservations.length - 1])
+                {
+                    axios.put('/api/Tools/' + id, {
+                        id: id,
+                        name: '@Model.Name',
+                        status: '@Model.Status',
+                        checkedOut: true
+                    })
+
+                    self.checkedOut = true;
+
+                    return;
+                }
 
                 var toDate = new Date(reservation.toDate);    
                 var fromDate = new Date(reservation.fromDate);    
@@ -260,10 +300,45 @@ var app = new Vue({
                         }
 
                         ConfirmDialog(options, function(){
-                            
+                            axios.put('/api/Tools/' + id, {
+                                id: id,
+                                name: '@Model.Name',
+                                status: '@Model.Status',
+                                checkedOut: true
+                            })
+
+                            self.checkedOut = true;
                     })
+                    
+                    stopLoop = true;
+                }
+
+                if (reservation == self.reservations[self.reservations.length - 1]
+                && !stopLoop)
+                {
+                    axios.put('/api/Tools/' + id, {
+                    id: id,
+                    name: '@Model.Name',
+                    status: '@Model.Status',
+                    checkedOut: true
+                })
+
+                self.checkedOut = true;
                 }
             })
+            }
+        },
+        checkIn: function(id) {
+            var self = this;
+
+            axios.put('/api/Tools/' + id, {
+            id: id,
+            name: '@Model.Name',
+            status: '@Model.Status',
+            checkedOut: false
+            })
+
+            self.checkedOut = false;
         }
     }
 })

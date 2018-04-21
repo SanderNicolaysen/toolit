@@ -12,3 +12,5 @@
 *.min.js
 
 *.db
+
+app/wwwroot/uploads/*

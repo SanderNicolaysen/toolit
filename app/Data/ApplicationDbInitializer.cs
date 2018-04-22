@@ -48,6 +48,12 @@ namespace app.Data
                 new Tool("Kniv", "Available", new List<Report>() { new Report("Test", user1.Id) }, new List<Alarm>())
             };
 
+            foreach (var tool in tools)
+            {
+                tool.Image = "images\\example_tools\\" + tool.Name.ToLower() + ".jpg";
+                tool.Thumbnail = "images\\example_tools\\" + tool.Name.ToLower() + "_thumb.jpg";
+            }
+
             db.AddRange(tools);
 
             db.SaveChanges();

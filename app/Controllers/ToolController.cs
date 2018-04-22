@@ -92,31 +92,41 @@ namespace app.Controllers
                 return View(tool);
             }
 
-            // Generate a random filename and find destination path
-            var filename = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
-            var path = Path.Combine(_hostingEnvironment.WebRootPath, "images\\uploads\\" + filename + ".jpg");
-
-            // Resize the image to 100 pixels wide and save it
-            using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))
+            if (image != null)
             {
-                var filestream = System.IO.File.Create(path);
-                img.Mutate(ctx => ctx.Resize(100, 0));
-                img.SaveAsJpeg(filestream);
-                filestream.Close();
+                // Generate a random filename and find destination path
+                var filename = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+                var path = Path.Combine(_hostingEnvironment.WebRootPath, "images\\uploads\\" + filename + ".jpg");
+
+                // Resize the image to 100 pixels wide and save it
+                using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))
+                {
+                    var filestream = System.IO.File.Create(path);
+                    if (img.Width >= img.Height)
+                        img.Mutate(ctx => ctx.Resize(100, 0));
+                    else
+                        img.Mutate(ctx => ctx.Resize(0, 100));
+                    img.SaveAsJpeg(filestream);
+                    filestream.Close();
+                }
+
+                // Create another copy 50 pixels wide for thumbnail
+                var thumbnailPath = path.Replace(".jpg", "_thumb.jpg");
+                using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))
+                {
+                    var filestream = System.IO.File.Create(thumbnailPath);
+                    if (img.Width >= img.Height)
+                        img.Mutate(ctx => ctx.Resize(50, 0));
+                    else
+                        img.Mutate(ctx => ctx.Resize(0, 50));
+                    img.SaveAsJpeg(filestream);
+                    filestream.Close();
+                }
+
+                tool.Image = Path.GetRelativePath(_hostingEnvironment.WebRootPath, path);
+                tool.Thumbnail = Path.GetRelativePath(_hostingEnvironment.WebRootPath, thumbnailPath);
             }
 
-            // Create another copy 50 pixels wide for thumbnail
-            var thumbnailPath = path.Replace(".jpg", "_thumb.jpg");
-            using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))
-            {
-                var filestream = System.IO.File.Create(thumbnailPath);
-                img.Mutate(ctx => ctx.Resize(50, 0));
-                img.SaveAsJpeg(filestream);
-                filestream.Close();
-            }
-
-            tool.Image = Path.GetRelativePath(_hostingEnvironment.WebRootPath, path);
-            tool.Thumbnail = Path.GetRelativePath(_hostingEnvironment.WebRootPath, thumbnailPath);
             _context.Add(tool);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -145,34 +155,88 @@ namespace app.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Status")] Tool tool)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Status")] Tool tool, IFormFile image)
         {
             if (id != tool.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(tool);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ToolExists(tool.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View(tool);
             }
-            return View(tool);
+
+            var pTool = await _context.Tools.AsNoTracking().SingleOrDefaultAsync(t => t.Id == id);
+
+            // If an image is submitted replace the old one
+            if (image != null)
+            {
+                // Delete previous images if they exist
+                {
+                    if (pTool != null && pTool.Image != null)
+                        System.IO.File.Delete(Path.Combine(_hostingEnvironment.WebRootPath, pTool.Image));
+                    if (pTool != null && pTool.Thumbnail != null)                        
+                        System.IO.File.Delete(Path.Combine(_hostingEnvironment.WebRootPath, pTool.Thumbnail));
+                }
+
+                // Generate a random filename and find destination path
+                var filename = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+                var path = Path.Combine(_hostingEnvironment.WebRootPath, "images\\uploads\\" + filename + ".jpg");
+
+                // Resize the image to 100 pixels wide and save it
+                using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))
+                {
+                    var filestream = System.IO.File.Create(path);
+                    if (img.Width >= img.Height)
+                        img.Mutate(ctx => ctx.Resize(100, 0));
+                    else
+                        img.Mutate(ctx => ctx.Resize(0, 100));
+                    img.SaveAsJpeg(filestream);
+                    filestream.Close();
+                }
+
+                // Create another copy 50 pixels wide for thumbnail
+                var thumbnailPath = path.Replace(".jpg", "_thumb.jpg");
+                using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))
+                {
+                    var filestream = System.IO.File.Create(thumbnailPath);
+                    if (img.Width >= img.Height)
+                        img.Mutate(ctx => ctx.Resize(50, 0));
+                    else
+                        img.Mutate(ctx => ctx.Resize(0, 50));
+                    img.SaveAsJpeg(filestream);
+                    filestream.Close();
+                }
+
+                tool.Image = Path.GetRelativePath(_hostingEnvironment.WebRootPath, path);
+                tool.Thumbnail = Path.GetRelativePath(_hostingEnvironment.WebRootPath, thumbnailPath);
+            }
+
+            // otherwise, make sure to keep the old image paths!
+            else
+            {
+                tool.Image = pTool.Image;
+                tool.Thumbnail = pTool.Thumbnail;
+            }
+
+            try
+            {
+                _context.Update(tool);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ToolExists(tool.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Tool/Delete/5

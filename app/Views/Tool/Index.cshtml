@@ -27,7 +27,6 @@
             <th></th>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
             <th>@Html.DisplayNameFor(model => model.Status)</th>
-            <th>@Html.DisplayNameFor(model => model.Alias)</th>
             <th></th>
         </tr>
     </thead>
@@ -38,8 +37,13 @@
             </td>
             <td>{{ tool.name }}</td>
             <td><i :style="tool.status.style" :class="tool.status.glyphicon"></i> {{ tool.status.statusName }}</td>
-            <td>{{ tool.alias }}</td>
             @if (User.IsInRole("Admin")) {
+                <td>
+                    <span class="glyphicon" style="font-size:17px" aria-hidden="true"
+                        v-on:click="toggleFavorite(tool)"
+                        v-bind:class="{ 'glyphicon-star': tool.favorite, 'glyphicon-star-empty' : !tool.favorite }">
+                    </span>
+                </td>
                 <td>
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">options
@@ -75,19 +79,51 @@ var app = new Vue({
         var self = this;
         axios.get('/api/tools')
         .then(function (response) { 
-        self.tools = response.data; 
+            for (var i = 0; i < response.data.length; i++) {
+                // Vue.set(self.tools[i], favorite, false);
+                response.data[i].favorite = false;
+            }
+            self.tools = response.data; 
+            axios.get('/api/favorites')
+            .then(function (response) {
+                for (var i = 0; i < response.data.length; i++) {
+                    for (var j = 0; j < self.tools.length; j++) {
+                        if (response.data[i].toolId == self.tools[j].id) {
+                            self.tools[j].favorite = true;
+                            continue;
+                        }
+                    }
+                }
+            }); 
         });
     },
     computed: {
         filteredTools: function() {
             return this.tools.filter((tool) => {
                 return tool.name.toLowerCase().match(this.search.toLowerCase()) || tool.alias.toLowerCase().match(this.search.toLowerCase());
-            })
+            });
         }
     },
     methods: {
+        toggleFavorite: function(tool) {
+            var self = this;
 
-    }
+            if (!tool.favorite) {
+                axios.post('/api/Favorites', JSON.stringify({ toolid: tool.id }), { headers: { 'Content-Type': 'application/json' }})
+                .then(function (response) {
+                    if (response.status == 201)                        
+                        tool.favorite = true;
+                });
+            }
+            else {
+                axios.delete('/api/Favorites', { data: JSON.stringify({ toolid: tool.id }), headers: { 'Content-Type': 'application/json' }})
+                .then(function (response) {
+                    if (response.status == 200)
+                        tool.favorite = false;
+                });
+            }
+        }
+    },
 })
 </script>
 }

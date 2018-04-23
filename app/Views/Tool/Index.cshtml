@@ -27,6 +27,7 @@
             <th></th>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
             <th>@Html.DisplayNameFor(model => model.Status)</th>
+            <th>@Html.DisplayNameFor(model => model.Alias)</th>
             <th></th>
         </tr>
     </thead>
@@ -37,6 +38,7 @@
             </td>
             <td>{{ tool.name }}</td>
             <td>{{ tool.status }}</td>
+            <td>{{ tool.alias }}</td>
             @if (User.IsInRole("Admin")) {
                 <td>
                     <div class="dropdown">
@@ -54,7 +56,7 @@
             {
                 <td>
                     <a v-bind:href="'Tool/Details/' + tool.id">Details</a>
-                </td>   
+                </td>
             }
         </tr>
     </tbody>
@@ -74,12 +76,12 @@ var app = new Vue({
         axios.get('/api/tools')
         .then(function (response) { 
         self.tools = response.data; 
-        });    
+        });
     },
     computed: {
         filteredTools: function() {
             return this.tools.filter((tool) => {
-                return tool.name.toLowerCase().match(this.search.toLowerCase());
+                return tool.name.toLowerCase().match(this.search.toLowerCase()) || tool.alias.toLowerCase().match(this.search.toLowerCase());
             })
         }
     },

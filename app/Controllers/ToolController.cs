@@ -85,7 +85,7 @@ namespace app.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,Name,Status")] Tool tool, IFormFile image)
+        public async Task<IActionResult> Create([Bind("Id,Name,Status, Alias")] Tool tool, IFormFile image)
         {
             if (!ModelState.IsValid)
             {
@@ -155,7 +155,7 @@ namespace app.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Status")] Tool tool, IFormFile image)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Status, Alias")] Tool tool, IFormFile image)
         {
             if (id != tool.Id)
             {

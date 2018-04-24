@@ -59,8 +59,8 @@ namespace app.Data
 
             foreach (var tool in tools)
             {
-                tool.Image = "images\\example_tools\\" + tool.Name.ToLower() + ".jpg";
-                tool.Thumbnail = "images\\example_tools\\" + tool.Name.ToLower() + "_thumb.jpg";
+                tool.Image = "images/example_tools/" + tool.Name.ToLower() + ".jpg";
+                tool.Thumbnail = "images/example_tools/" + tool.Name.ToLower() + "_thumb.jpg";
             }
 
             db.AddRange(tools);

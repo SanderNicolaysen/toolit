@@ -1,0 +1,27 @@
+a [type=link] {
+    background-color: orangered;
+  box-shadow: 0 5px 0 rgb(179, 51, 0);
+  color: white;
+  padding: 1em 1.5em;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  }
+  
+  a:hover {
+  background-color: #a03300;
+  cursor: pointer;
+  }
+  
+  a:active {
+  box-shadow: none;
+  top: 5px;
+  }
+  
+  /* Non-Demo Styles */
+  body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  }

@@ -64,7 +64,7 @@ namespace app.Controllers
             foreach (var alarm in tool.Alarms)
             {
                 if (alarm.Date.CompareTo(localTime) < 0)
-                    tool.Status = _context.Statuses.Find(2);
+                    tool.Status = _context.Statuses.Single(s => s.StatusName == "Busy");
             }
 
             await _context.SaveChangesAsync();

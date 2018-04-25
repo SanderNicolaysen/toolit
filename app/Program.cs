@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 
 using app.Data;
 using app.Models;
+using app.Services;
 
 namespace app
 {
@@ -29,8 +30,9 @@ namespace app
                 var db = services.GetRequiredService<ApplicationDbContext>();
                 var um = services.GetRequiredService<UserManager<ApplicationUser>>();
                 var rm = services.GetRequiredService<RoleManager<IdentityRole>>();
+                var nm = services.GetRequiredService<INotificationManager>();
                 
-                ApplicationDbInitializer.Initialize(db, um, rm, env.IsDevelopment());
+                ApplicationDbInitializer.Initialize(db, um, rm, env.IsDevelopment(), nm);
             }
 
             host.Run();

@@ -34,5 +34,6 @@ namespace app.Data
         public DbSet<Alarm> Alarms { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Status> Statuses { get; set; }
+        public DbSet<Notification> Notifications { get; set; }        
     }
 }

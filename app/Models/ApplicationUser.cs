@@ -12,5 +12,7 @@ namespace app.Models
         public bool ChangePassword { get; set; }
 
         public List<Favorite> Favorites { get; set; }
+
+        public List<Notification> Notifications { get; set; }
     }
 }

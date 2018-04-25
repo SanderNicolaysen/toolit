@@ -1,0 +1,36 @@
+@using app.Models
+
+@inject UserManager<ApplicationUser> UserManager
+@inject app.Services.INotificationManager NotificationManager
+
+@{
+    var userid = UserManager.GetUserId(User);
+    var unreadCount = NotificationManager.UnreadCount(userid);
+}
+
+<span id="notifications-container">
+    <button class="dropdown-toggle btn btn-default navbar-btn" type="button" data-toggle="dropdown" style="white-space:nowrap">
+        <span class="glyphicon glyphicon-bell notification-toggle"></span>
+        @if (unreadCount > 0)
+        {
+            <span class="notifications-badge">@unreadCount</span>
+        }
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right notifications" v-cloak>
+        <div class="row">
+            <h4 class="col-xs-12">Varsler</h4>
+        </div>
+
+        <div class="row" v-for="notification in notifications">
+            <a class="notification col-xs-12" :href="notification.actionUrl" v-on:click="clickHandler(notification, $event)">
+                {{ notification.message }}
+            </a>
+        </div>
+
+        <div class="row" v-if="notifications.length == 0">
+            <a class="notification col-xs-12">
+                Ingen nye varsler...
+            </a>
+        </div>
+    </ul>
+</span>

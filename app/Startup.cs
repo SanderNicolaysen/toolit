@@ -49,6 +49,8 @@ namespace app
             {
                 c.SwaggerDoc("v1", new Info { Title = "Users", Version = "v1" });
             });
+
+            services.AddTransient<INotificationManager, NotificationManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

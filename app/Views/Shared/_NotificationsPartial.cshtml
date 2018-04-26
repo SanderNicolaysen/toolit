@@ -23,7 +23,7 @@
 
         <div class="row" v-for="notification in notifications">
             <a class="notification col-xs-12" :href="notification.actionUrl" v-on:click="clickHandler(notification, $event)">
-                {{ notification.message }}
+                <span v-html="notification.message"></span>
             </a>
         </div>
 

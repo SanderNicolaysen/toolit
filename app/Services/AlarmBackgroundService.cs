@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 
 using app.Data;
-using Microsoft.Extensions.DependencyInjection;
+using app.Models;
 
 namespace app.Services
 {
@@ -32,23 +34,34 @@ namespace app.Services
             return Task.CompletedTask;
         }
 
-        public void CheckAlarms(Object state)
+        // If at least one of the alarm-dates have been surpassed, change the tool-status to "Not available" 
+        public async void CheckAlarms(Object state)
         {
             DateTime localTime = DateTime.Now;
-
-            // If at least one of the alarm-dates have been surpassed, change the tool-status to "Not available" 
 
             using (IServiceScope scope = _ServiceProvider.CreateScope())
             {
                 var _db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var _nm = scope.ServiceProvider.GetRequiredService<INotificationManager>();
+                var _um = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                var admins = await _um.GetUsersInRoleAsync("Admin");
                     
                 var alarms = _db.Alarms.Include(a => a.Tool).ToList();
                 foreach (var alarm in alarms)
                 {
                     if (alarm.Date.CompareTo(localTime) < 0)
+                    {
                         alarm.Tool.StatusId = _db.Statuses.Single(s => s.StatusName == "Busy").Id;
+                        foreach (var admin in admins)
+                        {
+                            await _nm.SendNotificationAsync(admin.Id, 
+                                "Alarmen <b>" + alarm.Name + "</b> på verktøyet <b>" + alarm.Tool.Name + "</b> har utløpt",
+                                "/Tool/Details/" + alarm.ToolId);
+                        }
+                        _db.Remove(alarm);
+                    }
                 }
-                _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
         }
 

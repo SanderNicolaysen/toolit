@@ -65,12 +65,23 @@ namespace app.Data
             }
 
             db.AddRange(tools);
+            db.SaveChanges();
 
+            var logs = new List<Log>
+            {
+                new Log(1, admin.Id, new DateTime(2018,4,26), new DateTime(2018,4,27)),
+                new Log(1, admin.Id, new DateTime(2018,4,28), new DateTime(2018,4,29))
+            };
+
+<<<<<<< HEAD
 
             // Adding some dummy notifications
             nm.SendNotificationAsync(admin.Id, "Verktøyet 'Hammer' har forsvunnet!", "/Tool/Details/2").Wait();
             nm.SendNotificationAsync(admin.Id, "Noen har glemt å levere tilbake 'Vater' etter reservasjonen utgitt!", "/Tool/Details/4").Wait();
 
+=======
+            db.AddRange(logs);
+>>>>>>> Added an api for logs. Now you can see in the details-view for a tool the logs for the tool.
             db.SaveChanges();
         }
     }

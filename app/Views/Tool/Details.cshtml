@@ -126,6 +126,24 @@
             </tr>
         </tbody>
     </table>
+    <h3>Logg</h3>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>Brukt av</th>
+                <th>Start</th>
+                <th>Slutt</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="log in logs">
+                <td>{{ log.user.userName }}</td>
+                <td>{{ log.fromDate }}</td>
+                <td>{{ log.toDate }}</td>
+            </tr>
+        </tbody>
+    </table>
     
     <!-- Reservation dialog -->
     @await Html.PartialAsync("ReserveDialogPartial", new app.Models.Reservation())
@@ -152,6 +170,7 @@ var app = new Vue({
         favorite: false,
         currentOwnerId: "@Model.CurrentOwnerId",
         reservations: [],
+        logs: [], // Vise de 10 nyeste, men ta vare på alle
         reservationForm: {
             FromDate: '',
             ToDate: ''
@@ -159,6 +178,7 @@ var app = new Vue({
     },
     created: function () {
         this.loadReservations();
+        this.loadLogs();
 
         var self = this;
         axios.get('/api/favorites')
@@ -175,10 +195,19 @@ var app = new Vue({
         loadReservations: function() {
             var self = this;
 
-            // Fetch list of users
+            // Fetch list of reservations
             axios.get('/api/reservations/?toolid=@Model.Id')
             .then(function (response) {
                 self.reservations = response.data;
+            }); 
+        },
+        loadLogs: function() {
+            var self = this;
+
+            // Fetch list of logs
+            axios.get('/api/Logs/?toolid=@Model.Id')
+            .then(function (response) {
+                self.logs = response.data;
             }); 
         },
         saveReservation: function() {

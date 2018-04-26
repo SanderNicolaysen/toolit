@@ -34,10 +34,7 @@ namespace app.Data
         public DbSet<Alarm> Alarms { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Status> Statuses { get; set; }
-<<<<<<< HEAD
         public DbSet<Notification> Notifications { get; set; }        
-=======
         public DbSet<Log> Logs { get; set; }
->>>>>>> Added an api for logs. Now you can see in the details-view for a tool the logs for the tool.
     }
 }

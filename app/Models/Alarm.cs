@@ -15,5 +15,7 @@ namespace app.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime Date { get; set; }
+        public int ToolId { get; set; }
+        public Tool Tool { get; set; }
     }
 }

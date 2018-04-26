@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 
 using app.Data;
@@ -51,6 +52,8 @@ namespace app
             });
 
             services.AddTransient<INotificationManager, NotificationManager>();
+            
+            services.AddSingleton<IHostedService, AlarmBackgroundService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

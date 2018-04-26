@@ -58,15 +58,6 @@ namespace app.Controllers
                 return NotFound();
             }
 
-            DateTime localTime = DateTime.Now;
-
-            // If at least one of the alarm-dates have been surpassed, change the tool-status to "Not available" 
-            foreach (var alarm in tool.Alarms)
-            {
-                if (alarm.Date.CompareTo(localTime) < 0)
-                    tool.Status = _context.Statuses.Single(s => s.StatusName == "Busy");
-            }
-
             await _context.SaveChangesAsync();
 
             return View(tool);

@@ -7,7 +7,7 @@ namespace app.Models
     {
         public Log() {}
 
-        public Log(int toolId, string userId, DateTime fromDate, DateTime toDate)
+        public Log(int toolId, string userId, string fromDate, string toDate)
         {
             ToolId = toolId;
             UserId = userId;
@@ -19,17 +19,13 @@ namespace app.Models
 
         [Required]
         public int ToolId { get; set; }
-        
-        public Tool Tool { get; set; }
-
         public string UserId { get; set; }
-
         public ApplicationUser User { get; set; }
 
         [Required]
-        public DateTime FromDate { get; set; }
+        public string FromDate { get; set; }
 
         [Required]
-        public DateTime ToDate { get; set; }
+        public string ToDate { get; set; }
     }
 }

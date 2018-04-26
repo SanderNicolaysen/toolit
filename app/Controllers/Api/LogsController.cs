@@ -100,6 +100,7 @@ namespace app.Controllers
                 return BadRequest(ModelState);
             }
 
+            
             _context.Logs.Add(log);
             await _context.SaveChangesAsync();
 

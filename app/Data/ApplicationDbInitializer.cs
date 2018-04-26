@@ -69,8 +69,8 @@ namespace app.Data
 
             var logs = new List<Log>
             {
-                new Log(1, admin.Id, new DateTime(2018,4,26), new DateTime(2018,4,27)),
-                new Log(1, admin.Id, new DateTime(2018,4,28), new DateTime(2018,4,29))
+                new Log(1, admin.Id, new DateTime(2018,4,26).ToString(), new DateTime(2018,4,27).ToString()),
+                new Log(1, admin.Id, new DateTime(2018,4,28).ToString(), new DateTime(2018,4,29).ToString())
             };
 
 

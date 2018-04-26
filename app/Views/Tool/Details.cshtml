@@ -329,6 +329,8 @@ var app = new Vue({
             }
         },
         checkIn: function(id) {
+            var self = this;
+
             axios.put('/api/Tools/' + id, {
             id: id,
             name: '@Model.Name',
@@ -339,9 +341,26 @@ var app = new Vue({
             alias: '@Model.Alias'
             })
 
+            var currentDate = new Date();
+
+            var length = self.logs.length;
+
+            axios.put('/api/Logs/' + self.logs[length - 1].id, {
+            id: self.logs[length - 1].id,
+            toolId: @Model.Id,
+            userId: '@UserManager.GetUserId(User)',
+            fromDate: self.logs[length - 1].fromDate,
+            toDate: currentDate.toLocaleString()
+            })
+            .then(function () {
+                    self.loadLogs();
+                });
+
             this.currentOwnerId = 'No owner';
         },
         checkOutTool: function(id) {
+            var self = this;
+
             axios.put('/api/Tools/' + id, {
             id: id,
             name: '@Model.Name',
@@ -351,6 +370,23 @@ var app = new Vue({
             currentOwnerId: '@UserManager.GetUserId(User)',
             alias: '@Model.Alias'
             })
+
+            var currentDate = new Date();
+
+            var data = {
+                ToolId: @Model.Id,
+                UserId: '@UserManager.GetUserId(User)',
+                FromDate: currentDate.toLocaleString(),
+                ToDate: '...'
+            };
+
+            axios.post('/api/Logs', JSON.stringify(data), { headers: { 'content-type': 'application/json; charset=utf-8' } })
+            .then(function (response) {
+                if (response.status == 201) {
+                    // Reload logs
+                    self.loadLogs();
+                } 
+            });
 
             this.currentOwnerId = '@UserManager.GetUserId(User)';
         }

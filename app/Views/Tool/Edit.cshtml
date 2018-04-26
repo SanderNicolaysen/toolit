@@ -1,4 +1,4 @@
-@model app.Models.Tool
+@model app.Models.ToolViewModels.EditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,29 +12,40 @@
     <div class="col-md-4">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Tool.Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Tool.Name" class="control-label"></label>
+                <input asp-for="Tool.Name" class="form-control" />
+                <span asp-validation-for="Tool.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
+                <select name="Tool.StatusId" class="form-control">
+                    @foreach(Status status in Model.Statuses)
+                    {
+                        if (status.Id == Model.Tool.StatusId)
+                        {
+                            <option value="@status.Id" selected>@status.StatusName</option>
+                        }
+                        else
+                        {
+                            <option value="@status.Id">@status.StatusName</option>
+                        }
+
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label class="control-label">Legg til eller endre bilde</label>
-                @if (Model.Image != null) 
+                @if (Model.Tool.Image != null) 
                 {
-                    <div><img src="~/@Model.Image" alt="@Model.Name"></div>
+                    <div><img src="~/@Model.Tool.Image" alt="@Model.Tool.Name"></div>
                 }
                 <input type="file" name="Image" accept="image/*">
             </div>
             <div class="form-group">
-                <label asp-for="Alias" class="control-label"></label>
-                <input asp-for="Alias" class="form-control" />
-                <span asp-validation-for="Alias" class="text-danger"></span>
+                <label asp-for="Tool.Alias" class="control-label"></label>
+                <input asp-for="Tool.Alias" class="form-control" />
+                <span asp-validation-for="Tool.Alias" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

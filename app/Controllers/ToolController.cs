@@ -18,6 +18,7 @@ using SixLabors.Primitives;
 
 using app.Data;
 using app.Models;
+using app.Models.ToolViewModels;
 
 namespace app.Controllers
 {
@@ -65,9 +66,12 @@ namespace app.Controllers
 
         // GET: Tool/Create
         [Authorize(Roles = "Admin")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var statuslist = await _context.Statuses.ToListAsync();
+            var vm = new CreateViewModel();
+            vm.Statuses = statuslist;
+            return View(vm);
         }
 
         // POST: Tool/Create
@@ -76,7 +80,7 @@ namespace app.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,Name,Status, Alias")] Tool tool, IFormFile image)
+        public async Task<IActionResult> Create([Bind("Id,Name,StatusId,Alias")] Tool tool, IFormFile image)
         {
             if (!ModelState.IsValid)
             {
@@ -137,7 +141,11 @@ namespace app.Controllers
             {
                 return NotFound();
             }
-            return View(tool);
+
+            var vm = new EditViewModel();
+            vm.Tool = tool;
+            vm.Statuses = await _context.Statuses.ToListAsync();
+            return View(vm);
         }
 
         // POST: Tool/Edit/5
@@ -146,7 +154,7 @@ namespace app.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Status, Alias")] Tool tool, IFormFile image)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StatusId,Alias")] Tool tool, IFormFile image)
         {
             if (id != tool.Id)
             {

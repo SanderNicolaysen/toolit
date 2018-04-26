@@ -1,4 +1,4 @@
-@model app.Models.Tool
+@model app.Models.ToolViewModels.CreateViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,23 +13,25 @@
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Tool.Name" class="control-label"></label>
+                <input asp-for="Tool.Name" class="form-control" />
+                <span asp-validation-for="Tool.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
+                <select name="Tool.StatusId" class="form-control">
+                    @foreach(Status status in Model.Statuses){
+                        <option value="@status.Id">@status.StatusName</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label class="control-label">Bilde</label>
                 <input type="file" name="Image" accept="image/*">
             </div>
             <div class="form-group">
-                <label asp-for="Alias" class="control-label"></label>
-                <input asp-for="Alias" class="form-control" />
-                <span asp-validation-for="Alias" class="text-danger"></span>
+                <label asp-for="Tool.Alias" class="control-label"></label>
+                <input asp-for="Tool.Alias" class="form-control" />
+                <span asp-validation-for="Tool.Alias" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

@@ -208,6 +208,7 @@ var app = new Vue({
             axios.get('/api/Logs/?toolid=@Model.Id')
             .then(function (response) {
                 self.logs = response.data;
+                self.logs.reverse();
             }); 
         },
         saveReservation: function() {

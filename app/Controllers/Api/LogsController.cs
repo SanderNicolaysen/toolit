@@ -29,7 +29,9 @@ namespace app.Controllers
             {
                 var logs = _context.Logs
                     .Where(l => l.ToolId == toolid)
-                    .Include(l => l.User);
+                    .Include(l => l.User)
+                    .OrderByDescending(l => l.Id)
+                    .Take(10);
 
                 return logs.ToList();
             }

@@ -2,14 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using app.Data;
 using app.Models;
 
-namespace app.Controllers
+namespace app.Controllers_Api
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/Logs")]
     public class LogsController : Controller
@@ -23,7 +26,7 @@ namespace app.Controllers
 
         // GET: api/Logs
         [HttpGet]
-        public IEnumerable<Log> GetLog(int? toolid)
+        public IEnumerable<Log> GetLogs(int? toolid)
         {
             if (toolid != null)
             {
@@ -102,7 +105,6 @@ namespace app.Controllers
                 return BadRequest(ModelState);
             }
 
-            
             _context.Logs.Add(log);
             await _context.SaveChangesAsync();
 

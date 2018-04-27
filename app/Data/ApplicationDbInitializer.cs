@@ -65,20 +65,11 @@ namespace app.Data
             }
 
             db.AddRange(tools);
-            db.SaveChanges();
-
-            var logs = new List<Log>
-            {
-                new Log(1, admin.Id, new DateTime(2018,4,26).ToString(), new DateTime(2018,4,27).ToString()),
-                new Log(1, admin.Id, new DateTime(2018,4,28).ToString(), new DateTime(2018,4,29).ToString())
-            };
-
 
             // Adding some dummy notifications
             nm.SendNotificationAsync(admin.Id, "Verktøyet 'Hammer' har forsvunnet!", "/Tool/Details/2").Wait();
             nm.SendNotificationAsync(admin.Id, "Noen har glemt å levere tilbake 'Vater' etter reservasjonen utgitt!", "/Tool/Details/4").Wait();
 
-            db.AddRange(logs);
             db.SaveChanges();
         }
     }

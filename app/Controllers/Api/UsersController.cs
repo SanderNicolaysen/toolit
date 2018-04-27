@@ -10,11 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using app.Data;
 using app.Models;
 
-namespace app.Controllers
+namespace app.Controllers_Api
 {
+    [Authorize(Roles = "Admin")]
     [Produces("application/json")]
     [Route("api/Users")]
-    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;

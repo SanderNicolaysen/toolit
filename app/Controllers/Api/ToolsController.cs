@@ -2,14 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using app.Data;
 using app.Models;
 
 namespace app.Controllers_Api
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/Tools")]
     public class ToolsController : Controller

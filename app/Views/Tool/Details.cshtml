@@ -126,6 +126,7 @@
             </tr>
         </tbody>
     </table>
+
     <h3>Logg</h3>
     <table class="table table-hover table-striped">
         <thead>
@@ -133,14 +134,13 @@
                 <th>Brukt av</th>
                 <th>Start</th>
                 <th>Slutt</th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="log in logs">
-                <td>{{ log.user.userName }}</td>
-                <td>{{ log.fromDate }}</td>
-                <td>{{ log.toDate }}</td>
+            <tr v-for="l in logs">
+                <td>{{ l.user.userName }}</td>
+                <td>{{ l.fromDate }}</td>
+                <td>{{ l.toDate }}</td>
             </tr>
         </tbody>
     </table>
@@ -170,7 +170,7 @@ var app = new Vue({
         favorite: false,
         currentOwnerId: "@Model.CurrentOwnerId",
         reservations: [],
-        logs: [], // Vise de 10 nyeste, men ta vare på alle
+        logs: [],
         reservationForm: {
             FromDate: '',
             ToDate: ''
@@ -205,9 +205,11 @@ var app = new Vue({
             var self = this;
 
             // Fetch list of logs
-            axios.get('/api/Logs/?toolid=@Model.Id')
+            axios.get('/api/logs/?toolid=@Model.Id')
             .then(function (response) {
                 self.logs = response.data;
+
+                // Reverse the logs in order to get the newest logs on the bottom 
                 self.logs.reverse();
             }); 
         },
@@ -344,20 +346,21 @@ var app = new Vue({
 
             var currentDate = new Date();
 
-            var length = self.logs.length;
+            var newestLog = self.logs[self.logs.length - 1];
 
-            axios.put('/api/Logs/' + self.logs[length - 1].id, {
-            id: self.logs[length - 1].id,
+            axios.put('/api/Logs/' + newestLog.id, {
+            id: newestLog.id,
             toolId: @Model.Id,
             userId: '@UserManager.GetUserId(User)',
-            fromDate: self.logs[length - 1].fromDate,
+            fromDate: newestLog.fromDate,
             toDate: currentDate.toLocaleString()
             })
             .then(function () {
-                    self.loadLogs();
-                });
+                // Reload logs
+                self.loadLogs();
+            });
 
-            this.currentOwnerId = 'No owner';
+            self.currentOwnerId = 'No owner';
         },
         checkOutTool: function(id) {
             var self = this;
@@ -389,7 +392,7 @@ var app = new Vue({
                 } 
             });
 
-            this.currentOwnerId = '@UserManager.GetUserId(User)';
+            self.currentOwnerId = '@UserManager.GetUserId(User)';
         }
     }
 })

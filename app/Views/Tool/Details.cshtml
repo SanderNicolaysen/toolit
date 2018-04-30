@@ -208,6 +208,24 @@ var app = new Vue({
             // Fetch list of logs
             axios.get('/api/logs/?toolid=@Model.Id')
             .then(function (response) {
+                
+                response.data.forEach(function(log) {
+                    var fromDateUTC = new Date(log.fromDate);
+                    var toDateUTC = new Date(log.toDate);
+
+                    var offset = fromDateUTC.getTimezoneOffset();
+
+                    // Convert UTC times from the server to local times
+                    var fromDateLocal = new Date(fromDateUTC.getTime() - offset*60000);
+                    var toDateLocal = new Date(toDateUTC.getTime() - offset*60000);
+
+                    log.fromDate = fromDateLocal.toLocaleString();
+                    log.toDate = toDateLocal.toLocaleString();
+
+                    if (log.fromDate == log.toDate)
+                        log.toDate = '...';
+                })
+
                 self.logs = response.data;
 
                 // Reverse the logs in order to get the newest logs on the bottom 
@@ -352,12 +370,21 @@ var app = new Vue({
 
             var newestLog = self.logs[self.logs.length - 1];
 
+            var newestFromDate = new Date(newestLog.fromDate);
+
+            var month = newestFromDate.getDate() - 1;
+            var date = newestFromDate.getMonth() + 1;
+
+            // Make sure that the date-format in JSON becomes correct
+            newestFromDate.setMonth(month);
+            newestFromDate.setDate(date);
+
             axios.put('/api/Logs/' + newestLog.id, {
             id: newestLog.id,
             toolId: @Model.Id,
             userId: '@UserManager.GetUserId(User)',
-            fromDate: newestLog.fromDate,
-            toDate: currentDate.toLocaleString()
+            fromDate: newestFromDate,
+            toDate: currentDate
             })
             .then(function () {
                 // Reload logs
@@ -384,8 +411,8 @@ var app = new Vue({
             var data = {
                 ToolId: @Model.Id,
                 UserId: '@UserManager.GetUserId(User)',
-                FromDate: currentDate.toLocaleString(),
-                ToDate: '...'
+                FromDate: currentDate,
+                ToDate: currentDate
             };
 
             axios.post('/api/Logs', JSON.stringify(data), { headers: { 'content-type': 'application/json; charset=utf-8' } })

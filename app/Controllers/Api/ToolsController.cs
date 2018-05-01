@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using app.Data;
@@ -119,6 +120,70 @@ namespace app.Controllers_Api
             await _context.SaveChangesAsync();
 
             return Ok(tool);
+        }
+
+        // PUT: api/Tools/5/checkout
+        [HttpPut("{id}/checkout")]
+        public async Task<IActionResult> CheckoutTool([FromRoute] int id, [FromServices] UserManager<ApplicationUser> um)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var tool = await _context.Tools.SingleOrDefaultAsync(m => m.Id == id);
+            if (tool == null)
+            {
+                return NotFound();
+            }
+
+            if (tool.CurrentOwnerId != "No owner")
+            {
+                return BadRequest("Tool is already checked out.");
+            }
+
+            var userId = (await um.GetUserAsync(User)).Id;
+            tool.CurrentOwnerId = userId;
+            _context.Update(tool);
+
+            _context.Logs.Add(new Log(tool.Id, userId, DateTime.UtcNow, DateTime.UtcNow));
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // PUT: api/Tools/5/checkout
+        [HttpPut("{id}/checkin")]
+        public async Task<IActionResult> CheckinTool([FromRoute] int id, [FromServices] UserManager<ApplicationUser> um)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var tool = await _context.Tools.SingleOrDefaultAsync(m => m.Id == id);
+            if (tool == null)
+            {
+                return NotFound();
+            }
+
+            var userId = (await um.GetUserAsync(User)).Id;
+            if (tool.CurrentOwnerId != userId)
+            {
+                return BadRequest("Tool is checked out by someone else.");
+            }
+
+            tool.CurrentOwnerId = "No owner";
+            _context.Update(tool);
+
+            var logEntry = await _context.Logs.Where(l => l.ToolId == id).OrderByDescending(l => l.Id).FirstAsync();
+            logEntry.ToDate = DateTime.UtcNow;
+            _context.Update(logEntry);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
 
         private bool ToolExists(int id)

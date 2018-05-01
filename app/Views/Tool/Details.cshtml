@@ -356,74 +356,26 @@ var app = new Vue({
         checkIn: function(id) {
             var self = this;
 
-            axios.put('/api/Tools/' + id, {
-            id: id,
-            name: '@Model.Name',
-            image: '@Model.Image',
-            thumbnail: '@Model.Thumbnail',
-            statusId: @Model.StatusId,
-            currentOwnerId: 'No owner',
-            alias: '@Model.Alias'
-            })
-
-            var currentDate = new Date();
-
-            var newestLog = self.logs[self.logs.length - 1];
-
-            var newestFromDate = new Date(newestLog.fromDate);
-
-            var month = newestFromDate.getDate() - 1;
-            var date = newestFromDate.getMonth() + 1;
-
-            // Make sure that the date-format in JSON becomes correct
-            newestFromDate.setMonth(month);
-            newestFromDate.setDate(date);
-
-            axios.put('/api/Logs/' + newestLog.id, {
-            id: newestLog.id,
-            toolId: @Model.Id,
-            userId: '@UserManager.GetUserId(User)',
-            fromDate: newestFromDate,
-            toDate: currentDate
-            })
-            .then(function () {
-                // Reload logs
-                self.loadLogs();
+            axios.put('/api/Tools/' + id + '/checkin')
+            .then(function (response){
+                if (response.status == 200)
+                {
+                    self.currentOwnerId = 'No owner';
+                    self.loadLogs();
+                }
             });
-
-            self.currentOwnerId = 'No owner';
         },
         checkOutTool: function(id) {
             var self = this;
 
-            axios.put('/api/Tools/' + id, {
-            id: id,
-            name: '@Model.Name',
-            image: '@Model.Image',
-            thumbnail: '@Model.Thumbnail',
-            statusId: @Model.StatusId,
-            currentOwnerId: '@UserManager.GetUserId(User)',
-            alias: '@Model.Alias'
-            })
-
-            var currentDate = new Date();
-
-            var data = {
-                ToolId: @Model.Id,
-                UserId: '@UserManager.GetUserId(User)',
-                FromDate: currentDate,
-                ToDate: currentDate
-            };
-
-            axios.post('/api/Logs', JSON.stringify(data), { headers: { 'content-type': 'application/json; charset=utf-8' } })
-            .then(function (response) {
-                if (response.status == 201) {
-                    // Reload logs
+            axios.put('/api/Tools/' + id + '/checkout')
+            .then(function (response){
+                if (response.status == 200)
+                {
+                    self.currentOwnerId = '@UserManager.GetUserId(User)';
                     self.loadLogs();
-                } 
+                }
             });
-
-            self.currentOwnerId = '@UserManager.GetUserId(User)';
         }
     }
 })

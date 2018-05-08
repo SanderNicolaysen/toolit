@@ -28,7 +28,11 @@ namespace app.Controllers
         public IActionResult Index()
         {
             var userid = _um.GetUserId(User);
-            var favorites = _context.Favorites.Where(f => f.UserId == userid).Include(f => f.Tool).ToList();
+            var favorites = _context.Favorites
+                .Where(f => f.UserId == userid)
+                .Include(f => f.Tool)
+                .ThenInclude(t => t.Status)
+                .ToList();
 
             return View(favorites);
         }

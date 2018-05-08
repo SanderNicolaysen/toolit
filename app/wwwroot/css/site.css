@@ -52,6 +52,55 @@ nav.navbar .navbar-toggle .icon-bar {
     cursor: pointer;
 }
 
+/* Favorites on home page */
+#favorites .favorite a {
+    display: inline-block;
+    padding: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    box-shadow: 0px 1px 1px rgba(0,0,0,0.05);
+}
+
+#favorites .favorite a:hover {
+    background: #f5f5f5;
+}
+
+#favorites .favorite a .favorite-head {
+    height: 35px;
+    color: #ff6600;
+    font-size: 1.4em;
+}
+
+#favorites .favorite a:hover .favorite-head {
+    color: #666;
+}
+
+#favorites .favorite .favorite-thumbnail {
+    height: 35px;
+    padding-left: 1em;
+}
+
+#favorites .favorite img {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+}
+
+#favorites .favorite a:hover img {
+    box-shadow: 0px 1px 1px rgba(0,0,0,0.2);
+}
+
+#favorites .favorite .favorite-status i {
+    color: #888;
+}
+
 /* Make table column fit the widht of the content */
 .table td.fit, .table th.fit {
     white-space: nowrap;
@@ -112,4 +161,31 @@ nav.navbar .navbar-toggle .icon-bar {
     vertical-align: middle;
     background-color: #777;
     border-radius: 10px;
+}
+
+/* BIG home main navigation buttons */
+.home-button {
+    display: block;
+    padding: 18px 0;
+    margin-bottom: 15px;
+
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+
+    font-size: 2em;
+    color: inherit;
+    text-align: center;
+    text-decoration: none;
+    background: linear-gradient(
+        -135deg,
+        #ff6600 0px,
+        #ff6600 15px,
+        #f9f9f9 25px
+    );
+}
+
+.home-button:hover {
+    text-decoration: underline;
+    box-shadow: 1px 1px 3px 1px rgba(50, 50, 0, 0.2);
 }

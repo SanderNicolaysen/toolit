@@ -42,8 +42,11 @@
             <td>{{ user.phoneNumber }}</td>
             <td>
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Options
-                    <span class="caret"></span></button>
+                    <button id="more-btn" class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">
+                        <span class="more-dot"></span>
+                        <span class="more-dot"></span>
+                        <span class="more-dot"></span>
+                    </button>
                     <ul class="dropdown-menu">
                         <li><a v-bind:href="'User/Edit/' + user.id">Edit</a></li>
                         <li><a v-bind:href="'User/Details/' + user.id">Details</a></li>

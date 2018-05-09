@@ -163,6 +163,30 @@ nav.navbar .navbar-toggle .icon-bar {
     border-radius: 10px;
 }
 
+/* Dropdown menu / More button */
+#more-btn {
+	background-color: transparent;
+    	border: none;
+    	line-height: normal;
+    	outline: none;
+    	cursor: pointer;
+	box-shadow: none;
+}
+
+.more-dot {
+	background-color: #777;
+    	margin: auto;
+    	display: inline-block;
+    	width: 7px;
+    	height: 7px;
+    	margin-right: 1px;
+    	border-radius: 50%;
+    	transition: background-color 0.3s;
+}
+
+#more-btn:hover .more-dot, #more-btn:focus .more-dot {
+  	background-color: #ff6600;
+}
 /* BIG home main navigation buttons */
 .home-button {
     display: block;

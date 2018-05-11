@@ -19,6 +19,7 @@ using SixLabors.Primitives;
 using app.Data;
 using app.Models;
 using app.Models.ToolViewModels;
+using app.Services;
 
 namespace app.Controllers
 {
@@ -80,7 +81,7 @@ namespace app.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,Name,StatusId,Alias")] Tool tool, IFormFile image)
+        public async Task<IActionResult> Create([Bind("Id,Name,StatusId,Alias")] Tool tool, IFormFile image, [FromServices] IResizeImage _ri)
         {
             if (!ModelState.IsValid)
             {
@@ -89,37 +90,9 @@ namespace app.Controllers
 
             if (image != null)
             {
-                // Generate a random filename and find destination path
-                var filename = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
-                var path = Path.Combine(_hostingEnvironment.WebRootPath, "images\\uploads\\" + filename + ".jpg");
-
-                // Resize the image to 100 pixels wide and save it
-                using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))
-                {
-                    var filestream = System.IO.File.Create(path);
-                    if (img.Width >= img.Height)
-                        img.Mutate(ctx => ctx.Resize(100, 0));
-                    else
-                        img.Mutate(ctx => ctx.Resize(0, 100));
-                    img.SaveAsJpeg(filestream);
-                    filestream.Close();
-                }
-
-                // Create another copy 50 pixels wide for thumbnail
-                var thumbnailPath = path.Replace(".jpg", "_thumb.jpg");
-                using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))
-                {
-                    var filestream = System.IO.File.Create(thumbnailPath);
-                    if (img.Width >= img.Height)
-                        img.Mutate(ctx => ctx.Resize(50, 0));
-                    else
-                        img.Mutate(ctx => ctx.Resize(0, 50));
-                    img.SaveAsJpeg(filestream);
-                    filestream.Close();
-                }
-
-                tool.Image = Path.GetRelativePath(_hostingEnvironment.WebRootPath, path);
-                tool.Thumbnail = Path.GetRelativePath(_hostingEnvironment.WebRootPath, thumbnailPath);
+                var imgs = _ri.GetImagePathsWithThumbnail(image);
+                tool.Image = imgs.image;
+                tool.Thumbnail = imgs.thumbnail;
             }
 
             _context.Add(tool);
@@ -154,7 +127,7 @@ namespace app.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StatusId,Alias")] Tool tool, IFormFile image)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StatusId,Alias")] Tool tool, IFormFile image, [FromServices] IResizeImage _ri)
         {
             if (id != tool.Id)
             {
@@ -179,37 +152,10 @@ namespace app.Controllers
                         System.IO.File.Delete(Path.Combine(_hostingEnvironment.WebRootPath, pTool.Thumbnail));
                 }
 
-                // Generate a random filename and find destination path
-                var filename = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
-                var path = Path.Combine(_hostingEnvironment.WebRootPath, "images\\uploads\\" + filename + ".jpg");
+                var imgs = _ri.GetImagePathsWithThumbnail(image);
 
-                // Resize the image to 100 pixels wide and save it
-                using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))
-                {
-                    var filestream = System.IO.File.Create(path);
-                    if (img.Width >= img.Height)
-                        img.Mutate(ctx => ctx.Resize(100, 0));
-                    else
-                        img.Mutate(ctx => ctx.Resize(0, 100));
-                    img.SaveAsJpeg(filestream);
-                    filestream.Close();
-                }
-
-                // Create another copy 50 pixels wide for thumbnail
-                var thumbnailPath = path.Replace(".jpg", "_thumb.jpg");
-                using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))
-                {
-                    var filestream = System.IO.File.Create(thumbnailPath);
-                    if (img.Width >= img.Height)
-                        img.Mutate(ctx => ctx.Resize(50, 0));
-                    else
-                        img.Mutate(ctx => ctx.Resize(0, 50));
-                    img.SaveAsJpeg(filestream);
-                    filestream.Close();
-                }
-
-                tool.Image = Path.GetRelativePath(_hostingEnvironment.WebRootPath, path);
-                tool.Thumbnail = Path.GetRelativePath(_hostingEnvironment.WebRootPath, thumbnailPath);
+                tool.Image = imgs.image;
+                tool.Thumbnail = imgs.thumbnail;
             }
 
             // otherwise, make sure to keep the old image paths!

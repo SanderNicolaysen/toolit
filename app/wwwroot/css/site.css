@@ -33,6 +33,10 @@ nav.navbar .navbar-toggle .icon-bar {
 	display: none;
 }
 
+#tool-table td {
+    line-height: 50px !important;
+}
+
 /* Favorites star! */
 .glyphicon-star {
     color: #ff6600;

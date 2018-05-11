@@ -52,6 +52,8 @@ namespace app
             });
 
             services.AddTransient<INotificationManager, NotificationManager>();
+
+            services.AddTransient<IResizeImage, ResizeImage>();
             
             services.AddSingleton<IHostedService, AlarmBackgroundService>();
         }

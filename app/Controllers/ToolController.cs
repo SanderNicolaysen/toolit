@@ -153,7 +153,6 @@ namespace app.Controllers
                 }
 
                 var imgs = _ri.GetImagePathsWithThumbnail(image);
-
                 tool.Image = imgs.image;
                 tool.Thumbnail = imgs.thumbnail;
             }

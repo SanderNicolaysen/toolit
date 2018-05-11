@@ -181,6 +181,7 @@
 
         // Reset particles
         this.particles = [];
+        this.mouseParticles = [];
         for (var i = 0; i < this.canvas.width * this.canvas.height / this.options.density; i++) {
           this.particles.push(new Particle(this));
         }
@@ -197,6 +198,7 @@
 
     // Initialise particles
     this.particles = [];
+    this.mouseParticles = [];
     for (var i = 0; i < this.canvas.width * this.canvas.height / this.options.density; i++) {
       this.particles.push(new Particle(this));
     }
@@ -229,6 +231,16 @@
           x: 0,
           y: 0
         };
+        // Remove first particle added after 21 clicks
+        if (this.mouseParticles.length >= 20) {
+            var i = this.particles.length - 21;
+            if (i > -1) {
+              this.particles.splice(i, 1);
+              this.mouseParticles.shift();
+            }
+        }
+        
+        this.mouseParticles.push(this.mouseParticle);
         this.particles.push(this.mouseParticle);
       }.bind(this));
     }

@@ -113,6 +113,9 @@ namespace app.Controllers_Api
             }
 
             reservation.UserId = _um.GetUserId(User);
+
+            
+
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
 

@@ -1,0 +1,8 @@
+﻿@using app.Views.Admin
+
+<ul class="nav nav-pills nav-stacked">
+    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Oversikt</a></li>
+    <li class="@ManageNavPages.UsersNavClass(ViewContext)"><a asp-action="Users">Brukere</a></li>
+    <li class="@ManageNavPages.AlarmsNavClass(ViewContext)"><a asp-action="Alarms">Alarmer</a></li>
+</ul>
+

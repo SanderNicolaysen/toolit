@@ -48,6 +48,15 @@ img {
     font-size: 0.85em;
 }
 
+#custom-checkbox {
+    color: #ff6600;
+    float: left;
+    display: block;
+    margin-top: 0.3em;
+    font-size: 0.85em;
+    margin-left: 2em;
+}
+
 #login-body button[type=submit] {
     background: rgba(255, 102, 0, 0.05);
     border-color: #ff6600;

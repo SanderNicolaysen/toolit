@@ -29,21 +29,16 @@
                     <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
                     <input asp-for="Password" class="form-control" placeholder="Password" />
                 </div>
-                <span asp-validation-for="Password" class="text-danger"></span>
-                <a asp-action="ForgotPassword" id="password-forgot">Forgot your password?</a>
-            </div>
-            <!--
-            <div class="form-group">
-                <div class="checkbox">
+                <div class="checkbox" id="custom-checkbox">
                     <label asp-for="RememberMe">
                         <input asp-for="RememberMe" />
                         @Html.DisplayNameFor(m => m.RememberMe)
                     </label>
                 </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <a asp-action="ForgotPassword" id="password-forgot">Forgot your password?</a>
             </div>
-            -->
             <div class="form-group">
-                <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
                 <button type="submit" class="btn btn-default">Sign in</button>
             </div>
         </form>

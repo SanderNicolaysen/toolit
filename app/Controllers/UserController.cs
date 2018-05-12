@@ -22,12 +22,6 @@ namespace app.Controllers
             _context = context;
         }
 
-        // GET: Users
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Users.ToListAsync());
-        }
-
         // GET: Users/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -92,7 +86,7 @@ namespace app.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AdminController.Users), "Admin");
             }
             return View(applicationUser);
         }
@@ -123,7 +117,7 @@ namespace app.Controllers
             var applicationUser = await _context.Users.SingleOrDefaultAsync(m => m.Id == id);
             _context.Users.Remove(applicationUser);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AdminController.Users), "Admin");
         }
 
         private bool ApplicationUserExists(string id)

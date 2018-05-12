@@ -246,7 +246,7 @@ namespace app.Controllers
 
                     _logger.LogInformation("User created a new account with password.");
 
-                    return RedirectToAction(nameof(UserController.Index), "User");
+                    return RedirectToAction(nameof(AdminController.Users), "Admin");
                 }
                 AddErrors(result);
             }

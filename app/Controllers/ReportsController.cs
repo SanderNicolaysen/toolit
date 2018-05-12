@@ -25,12 +25,6 @@ namespace app.Controllers
             _um = um;
         }
 
-        // GET: Reports
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Reports.ToListAsync());
-        }
-
         // GET: Reports/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -82,7 +76,7 @@ namespace app.Controllers
                 tool.Reports.Add(report);
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(ToolController.Index), "Tool");
+                return RedirectToAction(nameof(AdminController.Reports), "Admin");
             }
             return View(report);
         }
@@ -141,7 +135,7 @@ namespace app.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(ToolController.Index), "Tool");
+                return RedirectToAction(nameof(AdminController.Reports), "Admin");
             }
             return View(report);
         }
@@ -178,7 +172,7 @@ namespace app.Controllers
             var report = await _context.Reports.SingleOrDefaultAsync(m => m.Id == id);
             _context.Reports.Remove(report);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ToolController.Index), "Tool");
+            return RedirectToAction(nameof(AdminController.Reports), "Admin");
         }
 
         private bool ReportExists(int id)

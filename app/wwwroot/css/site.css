@@ -217,3 +217,23 @@ nav.navbar .navbar-toggle .icon-bar {
     text-decoration: underline;
     box-shadow: 1px 1px 3px 1px rgba(50, 50, 0, 0.2);
 }
+
+/* NAVIGATION PILLS (LEFT SIDE NAV) */
+/* Overwriting bootstrap default styling */
+.nav-pills {
+    background: #f9f9f9;
+}
+
+#toolit .nav-pills > li.active > a,
+#toolit .nav-pills > li.active > a:hover,
+#toolit .nav-pills > li.active > a:focus {
+    background: linear-gradient(
+        90deg,
+        #f60 0px,
+        #f0f0f0 200%
+    );
+    border-radius: 0;
+    margin-left: -4px;
+    margin-right: -4px;
+    box-shadow: 0px 1px 2px #888;
+}

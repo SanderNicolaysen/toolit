@@ -5,6 +5,10 @@
 
 <div id="app">
 
+<a asp-action="CreateUser" class="btn btn-default">Opprett ny bruker</a>
+
+<hr />
+
 <!--Search users-->
 <form class="form-inline" role="form">
   <div class="form-group has-feedback">
@@ -12,17 +16,19 @@
     <span class="glyphicon glyphicon-search form-control-feedback"></span>
   </div>
 </form>
-<hr />
+
 <table class="table table-hover table-striped">
     <thead>
         <tr>
+            <th>Brukernavn</th>
+            <th>Epost</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        <tr v-for="user in filteredUsers">
+        <tr v-for="user in filteredUsers" v-cloak>
             <td>{{ user.userName }}</td>
             <td>{{ user.email }}</td>
-            <td>{{ user.phoneNumber }}</td>
             <td class="fit">
                 <div class="dropdown">
                     <button id="more-btn" class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">
@@ -30,7 +36,7 @@
                         <span class="more-dot"></span>
                         <span class="more-dot"></span>
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-right">
                         <li><a v-bind:href="'/User/Edit/' + user.id">Edit</a></li>
                         <li><a v-bind:href="'/User/Details/' + user.id">Details</a></li>
                         <li><a v-bind:href="'/User/Delete/' + user.id">Delete</a></li>
@@ -65,9 +71,6 @@ var app = new Vue({
                 return user.userName.toLowerCase().match(this.search.toLowerCase());
             })
         }
-    },
-    methods: {
-
     }
 })
 </script>

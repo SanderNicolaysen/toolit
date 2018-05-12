@@ -22,8 +22,8 @@
     @if (User.IsInRole("Admin"))
     {
         <div class="col-md-4 col-xs-12">
-            <a href="/User" class="home-button">
-                <span>User-List</span>
+            <a asp-controller="Admin" asp-action="Index" class="home-button">
+                <span>Administrasjon</span>
             </a>
         </div>
     }

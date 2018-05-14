@@ -10,7 +10,7 @@
 <hr />
 
 <!--Search users-->
-<form class="form-inline" role="form">
+<form v-on:submit.prevent class="form-inline" role="form">
   <div class="form-group has-feedback">
     <input type="text" class="form-control" id="search" placeholder="Search users" v-model="search">
     <span class="glyphicon glyphicon-search form-control-feedback"></span>

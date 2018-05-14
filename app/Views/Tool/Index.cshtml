@@ -14,7 +14,7 @@
 }
 
 <!--Search tools-->
-<form class="form-inline" role="form">
+<form v-on:submit.prevent="onSubmit" class="form-inline" role="form">
   <div class="form-group has-feedback">
     <input type="text" class="form-control" id="search" placeholder="Search tools" v-model="search" autocomplete="off">
     <span class="glyphicon glyphicon-search form-control-feedback"></span>
@@ -107,6 +107,13 @@ var app = new Vue({
         }
     },
     methods: {
+        onSubmit: function() {
+            // If there is only one tool in the search results, navigate to it on submit
+            if (this.filteredTools.length == 1)
+            {
+                window.location.href = "/Tool/Details/" + this.filteredTools[0].id;
+            }
+        },
         toggleFavorite: function(tool) {
             var self = this;
 

@@ -1,0 +1,25 @@
+@model app.Models.AdminViewModels.CreateManyUsersViewModel
+
+@{
+    ViewData["Title"] = "Opprett ny bruker";
+    ViewData.AddActivePage(ManageNavPages.Users);
+}
+
+<div class="row">
+    <div class="col-sm-5">
+        <form method="post">
+            <h4>Opprett nye brukere</h4>
+            <hr />
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <textarea asp-for="Email" class="form-control" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-default">Opprett</button>
+        </form>
+    </div>
+</div>

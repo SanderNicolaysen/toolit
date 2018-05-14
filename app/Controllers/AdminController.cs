@@ -122,6 +122,36 @@ namespace app.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult CreateManyUsers()
+        {
+            return View(new CreateManyUsersViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateManyUsers(CreateManyUsersViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string[] emails = model.Email.Split( new[] { Environment.NewLine }, StringSplitOptions.None );            
+                for (int i = 0; i < emails.Length; i++) {
+                    var newUser = new ApplicationUser { UserName = emails[i], Email = emails[i], ChangePassword = true };
+                    var result = await _um.CreateAsync(newUser, model.Password);
+
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("Admin created a new account with password.");
+                        continue;
+                    }
+
+                    AddErrors(result);
+                }
+                return RedirectToAction(nameof(AdminController.Users));
+            }
+
+            return View(model);
+        }
+
         public async Task<IActionResult> Alarms()
         {
             return View(await _context.Alarms.ToListAsync());

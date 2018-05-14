@@ -1,4 +1,10 @@
 @model app.Models.Reservation
+@using app.Models
+
+@inject app.Data.ApplicationDbContext _context
+@inject UserManager<ApplicationUser> UserManager
+
+
 
 <div class="modal fade" id="reservationDialog" tabindex="-1" role="dialog">  
     <div class="modal-dialog" role="document">
@@ -13,6 +19,20 @@
             <form v-on:submit.prevent="saveReservation">
             
             <div class="modal-body">
+                @if(User.IsInRole("Admin"))
+                {
+                    <div class="form-group">
+                    <label class="control-label">Velg Brukernavn</label>
+                        <input class="form-control" value="@UserManager.GetUserName(User)" v-model="reservationForm.UserName" list="usernames" name="usernames" required="true">
+                            <datalist id="usernames">
+                            @foreach (var user in _context.Users.ToList())
+                            {
+                                <option value="@user.UserName"></option>
+                            }
+                            </datalist>
+                    </div class="form-group">
+                }
+
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label class="control-label">Fra dato/tid</label>

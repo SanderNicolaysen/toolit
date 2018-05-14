@@ -173,6 +173,7 @@ var app = new Vue({
         reservations: [],
         logs: [],
         reservationForm: {
+            UserName: '',
             FromDate: '',
             ToDate: ''
         }
@@ -237,6 +238,7 @@ var app = new Vue({
 
             var data = {
                 ToolId: @Model.Id,
+                User: { UserName: this.reservationForm.UserName },
                 FromDate: this.reservationForm.FromDate,
                 ToDate: this.reservationForm.ToDate
             };
@@ -254,6 +256,7 @@ var app = new Vue({
         },
         cancelReservation: function() {
             $('#reservationDialog').modal('hide');
+            this.reservationForm.UserName = '';
             this.reservationForm.FromDate = '';
             this.reservationForm.ToDate = '';
         },

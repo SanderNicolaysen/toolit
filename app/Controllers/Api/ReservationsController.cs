@@ -105,16 +105,27 @@ namespace app.Controllers_Api
 
         // POST: api/Reservations
         [HttpPost]
-        public async Task<IActionResult> PostReservation([FromBody][Bind("ToolId", "FromDate", "ToDate")] Reservation reservation)
+        public async Task<IActionResult> PostReservation([FromBody][Bind("User.UserName", "ToolId", "FromDate", "ToDate")] Reservation reservation)
         {
-            if (!ModelState.IsValid )
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            reservation.UserId = _um.GetUserId(User);
-
-            
+            if (!String.IsNullOrEmpty(reservation.User.UserName) && User.IsInRole("Admin"))
+            {
+                var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == reservation.User.UserName);
+                if (user == null)
+                {
+                    return BadRequest(ModelState);
+                }
+                reservation.UserId = user.Id;
+            }
+            else
+            {
+                reservation.UserId = _um.GetUserId(User);
+            }
+            reservation.User = null;
 
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();

@@ -12,6 +12,8 @@ namespace app.Data
     {
         public static void Initialize(ApplicationDbContext db, UserManager<ApplicationUser> um, RoleManager<IdentityRole> rm, bool isDevelopment, INotificationManager nm)
         {
+            return;
+
             if (!isDevelopment)
             {
                 db.Database.EnsureCreated();

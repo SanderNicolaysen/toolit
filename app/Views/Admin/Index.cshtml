@@ -1,3 +1,5 @@
+@model app.Models.AdminViewModels.ToolStats
+
 @{
     ViewData["Title"] = "Administrasjonspanel";
     ViewData.AddActivePage(ManageNavPages.Index);
@@ -7,3 +9,13 @@
 
 <p>Statisk info her kanskje? hehehehe...</p>
 
+@foreach (var l in Model.ToolUseCount)
+{
+    <p>@l.Tool.Name - @l.Count</p>
+}
+
+
+@foreach (var l in Model.ToolUsage)
+{
+    <p>@l.Tool.Name  # @l.UseagePercent </p>
+}

@@ -12,6 +12,6 @@ namespace app.Models.AdminViewModels
 
         public List<(Tool Tool, int Count)> ToolUseCount { get; set; }
 
-        public List<(Tool Tool, double UseagePercent)> ToolUsage { get; set; }
+        public List<(Tool Tool, double UsagePercent)> ToolUsage { get; set; }
     }
 }

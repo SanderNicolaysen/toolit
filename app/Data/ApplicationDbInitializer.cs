@@ -12,8 +12,6 @@ namespace app.Data
     {
         public static void Initialize(ApplicationDbContext db, UserManager<ApplicationUser> um, RoleManager<IdentityRole> rm, bool isDevelopment, INotificationManager nm)
         {
-            return;
-
             if (!isDevelopment)
             {
                 db.Database.EnsureCreated();
@@ -71,6 +69,19 @@ namespace app.Data
             // Adding some dummy notifications
             nm.SendNotificationAsync(admin.Id, "Verktøyet 'Hammer' har forsvunnet!", "/Tool/Details/2").Wait();
             nm.SendNotificationAsync(admin.Id, "Noen har glemt å levere tilbake 'Vater' etter reservasjonen utgitt!", "/Tool/Details/4").Wait();
+
+            db.SaveChanges();
+
+            var now = DateTime.Now;
+            var logs = new List<Log>
+            {
+                new Log(tools[0].Id, user1.Id, now.Subtract(TimeSpan.FromDays(60)), now.Subtract(TimeSpan.FromDays(20))),
+                new Log(tools[0].Id, user2.Id, now.Subtract(TimeSpan.FromDays(18)), now.Subtract(TimeSpan.FromDays(5))),
+                new Log(tools[3].Id, user3.Id, now.Subtract(TimeSpan.FromDays(450)), now.Subtract(TimeSpan.FromDays(15))),
+                new Log(tools[3].Id, user1.Id, now.Subtract(TimeSpan.FromDays(10)), now.Subtract(TimeSpan.FromDays(0))),
+                new Log(tools[1].Id, user1.Id, now.Subtract(TimeSpan.FromDays(365)), now.Subtract(TimeSpan.FromDays(0)))
+            };
+            db.AddRange(logs);
 
             db.SaveChanges();
         }

@@ -36,11 +36,14 @@ namespace app.Controllers
         {
             var model = new ToolStats();
 
-            var toolUseCounts = 
-                from l in _context.Logs
-                group l by l.ToolId into grp
-                orderby grp.Count() descending
-                select new { tool = grp.First().Tool, count = grp.Count() };
+            var toolUseCounts = _context.Logs
+                .Include(l => l.Tool)
+                .GroupBy(l => l.ToolId)
+                .Select(g => new {
+                    tool = g.First().Tool, count = g.Count()
+                })
+                .OrderByDescending(t => t.count)
+                .Take(10);
 
             foreach (var line in toolUseCounts)
             {
@@ -55,6 +58,7 @@ namespace app.Controllers
                 .GroupBy(l => l.ToolId);
 
 
+            var toolUsagePercent = new List<(Tool Tool, double UsagePercent)>();
             foreach (var logs in logsByTool)
             {
                 double hours = 0.0;
@@ -67,8 +71,10 @@ namespace app.Controllers
                         diff = log.ToDate - log.FromDate;
                     hours += diff.TotalHours;
                 }
-                model.ToolUsage.Add((logs.First().Tool, hours / TimeSpan.FromDays(365).TotalHours));
+                toolUsagePercent.Add((logs.First().Tool, hours / TimeSpan.FromDays(365).TotalHours * 100));
             }
+
+            model.ToolUsage.AddRange(toolUsagePercent.OrderByDescending(t => t.UsagePercent).Take(10));
 
             return View(model);
         }

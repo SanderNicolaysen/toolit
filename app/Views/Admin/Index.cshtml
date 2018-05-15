@@ -1,21 +1,128 @@
 @model app.Models.AdminViewModels.ToolStats
 
+@using Newtonsoft.Json;
+@using System.Linq;
+
 @{
     ViewData["Title"] = "Administrasjonspanel";
     ViewData.AddActivePage(ManageNavPages.Index);
+
+    var labelsUseCount = JsonConvert.SerializeObject(Model.ToolUseCount.Take(10).Select(t => t.Tool.Name));    
+    var dataUseCount = JsonConvert.SerializeObject(Model.ToolUseCount.Take(10).Select(t => t.Count));
+
+    var labelsUsagePercent = JsonConvert.SerializeObject(Model.ToolUsage.Take(10).Select(t => t.Tool.Name));    
+    var dataUsagePercent = JsonConvert.SerializeObject(Model.ToolUsage.Take(10).Select(t => t.UsagePercent));
 }
 
-<h2>Testing testing! hehehe</h2>
+<h2>Bruksoversikt</h2>
 
-<p>Statisk info her kanskje? hehehehe...</p>
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <canvas id="ToolUseCountChart" width="100%"></canvas>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Verktøy</th>
+                    <th>Antall ganger utlånt</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var l in Model.ToolUseCount)
+                {
+                    <tr>
+                        <td>@l.Tool.Name</td>
+                        <th>@l.Count</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
-@foreach (var l in Model.ToolUseCount)
+    <div class="col-md-6">
+        <div>
+            <canvas id="ToolUsagePercentChart" width="100%"></canvas>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Verktøy</th>
+                    <th>Brukstid det siste året (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var l in Model.ToolUsage)
+                {
+                    <tr>
+                        <td>@l.Tool.Name</td>
+                        <th>@l.UsagePercent.ToString("F2")</th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts
 {
-    <p>@l.Tool.Name - @l.Count</p>
-}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 
+<script>
+    var ctxUseCount = document.getElementById("ToolUseCountChart");
+    var ctxUsePercent = document.getElementById("ToolUsagePercentChart");
 
-@foreach (var l in Model.ToolUsage)
-{
-    <p>@l.Tool.Name  # @l.UseagePercent </p>
+    var colorSet1 = [
+		'#ff6600',
+		'#f53794',
+        '#f61525',
+		'#166a8f',
+		'#4dc9f6',
+		'#8549ba',
+		'#58595b',
+		'#00a950',
+		'#acc236',
+		'#537bc4'
+	];
+
+    var colorSet2 = colorSet1.slice().reverse();
+
+    var useCountChart = new Chart(ctxUseCount, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: @Html.Raw(dataUseCount),
+                backgroundColor: colorSet1
+            }],
+            labels: @Html.Raw(labelsUseCount)
+        },
+        options: {
+            cutoutPercentage: 60
+        }
+    });
+
+     var usagePercentChart = new Chart(ctxUsePercent, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: @Html.Raw(dataUsagePercent),
+                backgroundColor: colorSet2
+            }],
+            labels: @Html.Raw(labelsUsagePercent)
+        },
+        options: {
+            cutoutPercentage: 60,
+            tooltips: {
+                callbacks: {
+                    // Format tooltip-labels to display only 1 decimal
+                    label: function(tooltipItem, data) {
+                        var label = (data.labels[tooltipItem.index] || '') ? ': ' : '';
+                        label += Math.round(data.datasets[0].data[tooltipItem.index]  * 10) / 10;
+                        return label;
+                    }
+                }
+            }
+        }
+    });
+</script>
 }

@@ -19,6 +19,8 @@ namespace app.Views.Admin
 
         public static string Reports => "Reports";
 
+        public static string Log => "Log";
+
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string UsersNavClass(ViewContext viewContext) => PageNavClass(viewContext, Users);
@@ -26,6 +28,8 @@ namespace app.Views.Admin
         public static string AlarmsNavClass(ViewContext viewContext) => PageNavClass(viewContext, Alarms);
         
         public static string ReportsNavClass(ViewContext viewContext) => PageNavClass(viewContext, Reports);
+
+        public static string LogNavClass(ViewContext viewContext) => PageNavClass(viewContext, Log);
     
         public static string PageNavClass(ViewContext viewContext, string page)
         {

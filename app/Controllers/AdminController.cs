@@ -32,10 +32,11 @@ namespace app.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task <IActionResult> Index()
         {
-            var model = new ToolStats();
+            var model = new IndexViewModel();
 
+            // Finds how many times each tool has been used
             var toolUseCounts = _context.Logs
                 .Include(l => l.Tool)
                 .GroupBy(l => l.ToolId)
@@ -50,13 +51,13 @@ namespace app.Controllers
                 model.ToolUseCount.Add((line.tool, line.count));   
             }
 
+            // Finds how many
             var yearAgo = DateTime.Now.Subtract(TimeSpan.FromDays(365));
 
             var logsByTool = _context.Logs
                 .Where(l => l.ToDate > yearAgo)
                 .Include(l => l.Tool)
                 .GroupBy(l => l.ToolId);
-
 
             var toolUsagePercent = new List<(Tool Tool, double UsagePercent)>();
             foreach (var logs in logsByTool)
@@ -65,7 +66,9 @@ namespace app.Controllers
                 foreach (var log in logs)
                 {
                     TimeSpan diff;
-                    if (log.FromDate < yearAgo)
+                    if (log.ToDate == log.FromDate)
+                        diff = DateTime.Now - log.FromDate;
+                    else if (log.FromDate < yearAgo)
                         diff = log.ToDate - yearAgo;
                     else
                         diff = log.ToDate - log.FromDate;
@@ -75,6 +78,14 @@ namespace app.Controllers
             }
 
             model.ToolUsage.AddRange(toolUsagePercent.OrderByDescending(t => t.UsagePercent).Take(10));
+
+            // Get the latest 10 logs
+            model.Log10 = await _context.Logs
+                .Include(l => l.Tool)
+                .Include(l => l.User)
+                .OrderByDescending(l => l.FromDate)
+                .Take(10)
+                .ToListAsync();
 
             return View(model);
         }
@@ -119,6 +130,11 @@ namespace app.Controllers
         public async Task<IActionResult> Reports()
         {
             return View(await _context.Reports.ToListAsync());
+        }
+
+        public async Task<IActionResult> Log()
+        {
+            return View(await _context.Logs.OrderByDescending(l => l.FromDate).Include(l => l.User).Include(l => l.Tool).ToListAsync());
         }
 
         private void AddErrors(IdentityResult result)

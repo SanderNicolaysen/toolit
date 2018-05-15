@@ -146,7 +146,8 @@ namespace app.Controllers_Api
             tool.CurrentOwnerId = userId;
             _context.Update(tool);
 
-            _context.Logs.Add(new Log(tool.Id, userId, DateTime.UtcNow, DateTime.UtcNow));
+            var now = DateTime.UtcNow;
+            _context.Logs.Add(new Log(tool.Id, userId, now, now));
 
             await _context.SaveChangesAsync();
 

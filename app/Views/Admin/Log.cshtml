@@ -1,0 +1,49 @@
+@model IEnumerable<app.Models.Log>
+
+@using System;
+@using System.Globalization;
+
+@{
+    ViewData["Title"] = "Logg";
+    ViewData.AddActivePage(ManageNavPages.Log);
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Logg</h2>
+
+        <table class="table table-condensed table-hover table-striped" id="tool-log">
+            <thead>
+                <tr>
+                    <th>Utlånt av</th>
+                    <th>Utlånt</th>
+                    <th>Verktøy</th>
+                    <th class="fit">Innlevert</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var l in Model)
+                {
+                    @if (l.FromDate == l.ToDate)
+                    {
+                        <tr>
+                            <td>@l.User.UserName</td>
+                            <td>@l.FromDate.ToLocalTime().ToString("d. MMMM, yyyy - HH:mm")</td>
+                            <td>@l.Tool.Name</td>
+                            <td></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="checkedin">@l.User.UserName</td>
+                            <td class="checkedin">@l.FromDate.ToLocalTime().ToString("d. MMMM, yyyy - HH:mm")</td>
+                            <td class="checkedin">@l.Tool.Name</td>
+                            <td class="checkedin"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

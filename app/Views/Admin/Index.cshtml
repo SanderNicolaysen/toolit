@@ -1,12 +1,15 @@
-@model app.Models.AdminViewModels.ToolStats
+@model app.Models.AdminViewModels.IndexViewModel
 
-@using Newtonsoft.Json;
+@using System;
+@using System.Globalization;
 @using System.Linq;
+@using Newtonsoft.Json;
 
 @{
     ViewData["Title"] = "Administrasjonspanel";
     ViewData.AddActivePage(ManageNavPages.Index);
 
+    // Create data and label arrays for the graphs
     var labelsUseCount = JsonConvert.SerializeObject(Model.ToolUseCount.Take(10).Select(t => t.Tool.Name));    
     var dataUseCount = JsonConvert.SerializeObject(Model.ToolUseCount.Take(10).Select(t => t.Count));
 
@@ -14,13 +17,16 @@
     var dataUsagePercent = JsonConvert.SerializeObject(Model.ToolUsage.Take(10).Select(t => t.UsagePercent));
 }
 
-<h2>Bruksoversikt</h2>
+<h2>Sammendrag av verktøysbruk</h2>
 
 <div class="row">
     <div class="col-md-6">
+        <h3>Antall ganger utlånt</h3>
+
         <div>
-            <canvas id="ToolUseCountChart" width="100%"></canvas>
+            <canvas id="ToolUseCountChart" style="height: 170px;"></canvas>
         </div>
+
         <table class="table">
             <thead>
                 <tr>
@@ -41,9 +47,12 @@
     </div>
 
     <div class="col-md-6">
+        <h3>Andel av tid utlånt</h3>
+
         <div>
-            <canvas id="ToolUsagePercentChart" width="100%"></canvas>
+            <canvas id="ToolUsagePercentChart" style="height: 170px;"></canvas>
         </div>
+        
         <table class="table">
             <thead>
                 <tr>
@@ -64,6 +73,48 @@
     </div>
 </div>
 
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Nylige utlån <sub><a asp-action="Log">se hele loggen</a></sub></h3>
+
+        <table class="table table-condensed table-hover table-striped" id="tool-log">
+            <thead>
+                <tr>
+                    <th>Utlånt av</th>
+                    <th>Utlånt</th>
+                    <th>Verktøy</th>
+                    <th class="fit">Innlevert</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var l in Model.Log10)
+                {
+                    @if (l.FromDate == l.ToDate)
+                    {
+                        <tr>
+                            <td>@l.User.UserName</td>
+                            <td>@l.FromDate.ToLocalTime().ToString("G")</td>
+                            <td>@l.Tool.Name</td>
+                            <td></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="checkedin">@l.User.UserName</td>
+                            <td class="checkedin">@l.FromDate.ToLocalTime().ToString("G", CultureInfo.CreateSpecificCulture("nb-NO"))</td>
+                            <td class="checkedin">@l.Tool.Name</td>
+                            <td class="checkedin"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
 @section Scripts
 {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
@@ -72,19 +123,7 @@
     var ctxUseCount = document.getElementById("ToolUseCountChart");
     var ctxUsePercent = document.getElementById("ToolUsagePercentChart");
 
-    var colorSet1 = [
-		'#ff6600',
-		'#f53794',
-        '#f61525',
-		'#166a8f',
-		'#4dc9f6',
-		'#8549ba',
-		'#58595b',
-		'#00a950',
-		'#acc236',
-		'#537bc4'
-	];
-
+    var colorSet1 = [ '#ff6600', '#f53794', '#f61525', '#166a8f', '#4dc9f6', '#8549ba', '#58595b', '#00a950', '#acc236', '#537bc4' ];
     var colorSet2 = colorSet1.slice().reverse();
 
     var useCountChart = new Chart(ctxUseCount, {
@@ -97,11 +136,15 @@
             labels: @Html.Raw(labelsUseCount)
         },
         options: {
-            cutoutPercentage: 60
+            cutoutPercentage: 60,
+            maintainAspectRatio: false,
+            legend: {
+                position: 'left'
+            },
         }
     });
 
-     var usagePercentChart = new Chart(ctxUsePercent, {
+    var usagePercentChart = new Chart(ctxUsePercent, {
         type: 'doughnut',
         data: {
             datasets: [{
@@ -112,12 +155,16 @@
         },
         options: {
             cutoutPercentage: 60,
+            maintainAspectRatio: false,
+            legend: {
+                position: 'left'
+            },
             tooltips: {
                 callbacks: {
-                    // Format tooltip-labels to display only 1 decimal
+                    // Format tooltip-labels with 1 decimal rounding
                     label: function(tooltipItem, data) {
-                        var label = (data.labels[tooltipItem.index] || '') ? ': ' : '';
-                        label += Math.round(data.datasets[0].data[tooltipItem.index]  * 10) / 10;
+                        var label = data.labels[tooltipItem.index] + ": ";
+                        label += Math.round(data.datasets[0].data[tooltipItem.index]  * 10) / 10 + "%";
                         return label;
                     }
                 }

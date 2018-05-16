@@ -1,0 +1,107 @@
+@model app.Models.Status
+
+@{
+    ViewData["Title"] = "Edit";
+
+    string[] statusStyles = {"color: #8EE783",
+    "color: #F6D846",
+    "color: #FA7D12",
+    "color: #cd3611",
+    "color: #92516F",
+    "color: #323232"
+    };
+    
+    string[] statusGlyphs = {"glyphicon glyphicon-ok-sign",
+    "glyphicon glyphicon-remove-sign",
+    "glyphicon glyphicon-minus-sign",
+    "glyphicon glyphicon-asterisk",
+    "glyphicon glyphicon-remove",
+    "glyphicon glyphicon-repeat"
+    };
+
+    int num = 10;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+<h4>Status</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4" id="glyphdesigner">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="StatusName" class="control-label"></label>
+                <input asp-for="StatusName" v-model="statusname" class="form-control" />
+                <span asp-validation-for="StatusName" class="text-danger"></span>
+            </div>
+            <div class="form-group glyphdesignerdiv">
+                <label asp-for="Style" class="control-label"></label><br>
+                <div>
+                    @foreach (string statusstyle in statusStyles)
+                    {
+                    num += 1;
+                    <input type="radio" name="style" id="option @num"  value="@statusstyle" v-model="style" autocomplete="off"> 
+                    <label class="glyphdesignercontainer" for="option @num"> <i style="@statusstyle" :class="glyphicon"></i> </label>
+                    }
+                </div> 
+                <span asp-validation-for="Style" class="text-danger"></span>
+                    
+            </div>
+            <div class="form-group glyphdesignerdiv">
+                <label asp-for="Glyphicon" class="control-label"></label><br>
+                <div>
+                    @foreach (string statusglyph in statusGlyphs)
+                    {
+                    num += 1;
+                    <input type="radio" name="glyphicon" id="option @num"  value="@statusglyph" v-model="glyphicon" autocomplete="off"> 
+                    <label class="glyphdesignercontainer" for="option @num"> <i :style="style" class="@statusglyph"></i> </label>
+                    }
+                </div>
+                <span asp-validation-for="Glyphicon" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+                Preview:<br>
+
+                <h3><i :style="style" :class="glyphicon"></i> {{statusname}}</h3>
+                <h4><i :style="style" :class="glyphicon"></i> {{statusname}}</h4>
+                <i :style="style" :class="glyphicon"></i> {{statusname}}
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+</html>
+
+
+
+@section Scripts {
+<script>
+
+
+var glyphdesigner = new Vue({
+    el: '#glyphdesigner',
+    data: {
+        statusname: '@Model.StatusName',
+        glyphicon: '@Model.Glyphicon',
+        style: '@Model.Style'
+    }
+})
+
+
+</script>
+}

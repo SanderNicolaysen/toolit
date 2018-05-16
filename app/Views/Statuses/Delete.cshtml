@@ -1,0 +1,48 @@
+@model app.Models.Status
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Status</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StatusName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Style)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Style)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Glyphicon)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Glyphicon)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
+</body>
+</html>

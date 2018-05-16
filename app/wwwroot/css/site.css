@@ -238,6 +238,35 @@ nav.navbar .navbar-toggle .icon-bar {
     box-shadow: 0px 1px 2px #888;
 }
 
+.glyphdesignerdiv input + .glyphdesignercontainer {
+    display: inline-block;
+    position: relative;
+    padding-top: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 1px;
+    margin-bottom: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.glyphdesignerdiv input:hover + .glyphdesignercontainer {
+    background-color: #ccc;
+}
+
+.glyphdesignerdiv input:checked + .glyphdesignercontainer {
+    /*background-color: #666;*/
+    border: 1px #666 solid;
+}
+
+.glyphdesignerdiv input {
+    position: absolute;
+    opacity: 0;
+}
 /* Admin panel specific styles */
 #tool-log .glyphicon-ok {
     color: rgb(73, 185, 73);

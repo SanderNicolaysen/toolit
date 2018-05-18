@@ -12,7 +12,10 @@
             <hr />
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <textarea asp-for="Email" class="form-control" rows="4"></textarea>
+                <textarea asp-for="Email" class="form-control" rows="4" 
+                placeholder="email 1\nemail 2\nemail 3\netc...">
+                </textarea>
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password"></label>
@@ -23,3 +26,13 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+<script>
+    var textAreas = document.getElementsByTagName('textarea');
+
+    Array.prototype.forEach.call(textAreas, function(elem) {
+        elem.placeholder = elem.placeholder.replace(/\\n/g, '\n');
+    });
+</script>
+}

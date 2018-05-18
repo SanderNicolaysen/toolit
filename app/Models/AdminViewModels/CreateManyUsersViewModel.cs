@@ -5,6 +5,7 @@ namespace app.Models.AdminViewModels
     public class CreateManyUsersViewModel
     {
         [Required]
+        [EmailAddressArray(ErrorMessage = "Email address is not valid")]
         [Display(Name = "Epost")]
         public string Email { get; set; }
         

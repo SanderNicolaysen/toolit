@@ -11,6 +11,9 @@
             <th>
                 Rapport-melding
             </th>
+            <th>
+                Verktøy
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -20,6 +23,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Error)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tool.Name)
             </td>
             <td class="fit">
                 <div class="dropdown">

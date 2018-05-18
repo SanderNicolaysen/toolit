@@ -76,7 +76,7 @@ namespace app.Controllers
                 tool.Reports.Add(report);
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(AdminController.Reports), "Admin");
+                return RedirectToAction(nameof(ToolController.Details), "Tool", new { id });
             }
             return View(report);
         }
@@ -101,6 +101,9 @@ namespace app.Controllers
                 return BadRequest();
             }
 
+            TempData["ToolId"] = report.ToolId;
+            TempData["UserId"] = report.UserId;
+
             return View(report);
         }
 
@@ -109,7 +112,7 @@ namespace app.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Error")] Report report)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Error")] Report report)
         {
             if (id != report.Id)
             {
@@ -118,9 +121,16 @@ namespace app.Controllers
 
             if (ModelState.IsValid)
             {
+                var toolId = int.Parse(TempData["ToolId"].ToString());
+
                 try
                 {
-                    report.UserId = _um.GetUserId(User);
+                    if (TempData.ContainsKey("ToolId"))
+                        report.ToolId = toolId;
+
+                    if (TempData.ContainsKey("UserId"))
+                        report.UserId = TempData["UserId"].ToString();
+                    
                     _context.Update(report);
                     await _context.SaveChangesAsync();
                 }
@@ -135,7 +145,7 @@ namespace app.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(AdminController.Reports), "Admin");
+                return RedirectToAction(nameof(ToolController.Details), "Tool", new { id = toolId });
             }
             return View(report);
         }
@@ -172,7 +182,7 @@ namespace app.Controllers
             var report = await _context.Reports.SingleOrDefaultAsync(m => m.Id == id);
             _context.Reports.Remove(report);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(AdminController.Reports), "Admin");
+            return RedirectToAction(nameof(ToolController.Details), "Tool", new { id = report.ToolId });
         }
 
         private bool ReportExists(int id)

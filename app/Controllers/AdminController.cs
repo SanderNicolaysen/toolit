@@ -169,7 +169,7 @@ namespace app.Controllers
 
         public async Task<IActionResult> Reports()
         {
-            return View(await _context.Reports.ToListAsync());
+            return View(await _context.Reports.Include(r => r.Tool).ToListAsync());
         }
 
         public async Task<IActionResult> Log()

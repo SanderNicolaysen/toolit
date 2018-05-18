@@ -43,6 +43,21 @@ namespace app.Controllers_Api
             return _context.Reservations.Include(r => r.User);
         }
 
+        [HttpGet("cal/{id}")]
+        public IEnumerable<object> GetReservation([FromRoute] int id, string start, string end)
+        {
+            var Start = DateTime.Parse(start, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            var End = DateTime.Parse(end, null, System.Globalization.DateTimeStyles.RoundtripKind);
+
+            var reservations = _context.Reservations
+                .Where(r => r.ToolId == id)
+                .Where(r => r.ToDate > Start && r.FromDate < End)
+                .Include(r => r.User)
+                .Select(r => new { title = r.User.UserName, start = r.FromDate, end = r.ToDate });
+
+            return reservations;
+        }
+
         // GET: api/Reservations/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetReservation([FromRoute] int id)

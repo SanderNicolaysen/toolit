@@ -102,30 +102,10 @@
 
     <br>
     <a asp-action="Index">Tilbake til verktøyliste</a>
-
-    <h3>Reservasjoner</h3>
-    <table class="table table-hover table-striped">
-        <thead>
-            <tr>
-                <th>Reservert av</th>
-                <th>Start</th>
-                <th>Slutt</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="r in reservations">
-                <td>{{ r.user.userName }}</td>
-                <td>{{ r.fromDate }}</td>
-                <td>{{ r.toDate }}</td>
-                <td>
-                    <button v-if="r.userId == '@UserManager.GetUserId(User)'" v-on:click="deleteReservation(r.id)" class="close" style="color: red;">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    
+    <hr />
+    <div id="calendar"></div>
+    <hr />
 
     <h3>Logg</h3>
     <table class="table table-hover table-striped">
@@ -158,9 +138,48 @@
     }
 </style>
 
-@section Scripts {
+@section Styles
+{
+    <link rel='stylesheet' href='~/lib/fullcalendar/fullcalendar.css' />
+}
+
+@section Scripts
+{
+<script src='~/lib/fullcalendar/lib/moment.min.js'></script>
+<script src='~/lib/fullcalendar/fullcalendar.js'></script>
+<script src='~/lib/fullcalendar/locale/nb.js'></script>
+
 <!-- Script for custom confirmation dialog -->
 <script src="~/js/confirm-dialog.js"></script>
+
+<script>
+$(function() {
+    // Load calendar
+    $('#calendar').fullCalendar({
+        // put your options and callbacks here
+
+        events: '/api/Reservations/cal/@Model.Id',
+        contentHeight: 400,
+        eventClick: function(calEvent, jsEvent, view) {
+            var options = {
+                title: 'Slett reservasjon',
+                message: 'Er du sikker på at du vil slette reservasjonen?'
+            }
+
+            ConfirmDialog(options, function(){
+                axios.delete('/api/reservations/' + id)
+                .then(function(response) {
+                    if (response.status == 200) {
+                        $("#calendar").fullCalendar('refetchEvents');
+                    }
+                });
+            }, false);
+        }
+
+
+    })
+});
+</script>
 
 <script>
 var app = new Vue({
@@ -251,7 +270,7 @@ var app = new Vue({
                 // TODO: Error reporting
 
                 // Reload reservations
-                self.loadReservations();
+                $("#calendar").fullCalendar('refetchEvents');
             });
         },
         cancelReservation: function() {

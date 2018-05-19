@@ -5,49 +5,97 @@
     ViewData.AddActivePage(ManageNavPages.Reports);
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Rapport-melding
-            </th>
-            <th>
-                Verktøy
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Error)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tool.Name)
-            </td>
-            <td class="fit">
-                <div class="dropdown">
-                    <button id="more-btn" class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">
-                        <span class="more-dot"></span>
-                        <span class="more-dot"></span>
-                        <span class="more-dot"></span>
+<div id="app" v-cloak>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Rapport-melding
+                </th>
+                <th>
+                    Verktøy
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="r in reports">
+                <td>
+                    {{ r.error }}
+                </td>
+                <td>
+                    {{ r.tool.name }}
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default" title="Merk som løst"
+                    v-on:click="markAsResolved(r.id)" v-if="!r.isResolved" id="notResolvedButton">
+                    <span class="glyphicon glyphicon-ok-sign" id="okSign"></span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a asp-controller="Reports" asp-action="Edit" asp-route-id="@item.Id">Edit</a></li>
-                        <li><a asp-controller="Reports" asp-action="Details" asp-route-id="@item.Id">Details</a></li>
-                        <li><a asp-controller="Reports" asp-action="Delete" asp-route-id="@item.Id">Delete</a></li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
+
+                    <button type="button" class="btn btn-default" title="Merk som uløst" 
+                    v-on:click="markAsResolved(r.id)" v-else id="notResolvedButton">
+                    <span class="glyphicon glyphicon-ok-sign" id="okSignGreen"></span>
+                    </button>
+                </td>
+                <td class="fit">
+                    <div class="dropdown">
+                        <button id="more-btn" class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">
+                            <span class="more-dot"></span>
+                            <span class="more-dot"></span>
+                            <span class="more-dot"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a v-bind:href="'/Reports/Edit/' + r.id">Edit</a></li>
+                            <li><a v-bind:href="'/Reports/Details/' + r.id">Details</a></li>
+                            <li><a v-bind:href="'/Reports/Delete/' + r.id">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="2">Ingen rapporter å vise...</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+
+<script>
+var app = new Vue({
+    el: '#app',
+    data: {
+        reports: []
+    },
+    created: function () {
+        this.loadReports();
+    },
+    methods: {
+        loadReports: function() {
+            var self = this;
+
+            // Fetch list of reports
+            axios.get('/api/report')
+            .then(function (response) {
+                self.reports = response.data;
+            }); 
+        },
+        markAsResolved: function(id) {
+            var self = this;
+
+            axios.put('/api/Report/' + id + '/markAsResolved')
+            .then(function (response){
+                if (response.status == 200)
+                {
+                    self.loadReports();
+                }
+            });
+        }
     }
-    @if (Model.Count() == 0)
-    {
-        <tr>
-            <td colspan="2">Ingen rapporter å vise...</td>
-        </tr>
-    }
-    </tbody>
-</table>
+})
+</script>
+}

@@ -1,4 +1,4 @@
-function ConfirmDialog (arg1, arg2, clickHandlerSet) {
+function ConfirmDialog (arg1, arg2) {
     modal = $("#confirmDialog");
     modal.modal('show'); // Show dialog
     
@@ -31,12 +31,11 @@ function ConfirmDialog (arg1, arg2, clickHandlerSet) {
     modal.find('.btn.btn-primary').text(labels.confirmBtn);
 
     // Make sure that only one click event handler is set
-    if (!clickHandlerSet)
-    {
-        // Set up callback when the user clicks on the confirmation button
-        modal.find('.btn.btn-primary').click(function(){
-            modal.modal('hide'); // Hide dialog
-            callback();
-        });
-    }
+    modal.find('.btn.btn-primary').off('click');
+
+    // Set up callback when the user clicks on the confirmation button
+    modal.find('.btn.btn-primary').click(function(){
+        modal.modal('hide'); // Hide dialog
+        callback();
+    });
 }

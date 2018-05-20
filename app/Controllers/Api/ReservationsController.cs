@@ -43,6 +43,8 @@ namespace app.Controllers_Api
             return _context.Reservations.Include(r => r.User);
         }
 
+        // GET: api/Reservations/cal/5
+        // Used by fullcalendar to retrieve events
         [HttpGet("cal/{id}")]
         public IEnumerable<object> GetReservation([FromRoute] int id, string start, string end)
         {
@@ -53,7 +55,7 @@ namespace app.Controllers_Api
                 .Where(r => r.ToolId == id)
                 .Where(r => r.ToDate > Start && r.FromDate < End)
                 .Include(r => r.User)
-                .Select(r => new { title = r.User.UserName, start = r.FromDate, end = r.ToDate });
+                .Select(r => new { title = r.User.UserName, start = r.FromDate, end = r.ToDate, id = r.Id, user = r.User });
 
             return reservations;
         }

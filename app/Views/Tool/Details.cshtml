@@ -4,6 +4,8 @@
 
 @{
     ViewData["Title"] = "Details";
+
+    var isAdmin = User.IsInRole("Admin") ? "true" : "false";
 }
 
 <h2>Detaljer</h2>
@@ -140,43 +142,100 @@
 
 @section Styles
 {
-    <link rel='stylesheet' href='~/lib/fullcalendar/fullcalendar.css' />
+    <link rel='stylesheet' href='~/lib/fullcalendar/fullcalendar.min.css' />
+    <link rel='stylesheet' href='~/lib/qtip2/3.0.3/jquery.qtip.min.css' />
 }
 
 @section Scripts
 {
 <script src='~/lib/fullcalendar/lib/moment.min.js'></script>
-<script src='~/lib/fullcalendar/fullcalendar.js'></script>
+<script src='~/lib/fullcalendar/fullcalendar.min.js'></script>
 <script src='~/lib/fullcalendar/locale/nb.js'></script>
+<script src='~/lib/qtip2/3.0.3/jquery.qtip.min.js'></script>
 
 <!-- Script for custom confirmation dialog -->
-<script src="~/js/confirm-dialog.js"></script>
+<environment include="Development">
+    <script src="~/js/confirm-dialog.js"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/js/confirm-dialog.min.js"></script>
+</environment>
 
+
+<!-- Script for calendar (with qTip2 tooltips) -->
 <script>
+var UserName = "@UserManager.GetUserName(User)";
+var isAdmin = @isAdmin;
 $(function() {
+    var tooltip = $('<div/>').qtip({
+        id: 'fullcalendar',
+        content: {
+            text: ' ',
+            title: {
+                button: true
+            }
+        },
+        position: {
+            my: 'bottom center',
+            at: 'top center',
+            target: 'event',
+            viewport: $('#calendar'),
+            adjust: {
+                mouse: false,
+                scroll: false
+            }
+        },
+        show: false,
+        hide: false,
+        style: 'qtip-light'
+    }).qtip('api');
+
+
     // Load calendar
     $('#calendar').fullCalendar({
         // put your options and callbacks here
 
+        header: {
+            left: '',
+            center: 'title',
+            right: 'month,agendaWeek today prev,next'
+        },
+        slotDuration: '02:00:00',
+        agendaEventMinHeight: '25',
+
         events: '/api/Reservations/cal/@Model.Id',
         contentHeight: 400,
         eventClick: function(calEvent, jsEvent, view) {
-            var options = {
-                title: 'Slett reservasjon',
-                message: 'Er du sikker på at du vil slette reservasjonen?'
-            }
+            // Set up tooltip content
+			var content = '<h4>Reservert av '+calEvent.title+'</h4>' + 
+				'<p><b>Start:</b> '+calEvent.start.format("dddd, Do. MMMM YYYY, h:mm:ss")+'<br />' + 
+				(calEvent.end && '<p><b>Slutt:</b> '+calEvent.end.format("dddd, Do. MMMM YYYY, h:mm:ss")+'</p>' || '') +
+                (calEvent.user.userName == UserName || isAdmin ? '<button data-id='+calEvent.id+' class="btn btn-default">Slett reservasjon</button>' : '');
+			tooltip.set({
+				'content.text': content
+			})
+			.reposition(jsEvent).show(jsEvent);
 
-            ConfirmDialog(options, function(){
-                axios.delete('/api/reservations/' + id)
-                .then(function(response) {
-                    if (response.status == 200) {
-                        $("#calendar").fullCalendar('refetchEvents');
-                    }
+            // Set up an event-handler for the delete reservations button in the tooltip
+            var content = tooltip.elements.content;
+            $('button', content).click(function() {
+                tooltip.hide();
+
+                var id = $(this).data('id');
+                var dialogOpts = { title: 'Slett reservasjon', message: 'Er du sikker på at du vil slette reservasjonen?' }
+                ConfirmDialog(dialogOpts, function(){
+                    axios.delete('/api/reservations/' + id).then(function(response) {
+                        if (response.status == 200) {
+                            $("#calendar").fullCalendar('refetchEvents');
+                        }
+                    });
                 });
-            }, false);
-        }
-
-
+            }); 
+        },
+        dayClick: function() { tooltip.hide() },
+		eventResizeStart: function() { tooltip.hide() },
+		eventDragStart: function() { tooltip.hide() },
+		viewDisplay: function() { tooltip.hide() },
     })
 });
 </script>
@@ -187,7 +246,6 @@ var app = new Vue({
     data: {
         faviconhover: false,
         favorite: false,
-        clickHandlerSet: false,
         currentOwnerId: "@Model.CurrentOwnerId",
         reservations: [],
         logs: [],
@@ -279,30 +337,6 @@ var app = new Vue({
             this.reservationForm.FromDate = '';
             this.reservationForm.ToDate = '';
         },
-        deleteReservation: function(id) {
-            var self = this;
-
-            var options = {
-                title: 'Slett reservasjon',
-                message: 'Er du sikker på at du vil slette reservasjonen?'
-            }
-
-            ConfirmDialog(options, function(){
-                axios.delete('/api/reservations/' + id)
-                .then(function(response) {
-                    if (response.status == 200) {
-                        for (var i = 0; i < self.reservations.length; i++) {
-                            if (self.reservations[i].id == id) {
-                                self.reservations.splice(i, 1);
-                                return;
-                            }
-                        }
-                    }
-                });
-            }, self.clickHandlerSet)
-
-            self.clickHandlerSet = true;
-        },
         toggleFavorite: function() {
             var self = this;
 
@@ -332,47 +366,47 @@ var app = new Vue({
             if (self.reservations.length == 0)
                 self.checkOutTool(id);
             else {
-                self.reservations.forEach(function(reservation) {
-
-                if (stopLoop)
-                    return;
-
-                if (reservation.userId == '@UserManager.GetUserId(User)'
-                && reservation != self.reservations[self.reservations.length - 1])
-                    return;
-
-                if (reservation.userId == '@UserManager.GetUserId(User)'
-                && reservation == self.reservations[self.reservations.length - 1])
+                for (var i = 0; i < self.reservations.length; i++)
                 {
-                    self.checkOutTool(id);
+                    var reservation = self.reservations[i];
 
-                    return;
+                    if (stopLoop)
+                        return;
+
+                    if (reservation.userId == '@UserManager.GetUserId(User)'
+                    && reservation != self.reservations[self.reservations.length - 1])
+                        return;
+
+                    if (reservation.userId == '@UserManager.GetUserId(User)'
+                    && reservation == self.reservations[self.reservations.length - 1])
+                    {
+                        self.checkOutTool(id);
+
+                        return;
+                    }
+
+                    var toDate = new Date(reservation.toDate);    
+                    var fromDate = new Date(reservation.fromDate);    
+
+                    // If a user tries to check out a tool, but the tool is currently reserved for someone else, he/she gets a warning
+                    if (currentDate.getTime() <= toDate.getTime() 
+                    && currentDate.getTime() >= fromDate.getTime())
+                    {       
+                            var options = {
+                                title: 'Advarsel',
+                                message: 'Dette verktøyet er reservert av ' + reservation.user.userName + '. Er du sikker på at du vil sjekke ut verktøyet?'
+                            }
+
+                            ConfirmDialog(options, function(){
+                                self.checkOutTool(id);
+                            })
+                        
+                        stopLoop = true;
+                    }
+
+                    if (reservation == self.reservations[self.reservations.length - 1] && !stopLoop)
+                        self.checkOutTool(id);
                 }
-
-                var toDate = new Date(reservation.toDate);    
-                var fromDate = new Date(reservation.fromDate);    
-
-                // If a user tries to check out a tool, but the tool is currently reserved for someone else, he/she gets a warning
-                if (currentDate.getTime() <= toDate.getTime() 
-                && currentDate.getTime() >= fromDate.getTime())
-                {       
-                        var options = {
-                            title: 'Advarsel',
-                            message: 'Dette verktøyet er reservert av ' + reservation.user.userName + '. Er du sikker på at du vil sjekke ut verktøyet?'
-                        }
-
-                        ConfirmDialog(options, function(){
-                            self.checkOutTool(id);
-                        }, self.clickHandlerSet)
-                    
-                    stopLoop = true;
-                    self.clickHandlerSet = true;
-                }
-
-                if (reservation == self.reservations[self.reservations.length - 1]
-                && !stopLoop)
-                    self.checkOutTool(id);
-            })
             }
         },
         checkIn: function(id) {

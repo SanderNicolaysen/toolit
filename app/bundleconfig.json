@@ -33,5 +33,15 @@
       "enabled": true,
       "renameLocals": true
     }
+  },
+  {
+    "outputFileName": "wwwroot/js/confirm-dialog.min.js",
+    "inputFiles": [
+      "wwwroot/js/confirm-dialog.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
   }
 ]

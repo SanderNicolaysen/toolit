@@ -14,6 +14,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Date)
             </th>
+            <th>
+                Verktøy
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -27,13 +30,19 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
+                @item.Tool.Name
+            </td>
+            <td class="fit">
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">options
-                    <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        <li><a asp-action="Edit" asp-route-id="@item.Id">Edit</a></li>
-                        <li><a asp-action="Details" asp-route-id="@item.Id">Details</a></li>
-                        <li><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></li>
+                    <button id="more-btn" class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown">
+                        <span class="more-dot"></span>
+                        <span class="more-dot"></span>
+                        <span class="more-dot"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="/Alarms/Edit/@item.Id">Edit</a></li>
+                        <li><a href="/Alarms/Details/@item.Id">Details</a></li>
+                        <li><a href="/Alarms/Delete/@item.Id">Delete</a></li>
                     </ul>
                 </div>
             </td>

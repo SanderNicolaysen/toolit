@@ -164,7 +164,7 @@ namespace app.Controllers
 
         public async Task<IActionResult> Alarms()
         {
-            return View(await _context.Alarms.ToListAsync());
+            return View(await _context.Alarms.Include(a => a.Tool).ToListAsync());
         }
 
         public async Task<IActionResult> Reports()

@@ -89,11 +89,18 @@ namespace app.Controllers
             {
                 return NotFound();
             }
+<<<<<<< HEAD
             var statuslist = await _context.Statuses.ToListAsync();
             var vm = new EditViewModel();
             vm.Alarm = alarm;
             vm.Statuses = statuslist;
             return View(vm);
+=======
+
+            TempData["ToolId"] = alarm.ToolId;
+
+            return View(alarm);
+>>>>>>> Added relevant tools and replaced 'options'-button with three dots in the alarm-list.
         }
 
         // POST: Alarms/Edit/5
@@ -110,8 +117,13 @@ namespace app.Controllers
 
             if (ModelState.IsValid)
             {
+                var toolId = int.Parse(TempData["ToolId"].ToString());
+
                 try
                 {
+                    if (TempData.ContainsKey("ToolId"))
+                        alarm.ToolId = toolId;
+
                     _context.Update(alarm);
                     await _context.SaveChangesAsync();
                 }

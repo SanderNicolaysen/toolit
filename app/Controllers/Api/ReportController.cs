@@ -29,7 +29,7 @@ namespace app.Controllers
         [HttpGet]
         public IEnumerable<Report> GetReports()
         {
-            return _context.Reports.Include(r => r.Tool).OrderBy(r => r.isResolved);
+            return _context.Reports.Include(r => r.Tool).Include(r => r.User).OrderBy(r => r.isResolved);
         }
 
         // GET: api/Report/5

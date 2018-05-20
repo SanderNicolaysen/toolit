@@ -43,7 +43,9 @@
         {
            @foreach (var report in Model.Reports)
             {
-                <dd>
+                @if (!report.isResolved)
+                {
+                    <dd>
                     - @report.Error
                     @if (@report.UserId == @UserManager.GetUserId(User) || User.IsInRole("Admin"))
                     {
@@ -51,7 +53,8 @@
                         <a asp-controller="Reports" asp-action="Details" asp-route-id="@report.Id">Details</a> @Html.Raw("|")
                         <a asp-controller="Reports" asp-action="Delete" asp-route-id="@report.Id">Delete</a> 
                     }
-                </dd>
+                    </dd>
+                }
             }
         }
         <dt>

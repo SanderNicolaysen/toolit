@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using app.Data;
 using app.Models;
+using app.Services;
 
 namespace app.Controllers
 {
@@ -15,10 +17,12 @@ namespace app.Controllers
     public class ReportController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly INotificationManager _nm;
 
-        public ReportController(ApplicationDbContext context)
+        public ReportController(ApplicationDbContext context, INotificationManager nm)
         {
             _context = context;
+            _nm = nm;
         }
 
         // GET: api/Report
@@ -141,9 +145,19 @@ namespace app.Controllers
             if (!report.isResolved)
             {
                 report.isResolved = true;
+
+                _nm.SendNotificationAsync(report.UserId, 
+                "Rapporten '" + report.Error + "' har blitt merket som løst!", 
+                "/Tool/Details/" + report.ToolId).Wait();
             }
             else
+            {
                 report.isResolved = false;
+
+                _nm.SendNotificationAsync(report.UserId, 
+                "Rapporten '" + report.Error + "' har blitt merket som uløst!", 
+                "/Tool/Details/" + report.ToolId).Wait();
+            }
 
             _context.Update(report);
 

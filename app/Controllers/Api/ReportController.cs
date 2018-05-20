@@ -25,7 +25,7 @@ namespace app.Controllers
         [HttpGet]
         public IEnumerable<Report> GetReports()
         {
-            return _context.Reports.Include(r => r.Tool);
+            return _context.Reports.Include(r => r.Tool).OrderBy(r => r.isResolved);
         }
 
         // GET: api/Report/5

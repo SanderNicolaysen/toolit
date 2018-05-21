@@ -15,8 +15,8 @@ namespace app.Models.AdminViewModels
             string[] emails = e.Split( new[] { Environment.NewLine }, StringSplitOptions.None );
             for (int i = 0; i < emails.Length; i++) 
             {
-                if (!IsValidEmail(emails[i]))            
-                    return new ValidationResult(this.ErrorMessage);
+                if (!IsValidEmail(emails[i]))    
+                    return new ValidationResult(String.Format(this.ErrorMessage, emails[i]));
             }
             return ValidationResult.Success;
         }

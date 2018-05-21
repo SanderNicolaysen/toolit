@@ -133,7 +133,7 @@ namespace app.Controllers
         {
             if (ModelState.IsValid)
             {
-                string[] emails = model.Email.Split( new[] { Environment.NewLine }, StringSplitOptions.None );            
+                string[] emails = model.Email.Split( new[] { Environment.NewLine }, StringSplitOptions.None );
                 for (int i = 0; i < emails.Length; i++) {
                     var newUser = new ApplicationUser { UserName = emails[i], Email = emails[i], ChangePassword = true };
                     var result = await _um.CreateAsync(newUser, model.Password);
@@ -146,7 +146,9 @@ namespace app.Controllers
 
                     AddErrors(result);
                 }
-                return RedirectToAction(nameof(AdminController.Users));
+
+                if (ModelState.ErrorCount == 0)
+                    return RedirectToAction(nameof(AdminController.Users));
             }
 
             return View(model);

@@ -27,24 +27,6 @@ namespace app.Controllers
             return View(await _context.Statuses.ToListAsync());
         }
 
-        // GET: Statuses/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var status = await _context.Statuses
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (status == null)
-            {
-                return NotFound();
-            }
-
-            return View(status);
-        }
-
         // GET: Statuses/Create
         public IActionResult Create()
         {
@@ -62,7 +44,7 @@ namespace app.Controllers
             {
                 _context.Add(status);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AdminController.Statuses), "Admin");
             }
             return View(status);
         }
@@ -113,7 +95,7 @@ namespace app.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AdminController.Statuses), "Admin");
             }
             return View(status);
         }
@@ -144,7 +126,7 @@ namespace app.Controllers
             var status = await _context.Statuses.SingleOrDefaultAsync(m => m.Id == id);
             _context.Statuses.Remove(status);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AdminController.Statuses), "Admin");
         }
 
         private bool StatusExists(int id)

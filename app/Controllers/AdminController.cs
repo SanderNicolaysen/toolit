@@ -154,6 +154,14 @@ namespace app.Controllers
             return View(model);
         }
 
+
+        // GET: Statuses
+        public async Task<IActionResult> Statuses()
+        {
+            return View(await _context.Statuses.ToListAsync());
+        }
+
+
         public async Task<IActionResult> Alarms()
         {
             return View(await _context.Alarms.ToListAsync());

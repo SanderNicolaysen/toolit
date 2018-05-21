@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Statuses-List";
+    ViewData.AddActivePage(ManageNavPages.Statuses);
 }
 
 <!DOCTYPE html>
@@ -13,7 +14,7 @@
 </head>
 <body>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-controller="Statuses" asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -36,10 +37,18 @@
             <td>
                 <i style="@item.Style" class="@item.Glyphicon"></i>
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            <td class="fit">
+                <div class="dropdown">
+                    <button id="more-btn" class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">
+                        <span class="more-dot"></span>
+                        <span class="more-dot"></span>
+                        <span class="more-dot"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a asp-controller="Statuses" asp-action="Edit" asp-route-id="@item.Id">Edit</a></li>
+                        <li><a asp-controller="Statuses" asp-action="Delete" asp-route-id="@item.Id">Delete</a></li>
+                    </ul>
+                </div>
             </td>
         </tr>
 }

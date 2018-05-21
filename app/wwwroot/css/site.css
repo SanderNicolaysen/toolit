@@ -168,7 +168,7 @@ nav.navbar .navbar-toggle .icon-bar {
 }
 
 /* Resolve-report-button */
-#notResolvedButton {
+.resolveButton.btn.btn-default {
 	background-color: transparent;
 	border: none;
 	outline: none;
@@ -181,7 +181,7 @@ nav.navbar .navbar-toggle .icon-bar {
 	transition: background-color 0.3s;
 }
 
-#notResolvedButton:hover #okSign {
+.resolveButton:hover #okSign {
   	color: #8EE783;
 }
 

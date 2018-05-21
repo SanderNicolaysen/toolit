@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,14 +13,15 @@ using app.Services;
 
 namespace app.Controllers
 {
+    [Authorize]
     [Produces("application/json")]
     [Route("api/Report")]
-    public class ReportController : Controller
+    public class ReportsController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly INotificationManager _nm;
 
-        public ReportController(ApplicationDbContext context, INotificationManager nm)
+        public ReportsController(ApplicationDbContext context, INotificationManager nm)
         {
             _context = context;
             _nm = nm;

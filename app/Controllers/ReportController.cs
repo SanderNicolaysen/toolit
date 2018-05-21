@@ -14,12 +14,12 @@ using app.Models;
 namespace app.Controllers
 {
     [Authorize]
-    public class ReportsController : Controller
+    public class ReportController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _um;
 
-        public ReportsController(ApplicationDbContext context, UserManager<ApplicationUser> um)
+        public ReportController(ApplicationDbContext context, UserManager<ApplicationUser> um)
         {
             _context = context;
             _um = um;

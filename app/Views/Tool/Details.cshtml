@@ -49,9 +49,9 @@
                     - @report.Error
                     @if (@report.UserId == @UserManager.GetUserId(User) || User.IsInRole("Admin"))
                     {
-                        <a asp-controller="Reports" asp-action="Edit" asp-route-id="@report.Id">Edit</a> @Html.Raw("|")
-                        <a asp-controller="Reports" asp-action="Details" asp-route-id="@report.Id">Details</a> @Html.Raw("|")
-                        <a asp-controller="Reports" asp-action="Delete" asp-route-id="@report.Id">Delete</a> 
+                        <a asp-controller="Report" asp-action="Edit" asp-route-id="@report.Id">Edit</a> @Html.Raw("|")
+                        <a asp-controller="Report" asp-action="Details" asp-route-id="@report.Id">Details</a> @Html.Raw("|")
+                        <a asp-controller="Report" asp-action="Delete" asp-route-id="@report.Id">Delete</a> 
                     }
                     </dd>
                 }
@@ -97,7 +97,7 @@
             Sjekk ut
         </button>
 
-        <a href="/Reports/Create/@Model.Id" class="btn btn-warning">Rapporter feil</a>
+        <a href="/Report/Create/@Model.Id" class="btn btn-warning">Rapporter feil</a>
 
         @if (User.IsInRole("Admin"))
         {

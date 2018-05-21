@@ -33,13 +33,13 @@
                     {{ r.user.userName }}
                 </td>
                 <td>
-                    <button type="button" class="btn btn-default" title="Merk som løst"
-                    v-on:click="markAsResolved(r.id)" v-if="!r.isResolved" id="notResolvedButton">
+                    <button type="button" class="resolveButton btn btn-default" title="Merk som løst"
+                    v-on:click="markAsResolved(r.id)" v-if="!r.isResolved">
                     <span class="glyphicon glyphicon-ok-sign" id="okSign"></span>
                     </button>
 
-                    <button type="button" class="btn btn-default" title="Merk som uløst" 
-                    v-on:click="markAsResolved(r.id)" v-else id="notResolvedButton">
+                    <button type="button" class="resolveButton btn btn-default" title="Merk som uløst" 
+                    v-on:click="markAsResolved(r.id)" v-else>
                     <span class="glyphicon glyphicon-ok-sign" id="okSignGreen"></span>
                     </button>
                 </td>
@@ -51,9 +51,9 @@
                             <span class="more-dot"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a v-bind:href="'/Reports/Edit/' + r.id">Edit</a></li>
-                            <li><a v-bind:href="'/Reports/Details/' + r.id">Details</a></li>
-                            <li><a v-bind:href="'/Reports/Delete/' + r.id">Delete</a></li>
+                            <li><a v-bind:href="'/Report/Edit/' + r.id">Edit</a></li>
+                            <li><a v-bind:href="'/Report/Details/' + r.id">Details</a></li>
+                            <li><a v-bind:href="'/Report/Delete/' + r.id">Delete</a></li>
                         </ul>
                     </div>
                 </td>

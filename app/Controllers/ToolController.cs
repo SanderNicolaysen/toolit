@@ -62,8 +62,6 @@ namespace app.Controllers
 
             await _context.SaveChangesAsync();
 
-    
-
             return View(tool);
         }
 

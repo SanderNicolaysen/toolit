@@ -43,7 +43,8 @@
                     v-bind:class="{ 'glyphicon-star': tool.favorite, 'glyphicon-star-empty' : !tool.favorite }">
                 </span>
             </td>
-            @if (User.IsInRole("Admin")) {
+            @if (User.IsInRole("Admin")) 
+            {
                 <td>
                     <div class="dropdown">
                         <button id="more-btn" class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">
@@ -56,12 +57,6 @@
                             <li><a v-bind:href="'Tool/Delete/' + tool.id">Delete</a></li>
                         </ul>
                     </div>
-                </td>
-            }
-            else 
-            {
-                <td>
-                    <a class="btn btn-primary btn-sm" v-bind:href="'Tool/Details/' + tool.id">Details</a>
                 </td>
             }
         </tr>

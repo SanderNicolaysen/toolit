@@ -43,5 +43,25 @@
       "enabled": true,
       "renameLocals": true
     }
+  },
+  {
+    "outputFileName": "wwwroot/lib/qtip2/3.0.3/jquery.qtip.min.js",
+    "inputFiles": [
+      "wwwroot/lib/qtip2/3.0.3/jquery.qtip.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/lib/qtip2/3.0.3/jquery.qtip.min.css",
+    "inputFiles": [
+      "wwwroot/lib/qtip2/3.0.3/jquery.qtip.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
   }
 ]

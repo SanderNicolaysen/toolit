@@ -1,9 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
-    ViewData["Title"] = "Signed out";
+    ViewData["Title"] = Localizer["Signed out"];
 }
 
 <h2>@ViewData["Title"]</h2>
 <p>
-    You have successfully signed out.
+    @Localizer["You have successfully signed out"].
 </p>

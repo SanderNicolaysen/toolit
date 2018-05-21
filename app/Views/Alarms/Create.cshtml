@@ -1,12 +1,12 @@
 @model app.Models.AlarmViewModels.CreateViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = Localizer["Create"];
 }
 
-<h2>Create</h2>
+<h2>@Localizer["Create"]</h2>
 
-<h4>Alarm</h4>
+<h4>@Localizer["Alarm"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -39,6 +39,6 @@
 </div>
 
 <div>
-    <a asp-controller="Tool" asp-action="Index">Back to List</a>
+    <a asp-controller="Tool" asp-action="Index">@Localizer["Back to List"]</a>
 </div>
 

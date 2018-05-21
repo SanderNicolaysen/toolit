@@ -15,6 +15,10 @@ using Newtonsoft.Json;
 using app.Data;
 using app.Models;
 using app.Services;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 
 namespace app
 {
@@ -43,7 +47,24 @@ namespace app
             services.AddMvc().AddJsonOptions(options => {
                 // This option prevents infinite reference loops in your models when serializing to Json
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            });
+                })  .AddDataAnnotationsLocalization();
+
+            // Adds resource path for language files and enables localization
+            services.AddLocalization(opts => { opts.ResourcesPath = "LanguageResources"; });
+
+            services.Configure<RequestLocalizationOptions>(
+                opts =>
+                {
+                    var supportedCultures = new List<CultureInfo>
+                    {
+                        new CultureInfo("en"),
+                        new CultureInfo("no")
+                    };
+                    
+                    opts.DefaultRequestCulture = new RequestCulture("no");
+                    // UI strings that we have localized.
+                    opts.SupportedUICultures = supportedCultures;
+                });
 
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -56,6 +77,7 @@ namespace app
             services.AddTransient<IResizeImage, ResizeImage>();
             
             services.AddSingleton<IHostedService, AlarmBackgroundService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +94,9 @@ namespace app
             }
 
             app.UseStaticFiles();
+
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
 
             app.UseAuthentication();
 

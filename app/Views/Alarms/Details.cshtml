@@ -1,13 +1,13 @@
 @model app.Models.Alarm
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Localizer["Details"];
 }
 
-<h2>Details</h2>
+<h2>@Localizer["Details"]</h2>
 
 <div>
-    <h4>Alarm</h4>
+    <h4>@Localizer["Alarm"]</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -25,6 +25,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-controller="Tool" asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">@Localizer["Edit"]</a> |
+    <a asp-controller="Tool" asp-action="Index">@Localizer["Back to List"]</a>
 </div>

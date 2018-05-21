@@ -1,18 +1,15 @@
 ﻿@model ExternalLoginViewModel
 @{
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = Localizer["Register"];
 }
 
 <h2>@ViewData["Title"]</h2>
-<h4>Associate your @ViewData["LoginProvider"] account.</h4>
+<h4>@Localizer["Associate your"] @ViewData["LoginProvider"] @Localizer["account"].</h4>
 <hr />
 
-<p class="text-info">
-    You've successfully authenticated with <strong>@ViewData["LoginProvider"]</strong>.
-    Please enter an email address for this site below and click the Register button to finish
-    logging in.
-</p>
+<p class="text-info">@Localizer["You've successfully authenticated with"]<strong>@ViewData["LoginProvider"]</strong>.
+    @Localizer["Please enter your email address below and click the Register button to complete the registration"].</p>
 
 <div class="">
     <div class="">
@@ -23,7 +20,7 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-default">Register</button>
+            <button type="submit" class="btn btn-default">@Localizer["Register"]</button>
         </form>
     </div>
 </div>

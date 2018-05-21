@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Access denied" xml:space="preserve">
+    <value>Ingen tilgang</value>
+  </data>
+  <data name="Confirm email" xml:space="preserve">
+    <value>Bekreft epost adresse</value>
+  </data>
+  <data name="Reset password" xml:space="preserve">
+    <value>Tilbakestill passord</value>
+  </data>
+  <data name="Enter your authenticator code below" xml:space="preserve">
+    <value>Skriv inn din autentiserings kode nedenfor</value>
+  </data>
+  <data name="Enter your email" xml:space="preserve">
+    <value>Skriv inn din epost adresse</value>
+  </data>
+  <data name="Forgot password confirmation" xml:space="preserve">
+    <value>Passordbekreftelse</value>
+  </data>
+  <data name="Forgot your password" xml:space="preserve">
+    <value>Glemt passord</value>
+  </data>
+  <data name="Locked out" xml:space="preserve">
+    <value>Utelåst</value>
+  </data>
+  <data name="Log in" xml:space="preserve">
+    <value>Innlogging</value>
+  </data>
+  <data name="log in with a recovery code" xml:space="preserve">
+    <value>logge inn med</value>
+  </data>
+  <data name="Please check your email to reset your password" xml:space="preserve">
+    <value>Du har nå motatt en epost om tilbakestilling av passord</value>
+  </data>
+  <data name="Please enter your email address below and click the Register button to complete the registration" xml:space="preserve">
+    <value>Vennligst fyll ut din epost adresse nedenfor og klikk på registrer for og fullføre registreringen</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Registrer</value>
+  </data>
+  <data name="Sign in" xml:space="preserve">
+    <value>Logg inn</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Bekreft</value>
+  </data>
+  <data name="Thank you for confirming your email" xml:space="preserve">
+    <value>Epost er bekreftet</value>
+  </data>
+  <data name="This account has been locked out, please try again later" xml:space="preserve">
+    <value>Denne brukeren har blitt utelåst, prøv igjen senere</value>
+  </data>
+  <data name="Two-factor authentication" xml:space="preserve">
+    <value>To-faktor autentisering</value>
+  </data>
+  <data name="You do not have access to this resource" xml:space="preserve">
+    <value>Du har ikke tilgang til denne ressursen</value>
+  </data>
+  <data name="You have requested to login with a recovery code. This login will not be remembered until you provide&#xD;&#xA;    an authenticator app code at login or disable 2FA and login again." xml:space="preserve">
+    <value>Du har bedt om å logge inn med en gjenopprettingskode. Denne innlogging vil ikke bli husket før du oppgir
+     en autentiseringskode ved innlogging eller deaktiverer 2FA og logger på igjen.</value>
+  </data>
+  <data name="You've successfully authenticated with" xml:space="preserve">
+    <value>Tilgang innvilget</value>
+  </data>
+  <data name="account" xml:space="preserve">
+    <value>bruker</value>
+  </data>
+  <data name="Associate your" xml:space="preserve">
+    <value>Assosier din</value>
+  </data>
+  <data name="Create a new account" xml:space="preserve">
+    <value>Lag en ny bruker</value>
+  </data>
+  <data name="Don't have access to your authenticator device? You can log in with a" xml:space="preserve">
+    <value>Har du ikke tilgang til autentiserings enheten? Da kan du logge inn med en </value>
+  </data>
+  <data name="recovery code" xml:space="preserve">
+    <value>tilbakestillingskode</value>
+  </data>
+  <data name="Recovery code verification" xml:space="preserve">
+    <value>Tilbakestillingskode verifisering</value>
+  </data>
+  <data name="click here to log in" xml:space="preserve">
+    <value>klikk her for og logge inn</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Tilbakestill</value>
+  </data>
+  <data name="Reset your password" xml:space="preserve">
+    <value>Tilbakestill ditt passord</value>
+  </data>
+  <data name="Signed out" xml:space="preserve">
+    <value>Logget ut</value>
+  </data>
+  <data name="You have successfully signed out" xml:space="preserve">
+    <value>Du har blitt logget ut</value>
+  </data>
+  <data name="Your password has been reset. Please" xml:space="preserve">
+    <value>Ditt passord har blitt tilbakestillt. Vennligst</value>
+  </data>
+</root>

@@ -1,10 +1,18 @@
 @model IEnumerable<app.Models.Alarm>
 
 @{
+<<<<<<< HEAD:app/Views/Admin/Alarms.cshtml
     ViewData["Title"] = "Alarmer";
     ViewData.AddActivePage(ManageNavPages.Alarms);
 }
 
+=======
+    ViewData["Title"] = Localizer["Alarms"];
+}
+
+<h2>@Localizer["Alarms"]</h2>
+
+>>>>>>> Rebaser til master:app/Views/Alarms/Index.cshtml
 <table class="table">
     <thead>
         <tr>

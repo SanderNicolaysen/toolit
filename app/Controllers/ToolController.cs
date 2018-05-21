@@ -118,6 +118,9 @@ namespace app.Controllers
             var vm = new EditViewModel();
             vm.Tool = tool;
             vm.Statuses = await _context.Statuses.ToListAsync();
+
+            TempData["CurrentOwnerId"] = tool.CurrentOwnerId;
+
             return View(vm);
         }
 
@@ -166,6 +169,9 @@ namespace app.Controllers
 
             try
             {
+                if (TempData.ContainsKey("CurrentOwnerId"))
+                    tool.CurrentOwnerId = TempData["CurrentOwnerId"].ToString();
+
                 _context.Update(tool);
                 await _context.SaveChangesAsync();
             }

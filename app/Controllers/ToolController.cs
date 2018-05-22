@@ -119,8 +119,6 @@ namespace app.Controllers
             vm.Tool = tool;
             vm.Statuses = await _context.Statuses.ToListAsync();
 
-            TempData["CurrentOwnerId"] = tool.CurrentOwnerId;
-
             return View(vm);
         }
 
@@ -165,13 +163,11 @@ namespace app.Controllers
             {
                 tool.Image = pTool.Image;
                 tool.Thumbnail = pTool.Thumbnail;
+                tool.CurrentOwnerId = pTool.CurrentOwnerId;
             }
 
             try
             {
-                if (TempData.ContainsKey("CurrentOwnerId"))
-                    tool.CurrentOwnerId = TempData["CurrentOwnerId"].ToString();
-
                 _context.Update(tool);
                 await _context.SaveChangesAsync();
             }

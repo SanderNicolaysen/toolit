@@ -97,8 +97,6 @@ namespace app.Controllers
             return View(vm);
 =======
 
-            TempData["ToolId"] = alarm.ToolId;
-
             return View(alarm);
 >>>>>>> Added relevant tools and replaced 'options'-button with three dots in the alarm-list.
         }
@@ -117,12 +115,11 @@ namespace app.Controllers
 
             if (ModelState.IsValid)
             {
-                var toolId = int.Parse(TempData["ToolId"].ToString());
+                var pAlarm = await _context.Alarms.AsNoTracking().SingleOrDefaultAsync(a => a.Id == id);
 
                 try
                 {
-                    if (TempData.ContainsKey("ToolId"))
-                        alarm.ToolId = toolId;
+                    alarm.ToolId = pAlarm.ToolId;
 
                     _context.Update(alarm);
                     await _context.SaveChangesAsync();

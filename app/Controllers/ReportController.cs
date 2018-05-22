@@ -101,9 +101,6 @@ namespace app.Controllers
                 return BadRequest();
             }
 
-            TempData["ToolId"] = report.ToolId;
-            TempData["UserId"] = report.UserId;
-
             return View(report);
         }
 
@@ -121,15 +118,12 @@ namespace app.Controllers
 
             if (ModelState.IsValid)
             {
-                var toolId = int.Parse(TempData["ToolId"].ToString());
+                var pReport = await _context.Reports.AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
 
                 try
                 {
-                    if (TempData.ContainsKey("ToolId"))
-                        report.ToolId = toolId;
-
-                    if (TempData.ContainsKey("UserId"))
-                        report.UserId = TempData["UserId"].ToString();
+                    report.ToolId = pReport.ToolId;
+                    report.UserId = pReport.UserId;
                     
                     _context.Update(report);
                     await _context.SaveChangesAsync();
@@ -145,7 +139,7 @@ namespace app.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(ToolController.Details), "Tool", new { id = toolId });
+                return RedirectToAction(nameof(ToolController.Details), "Tool", new { id = pReport.ToolId });
             }
             return View(report);
         }

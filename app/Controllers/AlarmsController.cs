@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 using app.Data;
 using app.Models;
+using app.Models.AlarmViewModels;
 
 namespace app.Controllers
 {
@@ -41,9 +42,13 @@ namespace app.Controllers
         }
 
         // GET: Alarms/Create
-        public IActionResult Create(int id)
+        public async Task<IActionResult> Create(int id)
         {
-            return View();
+            var statuslist = await _context.Statuses.ToListAsync();
+            var vm = new CreateViewModel();
+            vm.Alarm.ToolId = id;
+            vm.Statuses = statuslist;
+            return View(vm);
         }
 
         // POST: Alarms/Create
@@ -51,7 +56,7 @@ namespace app.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int id, [Bind("Name,Date")] Alarm alarm)
+        public async Task<IActionResult> Create(int id, [Bind("Name,Date,StatusId")] Alarm alarm)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +89,11 @@ namespace app.Controllers
             {
                 return NotFound();
             }
-            return View(alarm);
+            var statuslist = await _context.Statuses.ToListAsync();
+            var vm = new EditViewModel();
+            vm.Alarm = alarm;
+            vm.Statuses = statuslist;
+            return View(vm);
         }
 
         // POST: Alarms/Edit/5
@@ -92,7 +101,7 @@ namespace app.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Date")] Alarm alarm)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Date,StatusId")] Alarm alarm)
         {
             if (id != alarm.Id)
             {

@@ -51,7 +51,11 @@ namespace app.Services
                 {
                     if (alarm.Date.CompareTo(localTime) < 0)
                     {
-                        alarm.Tool.StatusId = _db.Statuses.Single(s => s.StatusName == "Busy").Id;
+                        if (alarm.StatusId != null)
+                        {
+                            alarm.Tool.StatusId = (int) alarm.StatusId;
+                        }
+                        
                         foreach (var admin in admins)
                         {
                             await _nm.SendNotificationAsync(admin.Id, 

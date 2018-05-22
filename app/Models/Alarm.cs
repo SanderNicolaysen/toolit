@@ -17,5 +17,7 @@ namespace app.Models
         public DateTime Date { get; set; }
         public int ToolId { get; set; }
         public Tool Tool { get; set; }
+        public int? StatusId { get; set; }
+        public Status Status { get; set; }
     }
 }

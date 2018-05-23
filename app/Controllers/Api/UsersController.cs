@@ -155,10 +155,12 @@ namespace app.Controllers_Api
 
                 _nm.SendNotificationAsync(user.Id, 
                 "Du har blitt merket som administrator!", 
-                "/Tool").Wait();
+                "/Admin").Wait();
             }
             else
             {
+                await _um.RemoveFromRoleAsync(user, "Admin");
+
                 user.isAdmin = false;
 
                 _nm.SendNotificationAsync(user.Id, 

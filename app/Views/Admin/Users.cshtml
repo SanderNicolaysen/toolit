@@ -23,6 +23,7 @@
         <tr>
             <th>Brukernavn</th>
             <th>Epost</th>
+            <th>Administrator</th>
             <th></th>
         </tr>
     </thead>
@@ -30,6 +31,10 @@
         <tr v-for="user in filteredUsers" v-cloak>
             <td>{{ user.userName }}</td>
             <td>{{ user.email }}</td>
+            <td>
+                <p v-if="user.isAdmin">Ja</p>
+                <p v-else>Nei</p>
+            </td>
             <td class="fit">
                 <div class="dropdown">
                     <button id="more-btn" class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">

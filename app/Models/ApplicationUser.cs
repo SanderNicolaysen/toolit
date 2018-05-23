@@ -10,6 +10,7 @@ namespace app.Models
     public class ApplicationUser : IdentityUser
     {
         public bool ChangePassword { get; set; }
+        public bool isAdmin { get; set; }
 
         public List<Favorite> Favorites { get; set; }
 

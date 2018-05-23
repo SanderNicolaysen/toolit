@@ -26,7 +26,7 @@ namespace app.Data
             rm.CreateAsync(adminRole).Wait();
 
             // Add users
-            var admin = new ApplicationUser { UserName = "admin@uia.no", Email = "admin@uia.no", ChangePassword = true };
+            var admin = new ApplicationUser { UserName = "admin@uia.no", Email = "admin@uia.no", ChangePassword = true, isAdmin = true };
             um.CreateAsync(admin, "Password1.").Wait();
             um.AddToRoleAsync(admin, "Admin");
 

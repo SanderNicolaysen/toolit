@@ -21,9 +21,6 @@ namespace app.Controllers_Api
         {
             _um = um;
             _context = context;
-
-            var user = _context.Users.First();
-            _um.IsInRoleAsync(user, "Admin");
         }
 
         public class ApiRequest

@@ -149,7 +149,7 @@ namespace app.Controllers_Api
 
             return Ok(tool.Name + " checked in.");;
         }
-
+        
         private bool ValidateApiRequest(ApiRequest request)
         {
             return _context.ApiKeys.Any(api => api.Key == request.key);

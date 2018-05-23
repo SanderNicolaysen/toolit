@@ -110,12 +110,11 @@ namespace app.Controllers
 
             if (ModelState.IsValid)
             {
-                var toolId = int.Parse(TempData["ToolId"].ToString());
+                var pAlarm = await _context.Alarms.AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
 
                 try
                 {
-                    if (TempData.ContainsKey("ToolId"))
-                        alarm.ToolId = toolId;
+                    alarm.ToolId = pAlarm.ToolId;
 
                     _context.Update(alarm);
                     await _context.SaveChangesAsync();

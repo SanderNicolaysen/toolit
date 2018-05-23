@@ -32,8 +32,15 @@
             <td>{{ user.userName }}</td>
             <td>{{ user.email }}</td>
             <td>
-                <p v-if="user.isAdmin">Ja</p>
-                <p v-else>Nei</p>
+                <button type="button" class="resolveButton btn btn-default" title="Merk som administrator"
+                v-on:click="markAsAdmin(user.id)" v-if="!user.isAdmin">
+                <span class="glyphicon glyphicon-ok-sign" id="okSign"></span>
+                </button>
+
+                <button type="button" class="resolveButton btn btn-default" title="Merk som vanlig bruker" 
+                v-on:click="markAsAdmin(user.id)" v-else>
+                <span class="glyphicon glyphicon-ok-sign" id="okSignGreen"></span>
+                </button>
             </td>
             <td class="fit">
                 <div class="dropdown">
@@ -63,19 +70,35 @@ var app = new Vue({
         search: ''
     },
     created: function () {
-        var self = this;
-
-        // Fetch list of users
-        axios.get('/api/users')
-        .then(function (response) { 
-        self.users = response.data; 
-        });    
+        this.loadUsers();  
     },
     computed: {
         filteredUsers: function() {
             return this.users.filter((user) => {
                 return user.userName.toLowerCase().match(this.search.toLowerCase());
             })
+        }
+    },
+    methods: {
+        loadUsers: function() {
+            var self = this;
+
+            // Fetch list of users
+            axios.get('/api/Users')
+            .then(function (response) {
+                self.users = response.data;
+            }); 
+        },
+        markAsAdmin: function(id) {
+            var self = this;
+
+            axios.put('/api/Users/' + id + '/markAsAdmin')
+            .then(function (response){
+                if (response.status == 200)
+                {
+                    self.loadUsers();
+                }
+            });
         }
     }
 })

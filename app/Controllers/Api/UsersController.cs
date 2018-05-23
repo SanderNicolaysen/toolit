@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using app.Data;
 using app.Models;
+using app.Services;
 
 namespace app.Controllers_Api
 {
@@ -18,17 +20,21 @@ namespace app.Controllers_Api
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly INotificationManager _nm;
+        private readonly UserManager<ApplicationUser> _um;
 
-        public UsersController(ApplicationDbContext context)
+        public UsersController(ApplicationDbContext context, INotificationManager nm, UserManager<ApplicationUser> um)
         {
             _context = context;
+            _nm = nm;
+            _um = um;
         }
 
         // GET: api/Users
         [HttpGet]
         public IEnumerable<ApplicationUser> GetApplicationUser()
         {
-            return _context.Users;
+            return _context.Users.OrderByDescending(u => u.isAdmin);
         }
 
         // GET: api/Users/5
@@ -124,6 +130,47 @@ namespace app.Controllers_Api
         private bool ApplicationUserExists(string id)
         {
             return _context.Users.Any(e => e.Id == id);
+        }
+
+        // PUT: api/Users/5/markAsAdmin
+        [HttpPut("{id}/markAsAdmin")]
+        public async Task<IActionResult> MarkAsAdmin([FromRoute] string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (!user.isAdmin)
+            {
+                await _um.AddToRoleAsync(user, "Admin");
+
+                user.isAdmin = true;
+
+                _nm.SendNotificationAsync(user.Id, 
+                "Du har blitt merket som administrator!", 
+                "/Tool").Wait();
+            }
+            else
+            {
+                user.isAdmin = false;
+
+                _nm.SendNotificationAsync(user.Id, 
+                "Du har blitt merket som en vanlig bruker!", 
+                "/Tool").Wait();
+            }
+
+            _context.Update(user);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }

@@ -16,5 +16,7 @@ namespace app.Models
         public List<Favorite> Favorites { get; set; }
 
         public List<Notification> Notifications { get; set; }
+
+        public string UserIdentifierCode { get; set; }
     }
 }

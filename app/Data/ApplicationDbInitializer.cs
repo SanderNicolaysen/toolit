@@ -33,10 +33,10 @@ namespace app.Data
             um.CreateAsync(admin, "Password1.").Wait();
             um.AddToRolesAsync(admin, new List<string>(new string[]{"Admin", "SuperAdmin"}));
 
-            var user1 = new ApplicationUser { UserName = "ole@uia.no", Email = "ole@uia.no", ChangePassword = true };
+            var user1 = new ApplicationUser { UserName = "ole@uia.no", Email = "ole@uia.no", ChangePassword = true, UserIdentifierCode = "1" };
             um.CreateAsync(user1, "Password1.");
 
-            var user2 = new ApplicationUser { UserName = "dole@uia.no", Email = "dole@uia.no", ChangePassword = true };
+            var user2 = new ApplicationUser { UserName = "dole@uia.no", Email = "dole@uia.no", ChangePassword = true, UserIdentifierCode = "5" };
             um.CreateAsync(user2, "Password1.");
 
             var user3 = new ApplicationUser { UserName = "doffen@uia.no", Email = "doffen@uia.no", ChangePassword = true };
@@ -61,10 +61,12 @@ namespace app.Data
                 new Tool("Kniv", statusAvailable, new List<Report>() { new Report(5, "Test", user1.Id) }, new List<Alarm>(), "stikker")
             };
 
+            var toolRFIDcode = 100;
             foreach (var tool in tools)
             {
                 tool.Image = "images/example_tools/" + tool.Name.ToLower() + ".jpg";
                 tool.Thumbnail = "images/example_tools/" + tool.Name.ToLower() + "_thumb.jpg";
+                tool.ToolIdentifierCode = (toolRFIDcode++).ToString();
             }
 
             db.AddRange(tools);

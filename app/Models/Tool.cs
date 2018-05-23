@@ -27,5 +27,6 @@ namespace app.Models
         public List<Report> Reports { get; set; }
         public List<Alarm> Alarms { get; set; }
         public string Alias { get; set; }
+        public string ToolIdentifierCode { get; set; }
     }
 }

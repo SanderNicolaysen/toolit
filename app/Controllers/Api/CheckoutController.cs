@@ -24,28 +24,28 @@ namespace app.Controllers_Api
             _context = context;
         }
 
-        public class RequestBody
+        public class ApiRequest
         {
-            public string token;
+            public string key;
             public string userIdentifierCode;
             public string toolIdentifierCode;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Interface([FromBody] RequestBody requestBody)
+        public async Task<IActionResult> Interface([FromBody] ApiRequest request)
         {
-            if (requestBody.token != "ABCabc123")
+            if (!ValidateApiRequest(request))
             {
-                return BadRequest("Invalid api token");
+                return BadRequest("Invalid request key");
             }
 
-            var tool = await _context.Tools.SingleOrDefaultAsync(t => t.ToolIdentifierCode == requestBody.toolIdentifierCode);
+            var tool = await _context.Tools.SingleOrDefaultAsync(t => t.ToolIdentifierCode == request.toolIdentifierCode);
             if (tool == null)
             {
                 return BadRequest(new { toolIdentifierCode = "Not a valid identifier code for a tool."});
             }
 
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserIdentifierCode == requestBody.userIdentifierCode);
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserIdentifierCode == request.userIdentifierCode);
             if (user == null)
             {
                 return BadRequest(new { userIdentifierCode = "Not a valid identifier code for a user."});
@@ -98,6 +98,11 @@ namespace app.Controllers_Api
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        private bool ValidateApiRequest(ApiRequest request)
+        {
+            return _context.ApiKeys.Any(api => api.Key == request.key);
         }
     }
 }

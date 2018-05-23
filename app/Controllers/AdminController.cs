@@ -172,6 +172,73 @@ namespace app.Controllers
             return View(await _context.Reports.Include(r => r.Tool).ToListAsync());
         }
 
+        public async Task<IActionResult> API()
+        {
+            return View(await _context.ApiKeys.ToListAsync());
+        }
+
+        [HttpGet]        
+        public IActionResult AddAPI()
+        {
+            return View(new ApiKey());
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddAPI([Bind("Name")] ApiKey apiKey)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(apiKey);
+            }
+
+            apiKey.Key = ApiKey.GenerateApiKey();
+            _context.Add(apiKey);
+            await _context.SaveChangesAsync();
+            
+            return RedirectToAction(nameof(API));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteAPI(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var apiKey = await _context.ApiKeys.SingleOrDefaultAsync(key => key.Id == id);
+            if (apiKey == null)
+            {
+                return NotFound();
+            }
+
+            return View(apiKey);
+        }
+
+        [HttpPost, ActionName("DeleteAPI")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConfirmDeleteAPI(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var apiKey = await _context.ApiKeys.SingleOrDefaultAsync(key => key.Id == id);
+
+            if (apiKey == null)
+            {
+                return NotFound();
+            }
+
+            _context.ApiKeys.Remove(apiKey);
+            await _context.SaveChangesAsync();
+            
+            return RedirectToAction(nameof(API));
+        }
+        
+
         public async Task<IActionResult> Log()
         {
             return View(await _context.Logs.OrderByDescending(l => l.FromDate).Include(l => l.User).Include(l => l.Tool).ToListAsync());

@@ -1,0 +1,53 @@
+@model IEnumerable<app.Models.ApiKey>
+
+@using System;
+@using System.Globalization;
+
+@{
+    ViewData["Title"] = "Logg";
+    ViewData.AddActivePage(ManageNavPages.API);
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <a asp-action="AddAPI" class="btn btn-default">Opprett en ny API-nøkkel</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2>API-nøkler</h2>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Navn</th>
+                    <th>Nøkkel</th>
+                    <th class="fit"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var k in Model)
+                {
+                    <tr>
+                        <td>@k.Name</td>
+                        <td>
+                            <code>@k.Key</code>
+                        </td>
+                        <td class="fit">
+                            <div class="dropdown">
+                                <button id="more-btn" class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">
+                                    <span class="more-dot"></span>
+                                    <span class="more-dot"></span>
+                                    <span class="more-dot"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a asp-action="DeleteAPI" asp-route-id="@k.Id">Slett</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

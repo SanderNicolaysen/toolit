@@ -11,6 +11,7 @@ namespace app.Models
     {
         public bool ChangePassword { get; set; }
         public bool isAdmin { get; set; }
+        public bool isSuperAdmin { get; set; }
 
         public List<Favorite> Favorites { get; set; }
 

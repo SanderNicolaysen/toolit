@@ -23,7 +23,10 @@
         <tr>
             <th>Brukernavn</th>
             <th>Epost</th>
-            <th>Administrator</th>
+            @if (User.IsInRole("SuperAdmin"))
+            {
+                <th>Administrator</th>
+            }
             <th></th>
         </tr>
     </thead>
@@ -31,17 +34,24 @@
         <tr v-for="user in filteredUsers" v-cloak>
             <td>{{ user.userName }}</td>
             <td>{{ user.email }}</td>
-            <td>
-                <button type="button" class="okSignButton btn btn-default" title="Merk som administrator"
-                v-on:click="markAsAdmin(user.id)" v-if="!user.isAdmin">
-                <span class="okSign glyphicon glyphicon-ok-sign"></span>
-                </button>
+            @if (User.IsInRole("SuperAdmin"))
+            {
+                <td>
+                    <p v-if="user.isSuperAdmin">Super-Administrator</p>
 
-                <button type="button" class="okSignButton btn btn-default" title="Merk som vanlig bruker"
-                v-on:click="markAsAdmin(user.id)" v-else>
-                <span class="okSignGreen glyphicon glyphicon-ok-sign"></span>
-                </button>
-            </td>
+                    <div v-else>
+                        <button type="button" class="okSignButton btn btn-default" title="Merk som administrator"
+                        v-on:click="markAsAdmin(user.id, user.userName, user.isAdmin)" v-if="!user.isAdmin">
+                        <span class="okSign glyphicon glyphicon-ok-sign"></span>
+                        </button>
+
+                        <button type="button" class="okSignButton btn btn-default" title="Merk som vanlig bruker"
+                        v-on:click="markAsAdmin(user.id, user.userName, user.isAdmin)" v-else>
+                        <span class="okSignGreen glyphicon glyphicon-ok-sign"></span>
+                        </button>
+                    </div>
+                </td>
+            }
             <td class="fit">
                 <div class="dropdown">
                     <button id="more-btn" class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">
@@ -59,9 +69,21 @@
         </tr>
     </tbody>
 </table>
+
+<!-- Confirmation dialog -->
+    @await Html.PartialAsync("ConfirmDialogPartial")
 </div>
 
 @section Scripts {
+
+<!-- Script for custom confirmation dialog -->
+<environment include="Development">
+    <script src="~/js/confirm-dialog.js"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/js/confirm-dialog.min.js"></script>
+</environment>
+
 <script>
 var app = new Vue({
     el: '#app',
@@ -89,16 +111,37 @@ var app = new Vue({
                 self.users = response.data;
             }); 
         },
-        markAsAdmin: function(id) {
+        markAsAdmin: function(id, userName, isAdmin) {
             var self = this;
 
-            axios.put('/api/Users/' + id + '/markAsAdmin')
-            .then(function (response){
-                if (response.status == 200)
-                {
-                    self.loadUsers();
+            var options;
+
+            if (isAdmin)
+            {
+                options = {
+                title: 'Vennligst bekreft',
+                message: 'Er du sikker på at du vil merke ' 
+                + userName + ' som en vanlig bruker?' 
                 }
-            });
+            }
+            else
+            {
+                options = {
+                title: 'Vennligst bekreft',
+                message: 'Er du sikker på at du vil merke ' 
+                + userName + ' som en administrator?' 
+                }
+            }
+            
+            ConfirmDialog(options, function(){
+                axios.put('/api/Users/' + id + '/markAsAdmin')
+                    .then(function (response){
+                        if (response.status == 200)
+                        {
+                            self.loadUsers();
+                        }
+                });
+            })   
         }
     }
 })

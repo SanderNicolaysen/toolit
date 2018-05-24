@@ -14,7 +14,6 @@ using app.Services;
 
 namespace app.Controllers_Api
 {
-    [Authorize(Roles = "Admin")]
     [Produces("application/json")]
     [Route("api/Users")]
     public class UsersController : Controller
@@ -32,6 +31,7 @@ namespace app.Controllers_Api
 
         // GET: api/Users
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IEnumerable<ApplicationUser> GetApplicationUser()
         {
             return _context.Users.OrderByDescending(u => u.isAdmin);
@@ -39,6 +39,7 @@ namespace app.Controllers_Api
 
         // GET: api/Users/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetApplicationUser([FromRoute] string id)
         {
             if (!ModelState.IsValid)
@@ -58,6 +59,7 @@ namespace app.Controllers_Api
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutApplicationUser([FromRoute] string id, [FromBody] ApplicationUser applicationUser)
         {
             if (!ModelState.IsValid)
@@ -93,6 +95,7 @@ namespace app.Controllers_Api
 
         // POST: api/Users
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PostApplicationUser([FromBody] ApplicationUser applicationUser)
         {
             if (!ModelState.IsValid)
@@ -108,6 +111,7 @@ namespace app.Controllers_Api
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteApplicationUser([FromRoute] string id)
         {
             if (!ModelState.IsValid)
@@ -127,6 +131,7 @@ namespace app.Controllers_Api
             return Ok(applicationUser);
         }
 
+        [Authorize(Roles = "Admin")]
         private bool ApplicationUserExists(string id)
         {
             return _context.Users.Any(e => e.Id == id);
@@ -134,6 +139,7 @@ namespace app.Controllers_Api
 
         // PUT: api/Users/5/markAsAdmin
         [HttpPut("{id}/markAsAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> MarkAsAdmin([FromRoute] string id)
         {
             if (!ModelState.IsValid)

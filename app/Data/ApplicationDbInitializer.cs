@@ -25,10 +25,13 @@ namespace app.Data
             var adminRole = new IdentityRole("Admin");
             rm.CreateAsync(adminRole).Wait();
 
+            var superAdminRole = new IdentityRole("SuperAdmin");
+            rm.CreateAsync(superAdminRole).Wait();
+
             // Add users
-            var admin = new ApplicationUser { UserName = "admin@uia.no", Email = "admin@uia.no", ChangePassword = true, isAdmin = true };
+            var admin = new ApplicationUser { UserName = "admin@uia.no", Email = "admin@uia.no", ChangePassword = true, isAdmin = true, isSuperAdmin = true };
             um.CreateAsync(admin, "Password1.").Wait();
-            um.AddToRoleAsync(admin, "Admin");
+            um.AddToRolesAsync(admin, new List<string>(new string[]{"Admin", "SuperAdmin"}));
 
             var user1 = new ApplicationUser { UserName = "ole@uia.no", Email = "ole@uia.no", ChangePassword = true };
             um.CreateAsync(user1, "Password1.");

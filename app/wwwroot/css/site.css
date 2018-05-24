@@ -167,8 +167,8 @@ nav.navbar .navbar-toggle .icon-bar {
     border-radius: 10px;
 }
 
-/* Resolve-report-button */
-.resolveButton.btn.btn-default {
+/* Ok-sign-button */
+.okSignButton.btn.btn-default {
 	background-color: transparent;
 	border: none;
 	outline: none;
@@ -176,16 +176,16 @@ nav.navbar .navbar-toggle .icon-bar {
 	line-height: normal;
 }
 
-#okSign {
+.okSign {
 	color: #777;
 	transition: background-color 0.3s;
 }
 
-.resolveButton:hover #okSign {
+.okSignButton:hover .okSign {
   	color: #8EE783;
 }
 
-#okSignGreen {
+.okSignGreen {
 	color: #8EE783;
 }
 

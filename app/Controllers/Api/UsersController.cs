@@ -154,7 +154,7 @@ namespace app.Controllers_Api
                 user.isAdmin = true;
 
                 _nm.SendNotificationAsync(user.Id, 
-                "Du har blitt merket som administrator!", 
+                "Du har blitt merket som en administrator!", 
                 "/Admin").Wait();
             }
             else

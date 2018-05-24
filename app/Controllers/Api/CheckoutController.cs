@@ -12,7 +12,6 @@ using app.Data;
 namespace app.Controllers_Api
 {
     [Produces("application/json")]
-    [Route("api/checkout")]
     public class CheckoutController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -31,7 +30,34 @@ namespace app.Controllers_Api
             public string toolIdentifierCode;
         }
 
-        [HttpPost]
+        [HttpPost("api/checkuser")]
+        public async Task<IActionResult> CheckUser([FromBody][Bind("key, userIdentifierCode")] ApiRequest request)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserIdentifierCode == request.userIdentifierCode);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            
+            return Ok(user.UserName);
+        }
+
+        [HttpPost("api/checktool")]
+        public async Task<IActionResult> CheckTool([FromBody][Bind("key, toolIdentifierCode")] ApiRequest request)
+        {
+            var tool = await _context.Tools.SingleOrDefaultAsync(t => t.ToolIdentifierCode == request.toolIdentifierCode);
+
+            if (tool == null)
+            {
+                return NotFound();
+            }
+            
+            return Ok(tool.Name);
+        }
+
+        [HttpPost("api/checkout")]
+        [HttpPost("api/checkin")]
         public async Task<IActionResult> Interface([FromBody] ApiRequest request)
         {
             if (!ValidateApiRequest(request))
@@ -77,7 +103,7 @@ namespace app.Controllers_Api
 
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(tool.Name + " checked out.");
         }
 
         private async Task<IActionResult> Put(ApplicationUser user, Tool tool)
@@ -97,7 +123,7 @@ namespace app.Controllers_Api
             _context.Update(logEntry);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(tool.Name + " checked in.");;
         }
 
         private bool ValidateApiRequest(ApiRequest request)

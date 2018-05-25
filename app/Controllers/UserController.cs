@@ -106,6 +106,17 @@ namespace app.Controllers
                 return NotFound();
             }
 
+            // Nobody can delete the super-admin
+            if (applicationUser.isSuperAdmin)
+                return BadRequest();
+
+            // Admins can only delete non-admins
+            if (!User.IsInRole("SuperAdmin"))
+            {
+                if (applicationUser.isAdmin)
+                    return BadRequest();
+            }
+
             return View(applicationUser);
         }
 
@@ -115,6 +126,18 @@ namespace app.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var applicationUser = await _context.Users.SingleOrDefaultAsync(m => m.Id == id);
+
+            // Nobody can delete the super-admin
+            if (applicationUser.isSuperAdmin)
+                return BadRequest();
+
+            // Admins can only delete non-admins
+            if (!User.IsInRole("SuperAdmin"))
+            {
+                if (applicationUser.isAdmin)
+                    return BadRequest();
+            }
+
             _context.Users.Remove(applicationUser);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(AdminController.Users), "Admin");

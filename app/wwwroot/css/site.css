@@ -168,25 +168,12 @@ nav.navbar .navbar-toggle .icon-bar {
 }
 
 /* Ok-sign-button */
-.okSignButton.btn.btn-default {
-	background-color: transparent;
-	border: none;
-	outline: none;
-	box-shadow: none;
-	line-height: normal;
-}
-
-.okSign {
-	color: #777;
-	transition: background-color 0.3s;
-}
-
-.okSignButton:hover .okSign {
-  	color: #8EE783;
-}
-
 .okSignGreen {
-	color: #8EE783;
+	color: green;
+}
+
+.glyphicon-remove {
+	color: red;
 }
 
 /* Dropdown menu / More button */

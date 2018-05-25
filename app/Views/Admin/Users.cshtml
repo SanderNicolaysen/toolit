@@ -39,7 +39,7 @@
                     {
                         <button type="button" class="okSignButton btn btn-default" title="Merk som administrator"
                         v-on:click="markAsAdmin(user.id, user.userName, user.isAdmin)" v-if="!user.isAdmin">
-                        <span class="okSign glyphicon glyphicon-ok-sign"></span>
+                        <span class="okSign glyphicon glyphicon-remove"></span>
                         </button>
 
                         <button type="button" class="okSignButton btn btn-default" title="Merk som vanlig bruker"
@@ -49,7 +49,7 @@
                     }
                     else
                     {
-                        <span class="okSign glyphicon glyphicon-ok-sign" v-if="!user.isAdmin" title="Kun super-administratoren har lov til å merke vanlige brukere som administratorer"></span>
+                        <span class="okSign glyphicon glyphicon-remove" v-if="!user.isAdmin" title="Kun super-administratoren har lov til å merke vanlige brukere som administratorer"></span>
                         <span class="okSignGreen glyphicon glyphicon-ok-sign" v-else title="Kun super-administratoren har lov til å merke administratorer som vanlige brukere"></span>
                     }
                 </div>
@@ -72,7 +72,7 @@
     </tbody>
 </table>
 
-<!-- Confirmation dialog -->
+    <!-- Confirmation dialog -->
     @await Html.PartialAsync("ConfirmDialogPartial")
 </div>
 

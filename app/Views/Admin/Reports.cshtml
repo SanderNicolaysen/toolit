@@ -18,6 +18,9 @@
                 <th>
                     Bruker
                 </th>
+                <th>
+                    Løst
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -34,12 +37,12 @@
                 </td>
                 <td>
                     <button type="button" class="okSignButton btn btn-default" title="Merk som løst"
-                    v-on:click="markAsResolved(r.id)" v-if="!r.isResolved">
-                    <span class="okSign glyphicon glyphicon-ok-sign"></span>
+                    v-on:click="markAsResolved(r.id, false, r.error)" v-if="!r.isResolved">
+                    <span class="okSign glyphicon glyphicon-remove"></span>
                     </button>
 
                     <button type="button" class="okSignButton btn btn-default" title="Merk som uløst" 
-                    v-on:click="markAsResolved(r.id)" v-else>
+                    v-on:click="markAsResolved(r.id, true, r.error)" v-else>
                     <span class="okSignGreen glyphicon glyphicon-ok-sign"></span>
                     </button>
                 </td>
@@ -67,9 +70,20 @@
         }
         </tbody>
     </table>
+
+    <!-- Confirmation dialog -->
+    @await Html.PartialAsync("ConfirmDialogPartial")
 </div>
 
 @section Scripts {
+
+<!-- Script for custom confirmation dialog -->
+<environment include="Development">
+    <script src="~/js/confirm-dialog.js"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/js/confirm-dialog.min.js"></script>
+</environment>
 
 <script>
 var app = new Vue({
@@ -90,16 +104,37 @@ var app = new Vue({
                 self.reports = response.data;
             }); 
         },
-        markAsResolved: function(id) {
+        markAsResolved: function(id, isResolved, error) {
             var self = this;
 
-            axios.put('/api/Report/' + id + '/markAsResolved')
-            .then(function (response){
-                if (response.status == 200)
-                {
-                    self.loadReports();
+            var options;
+
+            if (isResolved)
+            {
+                options = {
+                title: 'Vennligst bekreft',
+                message: 'Er du sikker på at du vil merke rapporten "' 
+                + error + '" som uløst?' 
                 }
-            });
+            }
+            else
+            {
+                options = {
+                title: 'Vennligst bekreft',
+                message: 'Er du sikker på at du vil merke rapporten "' 
+                + error + '" som løst?' 
+                }
+            }
+
+            ConfirmDialog(options, function(){
+                axios.put('/api/Report/' + id + '/markAsResolved')
+                    .then(function (response){
+                        if (response.status == 200)
+                        {
+                            self.loadReports();
+                        }
+                });
+            })
         }
     }
 })

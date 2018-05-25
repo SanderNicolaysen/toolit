@@ -21,6 +21,9 @@ namespace app.Controllers_Api
         {
             _um = um;
             _context = context;
+
+            var user = _context.Users.First();
+            _um.IsInRoleAsync(user, "Admin");
         }
 
         public class ApiRequest
@@ -30,9 +33,25 @@ namespace app.Controllers_Api
             public string toolIdentifierCode;
         }
 
+        [HttpPost("api/echo")]
+        public IActionResult CheckApiKey([FromBody][Bind("key")] ApiRequest request)
+        {
+            if (!ValidateApiRequest(request))
+            {
+                return BadRequest("Invalid request key");
+            }
+
+            return Ok("Valid request key");
+        }
+
         [HttpPost("api/checkuser")]
         public async Task<IActionResult> CheckUser([FromBody][Bind("key, userIdentifierCode")] ApiRequest request)
         {
+            if (!ValidateApiRequest(request))
+            {
+                return BadRequest("Invalid request key");
+            }
+
             var user = await _context.Users.SingleOrDefaultAsync(u => u.UserIdentifierCode == request.userIdentifierCode);
 
             if (user == null)
@@ -46,6 +65,11 @@ namespace app.Controllers_Api
         [HttpPost("api/checktool")]
         public async Task<IActionResult> CheckTool([FromBody][Bind("key, toolIdentifierCode")] ApiRequest request)
         {
+            if (!ValidateApiRequest(request))
+            {
+                return BadRequest("Invalid request key");
+            }
+
             var tool = await _context.Tools.SingleOrDefaultAsync(t => t.ToolIdentifierCode == request.toolIdentifierCode);
 
             if (tool == null)

@@ -52,6 +52,7 @@
 #import
 import RPi.GPIO as GPIO
 import time
+import _thread
 
 # Define GPIO to LCD mapping
 LCD_RS = 26
@@ -73,6 +74,15 @@ LCD_LINE_2 = 0xC0 # LCD RAM address for the 2nd line
 # Timing constants
 E_PULSE = 0.0005
 E_DELAY = 0.0005
+
+# LCD line busy
+LINE_1_BUSY = False
+LINE_2_BUSY = False
+
+LINE_1_WAITING = False
+LINE_2_WAITING = False
+
+LCD_BUSY = False
 
 def lcd_setup():
   # Main program block
@@ -152,27 +162,111 @@ def lcd_toggle_enable():
 
 def lcd_string(message,line):
   # Send string to display
+  
+  global LINE_1_BUSY, LINE_1_WAITING
+  global LINE_2_BUSY, LINE_2_WAITING
+  # some thread things
+  if (line == LCD_LINE_1):
+    LINE_1_WAITING = True
+    while (LINE_1_BUSY):
+      time.sleep(0.01)
+    LINE_1_WAITING = False
+    LINE_1_BUSY = True
+  else:
+    LINE_2_WAITING = True
+    while (LINE_2_BUSY):
+      time.sleep(0.01)
+    LINE_1_WAITING = False
+    LINE_2_BUSY = True
+    
+  try:
+    _thread.start_new_thread(lcd_thread, (message, line, ))
+
+  except:
+    print ("ERROR: UNABLE TO PRINT TO LCD")
+
+def lcd_thread(message,line):
+
+  global LINE_1_BUSY, LINE_1_WAITING
+  global LINE_2_BUSY, LINE_2_WAITING
 
   if len(message) > LCD_WIDTH:
-    lcd_string(message[0:LCD_WIDTH], line)
+    str_to_byte_print(message[0:LCD_WIDTH], line)
     time.sleep(1.5)
     for i in range(0, len(message) - (LCD_WIDTH - 1)):
-      lcd_string(message[i:i+LCD_WIDTH], line)
+      str_to_byte_print(message[i:i+LCD_WIDTH], line)
       time.sleep(0.2)
-    time.sleep(2)
-    return
+    time.sleep(1.3)
 
+    if line == LCD_LINE_1:
+      replay_scroll(message, line)
+    else:
+      replay_scroll(message, line)
+
+  else:
+    str_to_byte_print(message, line)
+    time.sleep(2)
+
+  if line == LCD_LINE_1:
+    LINE_1_BUSY = False
+  else:
+    LINE_2_BUSY = False
+
+def replay_scroll(message, line):
+
+  global LINE_1_WAITING, LINE_2_WAITING, LINE_1_BUSY, LINE_2_BUSY
+
+  first_replay = True
+
+  if line == LCD_LINE_1:
+    while not LINE_1_WAITING:
+      if first_replay:
+        first_replay = False
+      else:
+        time.sleep(1.3)
+      i = 0
+      str_to_byte_print(message[i:LCD_WIDTH], line)
+      time.sleep(1.5)
+      while i < len(message) - (LCD_WIDTH - 1) and not LINE_1_WAITING:
+        str_to_byte_print(message[i:i + LCD_WIDTH], line)
+        time.sleep(0.2)
+        i += 1
+  else:
+    while not LINE_2_WAITING:
+      if first_replay:
+        first_replay = False
+      else:
+        time.sleep(1.3)
+      i = 0
+      str_to_byte_print(message[i:LCD_WIDTH], line)
+      time.sleep(1.5)
+      while i < len(message) - (LCD_WIDTH - 1) and not LINE_2_WAITING:
+        str_to_byte_print(message[i:i + LCD_WIDTH], line)
+        time.sleep(0.2)
+        i += 1
+
+
+  
+def str_to_byte_print(message, line):
   message = message.ljust(LCD_WIDTH," ")
 
-  lcd_byte(line, LCD_CMD)
+  global LCD_BUSY
 
+  while LCD_BUSY:
+    time.sleep(0.001)
+
+  LCD_BUSY = True
+
+  lcd_byte(line, LCD_CMD)
   for i in range(LCD_WIDTH):
     lcd_byte(ord(message[i]),LCD_CHR)
+  
+  LCD_BUSY = False
 
 if __name__ == '__main__':
 
   try:
-    main()
+    print("don't run this file")
   except KeyboardInterrupt:
     pass
   finally:

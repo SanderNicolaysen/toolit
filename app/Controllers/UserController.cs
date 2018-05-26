@@ -53,6 +53,21 @@ namespace app.Controllers
             {
                 return NotFound();
             }
+
+            // Only the superAdmin can edit himself/herself
+            if (applicationUser.isSuperAdmin)
+            {
+                if (!User.IsInRole("SuperAdmin"))
+                    return BadRequest();
+            }
+
+            // Admins can only edit non-admins
+            if (applicationUser.isAdmin)
+            {
+                if (!User.IsInRole("SuperAdmin"))
+                    return BadRequest();        
+            }
+
             return View(applicationUser);
         }
 
@@ -66,6 +81,20 @@ namespace app.Controllers
             if (id != applicationUser.Id)
             {
                 return NotFound();
+            }
+
+            // Only the superAdmin can edit himself/herself
+            if (applicationUser.isSuperAdmin)
+            {
+                if (!User.IsInRole("SuperAdmin"))
+                    return BadRequest();
+            }
+
+            // Admins can only edit non-admins
+            if (applicationUser.isAdmin)
+            {
+                if (!User.IsInRole("SuperAdmin"))
+                    return BadRequest();        
             }
 
             if (ModelState.IsValid)

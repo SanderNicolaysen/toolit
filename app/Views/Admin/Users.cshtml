@@ -62,14 +62,16 @@
                         <span class="more-dot"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a v-bind:href="'/User/Edit/' + user.id">Edit</a></li>
-                        <li><a v-bind:href="'/User/Details/' + user.id">Details</a></li>
                         @if (User.IsInRole("SuperAdmin"))
                         {
+                            <li><a v-bind:href="'/User/Edit/' + user.id">Edit</a></li>
+                            <li><a v-bind:href="'/User/Details/' + user.id">Details</a></li>
                             <li><a v-bind:href="'/User/Delete/' + user.id" v-if="!user.isSuperAdmin">Delete</a></li>
                         }
                         else
                         {
+                            <li><a v-bind:href="'/User/Edit/' + user.id" v-if="!user.isSuperAdmin && !user.isAdmin">Edit</a></li>
+                            <li><a v-bind:href="'/User/Details/' + user.id">Details</a></li>
                             <li><a v-bind:href="'/User/Delete/' + user.id" v-if="!user.isSuperAdmin && !user.isAdmin">Delete</a></li>
                         }
                     </ul>

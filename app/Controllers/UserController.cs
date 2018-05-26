@@ -185,6 +185,26 @@ namespace app.Controllers
                     return BadRequest();
             }
 
+            // Delete all of the logs which belong to this user
+            var pLogs = await _context.Logs.AsNoTracking().Where(l => l.UserId == applicationUser.Id).ToListAsync();
+            _context.Logs.RemoveRange(pLogs);
+
+            // Delete all of the reports which belong to this user
+            var pReports = await _context.Reports.AsNoTracking().Where(r => r.UserId == applicationUser.Id).ToListAsync();
+            _context.Reports.RemoveRange(pReports);
+
+            // Delete all of the reservations which belong to this user
+            var pReservations = await _context.Reservations.AsNoTracking().Where(r => r.UserId == applicationUser.Id).ToListAsync();
+            _context.Reservations.RemoveRange(pReservations);
+
+            // Delete all of the favorites which belong to this user
+            var pFavorites = await _context.Favorites.AsNoTracking().Where(f => f.UserId == applicationUser.Id).ToListAsync();
+            _context.Favorites.RemoveRange(pFavorites);
+
+            // Delete all of the notifications which belong to this user
+            var pNotifications = await _context.Notifications.AsNoTracking().Where(n => n.UserId == applicationUser.Id).ToListAsync();
+            _context.Notifications.RemoveRange(pNotifications);
+
             _context.Users.Remove(applicationUser);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(AdminController.Users), "Admin");

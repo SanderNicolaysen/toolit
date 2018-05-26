@@ -76,7 +76,7 @@ namespace app.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,UserName,Email,PhoneNumber")] ApplicationUser applicationUser)
         {
             if (id != applicationUser.Id)
             {
@@ -105,6 +105,19 @@ namespace app.Controllers
                 {
                     applicationUser.isAdmin = pUser.isAdmin;
                     applicationUser.isSuperAdmin = pUser.isSuperAdmin;
+
+                    applicationUser.NormalizedUserName = applicationUser.UserName.ToUpper();
+                    applicationUser.NormalizedEmail = applicationUser.Email.ToUpper();
+
+                    applicationUser.EmailConfirmed = pUser.EmailConfirmed;
+                    applicationUser.PasswordHash = pUser.PasswordHash;
+                    applicationUser.SecurityStamp = pUser.SecurityStamp;
+                    applicationUser.ConcurrencyStamp = pUser.ConcurrencyStamp;
+                    applicationUser.PhoneNumberConfirmed = pUser.PhoneNumberConfirmed;
+                    applicationUser.TwoFactorEnabled = pUser.TwoFactorEnabled;
+                    applicationUser.LockoutEnd = pUser.LockoutEnd;
+                    applicationUser.LockoutEnabled = pUser.LockoutEnabled;
+                    applicationUser.AccessFailedCount = pUser.AccessFailedCount;
 
                     _context.Update(applicationUser);
                     await _context.SaveChangesAsync();

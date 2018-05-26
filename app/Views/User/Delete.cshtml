@@ -4,102 +4,58 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Slett</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Er du sikker på at du vil slette denne brukeren?</h3>
 <div>
-    <h4>User</h4>
+    <h4>Bruker</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.UserName)
+            Brukernavn
         </dt>
         <dd>
             @Html.DisplayFor(model => model.UserName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.NormalizedUserName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NormalizedUserName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            E-post
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.NormalizedEmail)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NormalizedEmail)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EmailConfirmed)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EmailConfirmed)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PasswordHash)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SecurityStamp)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SecurityStamp)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ConcurrencyStamp)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ConcurrencyStamp)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            Telefonnummer
         </dt>
         <dd>
             @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-        </dt>
+        <dt>Super-Administrator</dt>
         <dd>
-            @Html.DisplayFor(model => model.PhoneNumberConfirmed)
+            @if (Model.isSuperAdmin)
+            {
+                @Html.Raw("Ja")
+            }
+            else
+            {
+                @Html.Raw("Nei")
+            }
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TwoFactorEnabled)
-        </dt>
+        <dt>Administrator</dt>
         <dd>
-            @Html.DisplayFor(model => model.TwoFactorEnabled)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LockoutEnd)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LockoutEnd)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LockoutEnabled)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LockoutEnabled)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AccessFailedCount)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AccessFailedCount)
+            @if (Model.isAdmin)
+            {
+                @Html.Raw("Ja")
+            }
+            else
+            {
+                @Html.Raw("Nei")
+            }
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-controller="Admin" asp-action="Users">Back to List</a>
+        <input type="submit" value="Slett" class="btn btn-default" /> |
+        <a asp-controller="Admin" asp-action="Users">Tilbake til Liste</a>
     </form>
 </div>

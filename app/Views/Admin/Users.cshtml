@@ -22,7 +22,8 @@
     <thead>
         <tr>
             <th>Brukernavn</th>
-            <th>Epost</th>
+            <th>E-post</th>
+            <th>Telefonnummer</th>
             <th>Administrator</th>
             <th></th>
         </tr>
@@ -31,6 +32,7 @@
         <tr v-for="user in filteredUsers" v-cloak>
             <td>{{ user.userName }}</td>
             <td>{{ user.email }}</td>
+            <td>{{ user.phoneNumber }}</td>
             <td>
                 <p v-if="user.isSuperAdmin">Super-Administrator</p>
 
@@ -64,15 +66,15 @@
                     <ul class="dropdown-menu dropdown-menu-right">
                         @if (User.IsInRole("SuperAdmin"))
                         {
-                            <li><a v-bind:href="'/User/Edit/' + user.id">Edit</a></li>
-                            <li><a v-bind:href="'/User/Details/' + user.id">Details</a></li>
-                            <li><a v-bind:href="'/User/Delete/' + user.id" v-if="!user.isSuperAdmin">Delete</a></li>
+                            <li><a v-bind:href="'/User/Edit/' + user.id">Endre</a></li>
+                            <li><a v-bind:href="'/User/Details/' + user.id">Detaljer</a></li>
+                            <li><a v-bind:href="'/User/Delete/' + user.id" v-if="!user.isSuperAdmin">Slett</a></li>
                         }
                         else
                         {
-                            <li><a v-bind:href="'/User/Edit/' + user.id" v-if="!user.isSuperAdmin && !user.isAdmin">Edit</a></li>
-                            <li><a v-bind:href="'/User/Details/' + user.id">Details</a></li>
-                            <li><a v-bind:href="'/User/Delete/' + user.id" v-if="!user.isSuperAdmin && !user.isAdmin">Delete</a></li>
+                            <li><a v-bind:href="'/User/Edit/' + user.id" v-if="!user.isSuperAdmin && !user.isAdmin">Endre</a></li>
+                            <li><a v-bind:href="'/User/Details/' + user.id">Detaljer</a></li>
+                            <li><a v-bind:href="'/User/Delete/' + user.id" v-if="!user.isSuperAdmin && !user.isAdmin">Slett</a></li>
                         }
                     </ul>
                 </div>

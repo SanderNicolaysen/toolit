@@ -99,8 +99,13 @@ namespace app.Controllers
 
             if (ModelState.IsValid)
             {
+                var pUser = await _context.Users.AsNoTracking().SingleOrDefaultAsync(r => r.Id == id);
+
                 try
                 {
+                    applicationUser.isAdmin = pUser.isAdmin;
+                    applicationUser.isSuperAdmin = pUser.isSuperAdmin;
+
                     _context.Update(applicationUser);
                     await _context.SaveChangesAsync();
                 }

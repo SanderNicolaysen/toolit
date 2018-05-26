@@ -167,8 +167,8 @@ nav.navbar .navbar-toggle .icon-bar {
     border-radius: 10px;
 }
 
-/* Ok-sign-button */
-.okSignGreen {
+/* Ok-remove-button */
+.glyphicon-ok-sign {
 	color: green;
 }
 

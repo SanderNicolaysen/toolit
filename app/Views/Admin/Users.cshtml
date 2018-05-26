@@ -39,14 +39,14 @@
                 <div v-else>
                     @if (User.IsInRole("SuperAdmin"))
                     {
-                        <button type="button" class="okSignButton btn btn-default" title="Merk som administrator"
+                        <button type="button" class="btn btn-default" title="Merk som administrator"
                         v-on:click="markAsAdmin(user.id, user.userName, user.isAdmin)" v-if="!user.isAdmin">
-                        <span class="okSign glyphicon glyphicon-remove"></span>
+                        <span class="glyphicon glyphicon-remove"></span>
                         </button>
 
-                        <button type="button" class="okSignButton btn btn-default" title="Merk som vanlig bruker"
+                        <button type="button" class="btn btn-default" title="Merk som vanlig bruker"
                         v-on:click="markAsAdmin(user.id, user.userName, user.isAdmin)" v-else>
-                        <span class="okSignGreen glyphicon glyphicon-ok-sign"></span>
+                        <span class="glyphicon glyphicon-ok-sign"></span>
                         </button>
                     }
                     else

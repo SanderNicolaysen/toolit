@@ -36,14 +36,14 @@
                     {{ r.user.userName }}
                 </td>
                 <td>
-                    <button type="button" class="okSignButton btn btn-default" title="Merk som løst"
+                    <button type="button" class="btn btn-default" title="Merk som løst"
                     v-on:click="markAsResolved(r.id, false, r.error)" v-if="!r.isResolved">
-                    <span class="okSign glyphicon glyphicon-remove"></span>
+                    <span class="glyphicon glyphicon-remove"></span>
                     </button>
 
-                    <button type="button" class="okSignButton btn btn-default" title="Merk som uløst" 
+                    <button type="button" class="btn btn-default" title="Merk som uløst" 
                     v-on:click="markAsResolved(r.id, true, r.error)" v-else>
-                    <span class="okSignGreen glyphicon glyphicon-ok-sign"></span>
+                    <span class="glyphicon glyphicon-ok-sign"></span>
                     </button>
                 </td>
                 <td class="fit">

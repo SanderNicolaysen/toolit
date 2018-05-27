@@ -127,6 +127,8 @@ nav.navbar .navbar-toggle .icon-bar {
 
 .dropdown-menu.notifications {
     width: auto;
+    max-height: 300px;
+    overflow: auto;
 }
 
 .notifications a.notification {
@@ -282,4 +284,13 @@ nav.navbar .navbar-toggle .icon-bar {
     color: rgb(73, 185, 73);
     width: 100%;
     text-align: right;
+}
+
+#toolit code.api-key-field {
+    cursor: pointer;
+}
+
+#toolit code.api-key-field:hover {
+    background: #fff;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }

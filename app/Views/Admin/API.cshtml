@@ -31,8 +31,7 @@
                     <tr>
                         <td>@k.Name</td>
                         <td>
-                            <code>@k.Key</code> 
-                            <a onclick="copyTextToClipboard('@k.Key');" style="cursor: pointer;">Kopiér</a>
+                            <code onclick="copyTextToClipboard('@k.Key', this);" class="api-key-field">@k.Key</code>
                         </td>
                         <td class="fit">
                             <div class="dropdown">
@@ -53,28 +52,56 @@
     </div>
 </div>
 
+@section Styles
+{
+    <link rel='stylesheet' href='~/lib/qtip2/3.0.3/jquery.qtip.min.css' />
+}
+
 @section Scripts
 {
+<script src='~/lib/qtip2/3.0.3/jquery.qtip.min.js'></script>
+
 <script>
-function copyTextToClipboard(text) {
-    var textArea = document.createElement("textarea");
+    $(document).ready(function () {
+        $('.api-key-field').each(function () {
+            $(this).qtip({
+                content: 'Klikk for å kopiere til utklippstavle',
+                hide: {
+                    fixed: true
+                },
+                position: {
+                    my: 'bottom center',
+                    at: 'top center',
+                },
+                events: {
+                    hide: function(event, api) {
+                        setTimeout(function(){
+                            api.set('content.text', "Klikk for å kopiere til utklippstavle");
+                        }, 300);
+                    }
+                },
+                style: 'qtip-light'
+            });
+        });
+    });
 
-    
-    textArea.value = text;
+    function copyTextToClipboard(text, source) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
 
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
 
-    try {
-    var successful = document.execCommand('copy');
-    var msg = successful ? 'successful' : 'unsuccessful';
-    console.log('Copying text command was ' + msg);
-    } catch (err) {
-    console.log('Oops, unable to copy');
+        try {
+            var successful = document.execCommand('copy');
+        } catch (err) {
+            $(source).qtip('option', 'content.text', "Whoops! Klarte ikke kopiere");
+        }
+
+        document.body.removeChild(textArea);
+
+        $(source).qtip('option', 'content.text', "Kopiért!");
     }
-
-    document.body.removeChild(textArea);
-}
 </script>
 }

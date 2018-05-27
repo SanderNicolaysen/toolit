@@ -64,15 +64,24 @@ namespace app.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+                var user = await _context.Users.SingleOrDefaultAsync(u => u.UserName == model.UserNameOrEmail);
+
+                if (user == null)
+                    user = await _context.Users.SingleOrDefaultAsync(u => u.Email == model.UserNameOrEmail);
+
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return View(model);
+                }
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
                     
-                    var user = _context.Users.Single(u => u.Email == model.Email);
-
                     // If it is the user's first login, redirect the user to the "ChangePassword"-page
                     if (user.ChangePassword)
                     {

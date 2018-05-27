@@ -103,6 +103,7 @@ namespace app.Controllers
 
                 try
                 {
+                    applicationUser.ChangePassword = pUser.ChangePassword;
                     applicationUser.isAdmin = pUser.isAdmin;
                     applicationUser.isSuperAdmin = pUser.isSuperAdmin;
 

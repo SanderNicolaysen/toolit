@@ -38,6 +38,7 @@ if (__name__ == "__main__"):
     print("ERROR: please update key in apikey.txt\nNew keys can be generated in the admin-panel in your browser.")
     lcd_string("ERROR: BAD KEY", LCD_LINE_1)
     lcd_string("Please update API key in apikey.txt. New keys can be generated in the admin-panel in your browser.", LCD_LINE_2)
+    time.sleep(73)
     lcd_init()
     exit()
 

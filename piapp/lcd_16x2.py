@@ -176,7 +176,7 @@ def lcd_string(message,line):
     LINE_2_WAITING = True
     while (LINE_2_BUSY):
       time.sleep(0.01)
-    LINE_1_WAITING = False
+    LINE_2_WAITING = False
     LINE_2_BUSY = True
     
   try:

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace app.Models
@@ -27,6 +28,8 @@ namespace app.Models
         public List<Report> Reports { get; set; }
         public List<Alarm> Alarms { get; set; }
         public string Alias { get; set; }
+
+        [DisplayName("RFID code")]
         public string ToolIdentifierCode { get; set; }
     }
 }

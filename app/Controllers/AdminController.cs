@@ -106,7 +106,7 @@ namespace app.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newUser = new ApplicationUser { UserName = model.Email, Email = model.Email, ChangePassword = true };
+                var newUser = new ApplicationUser { UserName = model.Email, Email = model.Email, ChangePassword = true, UserIdentifierCode = model.UserIdentifierCode };
                 var result = await _um.CreateAsync(newUser, model.Password);
                 
                 if (result.Succeeded)

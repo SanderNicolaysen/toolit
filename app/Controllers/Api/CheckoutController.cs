@@ -151,10 +151,5 @@ namespace app.Controllers_Api
         {
             return _context.ApiKeys.Any(api => api.Key == request.key);
         }
-
-        private bool ValidateApiRequest(ApiRequest request)
-        {
-            return _context.ApiKeys.Any(api => api.Key == request.key);
-        }
     }
 }

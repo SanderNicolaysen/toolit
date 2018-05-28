@@ -29,8 +29,10 @@
         <dt>
             @Html.DisplayNameFor(model => model.Status)
         </dt>
-        <dd>
-            <i style="@Model.Status.Style" class="@Model.Status.Glyphicon"></i> @Html.DisplayFor(model => model.Status.StatusName)
+        <dd>            
+            <template v-if="tool">
+                <i v-bind:style="tool.status.style" v-bind:class="tool.status.glyphicon"></i> {{tool.status.statusName}}
+            </template>
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Reports)
@@ -164,7 +166,6 @@
     <script src="~/js/confirm-dialog.min.js"></script>
 </environment>
 
-
 <!-- Script for calendar (with qTip2 tooltips) -->
 <script>
 var UserName = "@UserManager.GetUserName(User)";
@@ -256,7 +257,8 @@ var app = new Vue({
             UserName: '',
             FromDate: '',
             ToDate: ''
-        }
+        },
+        tool: ''
     },
     created: function () {
         this.loadReservations();
@@ -272,6 +274,11 @@ var app = new Vue({
                 }
             }
         }); 
+
+        axios.get('/api/tools/@Model.Id')
+        .then(function (response) {
+            self.tool = response.data;
+        });
     },
     methods: {
         loadReservations: function() {
@@ -420,6 +427,7 @@ var app = new Vue({
                 if (response.status == 200)
                 {
                     self.currentOwnerId = 'No owner';
+                    self.tool.status = response.data.status;
                     self.loadLogs();
                 }
             });
@@ -432,6 +440,7 @@ var app = new Vue({
                 if (response.status == 200)
                 {
                     self.currentOwnerId = '@UserManager.GetUserId(User)';
+                    self.tool.status = response.data.status;
                     self.loadLogs();
                 }
             });

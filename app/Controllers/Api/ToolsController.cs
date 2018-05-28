@@ -41,7 +41,7 @@ namespace app.Controllers_Api
                 return BadRequest(ModelState);
             }
 
-            var tool = await _context.Tools.SingleOrDefaultAsync(m => m.Id == id);
+            var tool = await _context.Tools.Include(t => t.Status).SingleOrDefaultAsync(m => m.Id == id);
 
             if (tool == null)
             {
@@ -131,7 +131,7 @@ namespace app.Controllers_Api
                 return BadRequest(ModelState);
             }
 
-            var tool = await _context.Tools.SingleOrDefaultAsync(m => m.Id == id);
+            var tool = await _context.Tools.Include(s => s.Status).SingleOrDefaultAsync(m => m.Id == id);
             if (tool == null)
             {
                 return NotFound();
@@ -142,6 +142,9 @@ namespace app.Controllers_Api
                 return BadRequest("Tool is already checked out.");
             }
 
+            var statusNotAvailable = _context.Statuses.SingleOrDefaultAsync(m => m.Id == 2);
+            tool.StatusId = statusNotAvailable.Result.Id;
+
             var userId = (await um.GetUserAsync(User)).Id;
             tool.CurrentOwnerId = userId;
             _context.Update(tool);
@@ -151,7 +154,7 @@ namespace app.Controllers_Api
 
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(tool);
         }
 
         // PUT: api/Tools/5/checkout
@@ -163,11 +166,14 @@ namespace app.Controllers_Api
                 return BadRequest(ModelState);
             }
 
-            var tool = await _context.Tools.SingleOrDefaultAsync(m => m.Id == id);
+            var tool = await _context.Tools.Include(t => t.Status).SingleOrDefaultAsync(m => m.Id == id);
             if (tool == null)
             {
                 return NotFound();
             }
+
+            var statusAvailable = _context.Statuses.SingleOrDefaultAsync(m => m.Id == 1);
+            tool.StatusId = statusAvailable.Result.Id;
 
             var userId = (await um.GetUserAsync(User)).Id;
             if (tool.CurrentOwnerId != userId)
@@ -184,7 +190,7 @@ namespace app.Controllers_Api
 
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(tool);
         }
 
         private bool ToolExists(int id)

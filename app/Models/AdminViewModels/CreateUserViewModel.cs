@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace app.Models.AdminViewModels
@@ -6,7 +7,7 @@ namespace app.Models.AdminViewModels
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [DisplayName("Email")]
         public string Email { get; set; }
         
         [Required]

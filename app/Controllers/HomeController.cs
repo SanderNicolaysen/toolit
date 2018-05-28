@@ -37,6 +37,11 @@ namespace app.Controllers
             return View(favorites);
         }
 
+        public IActionResult Calendar()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

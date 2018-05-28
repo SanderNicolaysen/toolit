@@ -1,0 +1,120 @@
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Kalender";
+}
+
+<h2>Kalender</h2>
+
+<div>
+    <div id="calendar"></div>
+    
+    <!-- Confirmation dialog -->
+    @await Html.PartialAsync("ConfirmDialogPartial")
+</div>
+
+<style>
+    .buttons .btn {
+        margin-top: 5px;
+    }
+</style>
+
+@section Styles
+{
+    <link rel='stylesheet' href='~/lib/fullcalendar/fullcalendar.min.css' />
+    <link rel='stylesheet' href='~/lib/qtip2/3.0.3/jquery.qtip.min.css' />
+}
+
+@section Scripts
+{
+<script src='~/lib/fullcalendar/lib/moment.min.js'></script>
+<script src='~/lib/fullcalendar/fullcalendar.min.js'></script>
+<script src='~/lib/fullcalendar/locale/nb.js'></script>
+<script src='~/lib/qtip2/3.0.3/jquery.qtip.min.js'></script>
+
+<!-- Script for custom confirmation dialog -->
+<environment include="Development">
+    <script src="~/js/confirm-dialog.js"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/js/confirm-dialog.min.js"></script>
+</environment>
+
+
+<!-- Script for calendar (with qTip2 tooltips) -->
+<script>
+var UserId = "@UserManager.GetUserId(User)";
+$(function() {
+    var tooltip = $('<div/>').qtip({
+        id: 'fullcalendar',
+        content: {
+            text: ' ',
+            title: {
+                button: true
+            }
+        },
+        position: {
+            my: 'bottom center',
+            at: 'top center',
+            target: 'event',
+            viewport: $('#calendar'),
+            adjust: {
+                mouse: false,
+                scroll: false
+            }
+        },
+        show: false,
+        hide: false,
+        style: 'qtip-light'
+    }).qtip('api');
+
+
+    // Load calendar
+    $('#calendar').fullCalendar({
+        // put your options and callbacks here
+
+        header: {
+            left: '',
+            center: 'title',
+            right: 'month,agendaWeek today prev,next'
+        },
+        slotDuration: '02:00:00',
+        agendaEventMinHeight: '25',
+
+        events: '/api/Reservations/cal/user/'+UserId,
+        contentHeight: 400,
+        eventClick: function(calEvent, jsEvent, view) {
+            // Set up tooltip content
+			var content = '<h4>'+calEvent.title+'</h4>' + 
+				'<p><b>Start:</b> '+calEvent.start.format("dddd, Do. MMMM YYYY, h:mm:ss")+'<br />' + 
+				(calEvent.end && '<p><b>Slutt:</b> '+calEvent.end.format("dddd, Do. MMMM YYYY, h:mm:ss")+'</p>' || '') +
+                '<button data-id='+calEvent.id+' class="btn btn-default">Slett reservasjon</button>';
+			tooltip.set({
+				'content.text': content
+			})
+			.reposition(jsEvent).show(jsEvent);
+
+            // Set up an event-handler for the delete reservations button in the tooltip
+            var content = tooltip.elements.content;
+            $('button', content).click(function() {
+                tooltip.hide();
+
+                var id = $(this).data('id');
+                var dialogOpts = { title: 'Slett reservasjon', message: 'Er du sikker på at du vil slette reservasjonen?' }
+                ConfirmDialog(dialogOpts, function(){
+                    axios.delete('/api/reservations/' + id).then(function(response) {
+                        if (response.status == 200) {
+                            $("#calendar").fullCalendar('refetchEvents');
+                        }
+                    });
+                });
+            }); 
+        },
+        dayClick: function() { tooltip.hide() },
+		eventResizeStart: function() { tooltip.hide() },
+		eventDragStart: function() { tooltip.hide() },
+		viewDisplay: function() { tooltip.hide() },
+    })
+});
+</script>
+}

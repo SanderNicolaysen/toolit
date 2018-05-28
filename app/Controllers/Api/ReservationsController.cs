@@ -60,6 +60,23 @@ namespace app.Controllers_Api
             return reservations;
         }
 
+        // GET: api/Reservations/cal/user/5
+        // Used by fullcalendar to retrieve events
+        [HttpGet("cal/user/{userid}")]
+        public IEnumerable<object> GetReservationsUser([FromRoute] string userid, string start, string end)
+        {
+            var Start = DateTime.Parse(start, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            var End = DateTime.Parse(end, null, System.Globalization.DateTimeStyles.RoundtripKind);
+
+            var reservations = _context.Reservations
+                .Where(r => r.UserId == userid)
+                .Where(r => r.ToDate > Start && r.FromDate < End)
+                .Include(r => r.Tool)
+                .Select(r => new { title = r.Tool.Name, start = r.FromDate, end = r.ToDate, id = r.Id, user = r.User });
+
+            return reservations;
+        }
+
         // GET: api/Reservations/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetReservation([FromRoute] int id)

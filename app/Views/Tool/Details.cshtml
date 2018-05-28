@@ -330,16 +330,68 @@ var app = new Vue({
                 ToDate: this.reservationForm.ToDate
             };
 
-            axios.post('/api/reservations', JSON.stringify(data), { headers: { 'content-type': 'application/json; charset=utf-8' } })
-            .then(function (response) {
-                if (response.status == 201)
-                    $('#reservationDialog').modal('hide');
+            var stopLoop = false;
 
-                // TODO: Error reporting
+            // If there currently are no reservations for the tool, a user is free to reserve the tool
+            if (self.reservations.length == 0)
+            {
+                self.postReservation(data);
+            }
+            else {
+                for (var i = 0; i < self.reservations.length; i++)
+                {
+                    var reservation = self.reservations[i];
 
-                // Reload reservations
-                $("#calendar").fullCalendar('refetchEvents');
-            });
+                    if (stopLoop)
+                        break;
+
+                    if (data.User.UserName == "")
+                    {
+                        data.User.UserName = '@UserManager.GetUserName(User)';
+                    }
+
+                    // A user can create a reservation on top of one of his/her own reservations
+                    if (reservation.user.userName == data.User.UserName
+                    && reservation != self.reservations[self.reservations.length - 1])
+                        continue;
+
+                    if (reservation.user.userName == data.User.UserName
+                    && reservation == self.reservations[self.reservations.length - 1])
+                    {
+                        self.postReservation(data);
+
+                        break;
+                    }
+
+                    var toDate = new Date(reservation.toDate);    
+                    var fromDate = new Date(reservation.fromDate);
+
+                    var toDateData = new Date(data.ToDate);
+                    var fromDateData = new Date(data.FromDate);
+
+                    // If a user tries to reserve a tool, but the tool is currently reserved for someone else, he/she gets an error-message
+                    if (fromDate.getTime() <= toDateData.getTime() 
+                    && toDate.getTime() >= fromDateData.getTime())
+                    {
+                        var options = {
+                                title: 'Allerede reservert for en annen bruker',
+                                message: 'Dette verktøyet er allerede reservert for ' + reservation.user.userName + 
+                                         ' fra og med ' + fromDate.toLocaleString() + ' til og med ' + toDate.toLocaleString() + '.',
+                                dismissBtn: "Ingen",
+                                confirmBtn: "OK"
+                            }
+
+                        ConfirmDialog(options, function(){})
+                        
+                        stopLoop = true;
+                    }
+
+                    if (reservation == self.reservations[self.reservations.length - 1] && !stopLoop)
+                    {
+                        self.postReservation(data);
+                    }
+                }
+            }
         },
         cancelReservation: function() {
             $('#reservationDialog').modal('hide');
@@ -381,18 +433,18 @@ var app = new Vue({
                     var reservation = self.reservations[i];
 
                     if (stopLoop)
-                        return;
+                        break;
 
                     if (reservation.userId == '@UserManager.GetUserId(User)'
                     && reservation != self.reservations[self.reservations.length - 1])
-                        return;
+                        continue;
 
                     if (reservation.userId == '@UserManager.GetUserId(User)'
                     && reservation == self.reservations[self.reservations.length - 1])
                     {
                         self.checkOutTool(id);
 
-                        return;
+                        break;
                     }
 
                     var toDate = new Date(reservation.toDate);    
@@ -444,6 +496,21 @@ var app = new Vue({
                     self.loadLogs();
                 }
             });
+        },
+        postReservation: function(data) {
+            var self = this;
+
+            axios.post('/api/reservations', JSON.stringify(data), { headers: { 'content-type': 'application/json; charset=utf-8' } })
+                .then(function (response) {
+                    if (response.status == 201)
+                        $('#reservationDialog').modal('hide');
+
+                        // TODO: Error reporting
+
+                        // Reload reservations
+                        $("#calendar").fullCalendar('refetchEvents');
+                        self.loadReservations();
+                    });
         }
     }
 })

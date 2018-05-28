@@ -27,7 +27,15 @@ function ConfirmDialog (arg1, arg2) {
 
     modal.find('.modal-title').text(labels.title);
     modal.find('.dialogMessage').text(labels.message);
-    modal.find('.btn.btn-default').text(labels.dismissBtn);
+
+    if (options.dismissBtn == "Ingen")
+        modal.find('.btn.btn-default').css({"display": "none"});
+    else
+    {
+        modal.find('.btn.btn-default').css({"display": "initial"});
+        modal.find('.btn.btn-default').text(labels.dismissBtn);
+    }
+        
     modal.find('.btn.btn-primary').text(labels.confirmBtn);
 
     // Make sure that only one click event handler is set

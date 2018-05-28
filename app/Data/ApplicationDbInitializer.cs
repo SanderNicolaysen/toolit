@@ -14,7 +14,23 @@ namespace app.Data
         {
             if (!isDevelopment)
             {
-                db.Database.EnsureCreated();
+                if (db.Database.EnsureCreated())
+                {
+                    // Add roles
+                    var administratorRole = new IdentityRole("Admin");
+                    rm.CreateAsync(administratorRole).Wait();
+
+                    // Add users
+                    var administrator = new ApplicationUser { UserName = "admin@uia.no", Email = "admin@uia.no", ChangePassword = true };
+                    um.CreateAsync(administrator, "Password1.").Wait();
+                    um.AddToRoleAsync(administrator, "Admin");
+
+                    db.Statuses.AddRange(new List<Status>{
+                        new Status { StatusName = "På lager", Style = "color: #8EE783", Glyphicon = "glyphicon glyphicon-ok-sign", IsDeleteable = false, Id = Status.AVAILABLE },
+                        new Status { StatusName = "Utlånt", Style = "color: #FA7D12", Glyphicon = "glyphicon glyphicon-remove-sign", IsDeleteable = false, Id = Status.BUSY  },
+                        new Status { StatusName = "Ikke tilgjengelig", Style = "color: #F6D846", Glyphicon = "glyphicon glyphicon-minus-sign", IsDeleteable = false, Id = Status.UNAVAILABLE  }
+                    });
+                }
                 return;
             }
 
@@ -42,21 +58,21 @@ namespace app.Data
             var user3 = new ApplicationUser { UserName = "doffen@uia.no", Email = "doffen@uia.no", ChangePassword = true };
             um.CreateAsync(user3, "Password1.");
 
-            var statusAvailable = new Status { StatusName = "Available", Style = "color: #8EE783", Glyphicon = "glyphicon glyphicon-ok-sign" };
+            var statusAvailable = new Status { StatusName = "På lager", Style = "color: #8EE783", Glyphicon = "glyphicon glyphicon-ok-sign", IsDeleteable = false, Id = Status.AVAILABLE};
             db.Add(statusAvailable);
 
-            var statusBusy = new Status { StatusName = "Busy", Style = "color: #FA7D12", Glyphicon = "glyphicon glyphicon-remove-sign" };
+            var statusBusy = new Status { StatusName = "Utlånt", Style = "color: #FA7D12", Glyphicon = "glyphicon glyphicon-remove-sign", IsDeleteable = false, Id = Status.BUSY };
             db.Add(statusBusy);
 
-            var statusBooked = new Status { StatusName = "Booked", Style = "color: #F6D846", Glyphicon = "glyphicon glyphicon-minus-sign" };
-            db.Add(statusBooked);
+            var statusUnavailible = new Status { StatusName = "Ikke tilgjengelig", Style = "color: #F6D846", Glyphicon = "glyphicon glyphicon-minus-sign", IsDeleteable = false, Id = Status.UNAVAILABLE };
+            db.Add(statusUnavailible);
 
             // Add dummy data here
             var tools = new List<Tool>
             {
                 new Tool("Skrujern", statusAvailable, new List<Report>(new Report[] { new Report(1, "It misses a handle!", admin.Id), new Report(1, "Should be replaced.", user1.Id), new Report(1, "It doesn't work", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,11)), new Alarm("Årskontroll", new DateTime(2018,4,15))}), "playboy"),
                 new Tool("Hammer", statusAvailable, new List<Report>() { new Report(2, "How does it work?", user3.Id) }, new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,13))}), "banger"),
-                new Tool("Sag", statusBooked, new List<Report>(), new List<Alarm>(), "cutter"),
+                new Tool("Sag", statusUnavailible, new List<Report>(), new List<Alarm>(), "cutter"),
                 new Tool("Vater", statusBusy, new List<Report>(new Report[] { new Report(4, "Random report.", admin.Id), new Report(4, "What is this thing?", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Årskontroll", new DateTime(2018,4,12))}), "måler"),
                 new Tool("Kniv", statusAvailable, new List<Report>() { new Report(5, "Test", user1.Id) }, new List<Alarm>(), "stikker")
             };

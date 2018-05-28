@@ -96,7 +96,7 @@
 var glyphdesigner = new Vue({
     el: '#glyphdesigner',
     data: {
-        statusname: '@Model.StatusName',
+        statusname: '@Html.Raw(Model.StatusName)',
         glyphicon: '@Model.Glyphicon',
         style: '@Model.Style'
     }

@@ -81,6 +81,7 @@ namespace app.Controllers
             {
                 try
                 {
+                    status.IsDeleteable = (await _context.Statuses.AsNoTracking().SingleOrDefaultAsync(m => m.Id == id)).IsDeleteable;
                     _context.Update(status);
                     await _context.SaveChangesAsync();
                 }
@@ -124,6 +125,9 @@ namespace app.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var status = await _context.Statuses.SingleOrDefaultAsync(m => m.Id == id);
+            if (!status.IsDeleteable){
+                return BadRequest("Can't delete undeleteable status");
+            }
             _context.Statuses.Remove(status);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(AdminController.Statuses), "Admin");

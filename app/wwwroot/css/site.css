@@ -286,6 +286,9 @@ nav.navbar .navbar-toggle .icon-bar {
     text-align: right;
 }
 
+.undeleteable {
+    background-color:#f3f3f3;
+}
 #toolit code.api-key-field {
     cursor: pointer;
 }

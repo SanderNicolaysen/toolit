@@ -30,7 +30,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr class="@(@item.IsDeleteable ? "" : "undeleteable")">
             <td>
                 @Html.DisplayFor(modelItem => item.StatusName)
             </td>
@@ -46,7 +46,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a asp-controller="Statuses" asp-action="Edit" asp-route-id="@item.Id">Edit</a></li>
-                        <li><a asp-controller="Statuses" asp-action="Delete" asp-route-id="@item.Id">Delete</a></li>
+                        @if(item.IsDeleteable) {<li><a asp-controller="Statuses" asp-action="Delete" asp-route-id="@item.Id">Delete</a></li>}
                     </ul>
                 </div>
             </td>

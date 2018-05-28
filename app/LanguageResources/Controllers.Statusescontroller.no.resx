@@ -117,109 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Administration panel" xml:space="preserve">
-    <value>Administrasjonspanel</value>
+  <data name="Are you sure you want to delete this?" xml:space="preserve">
+    <value>Er du sikker på at du vil slette dette?</value>
   </data>
-  <data name="Alarms" xml:space="preserve">
-    <value>Alarmer</value>
+  <data name="Back to list" xml:space="preserve">
+    <value>Tilbake til lista</value>
   </data>
   <data name="Create" xml:space="preserve">
     <value>Opprett</value>
   </data>
-  <data name="Create a new user" xml:space="preserve">
-    <value>Opprett en ny bruker</value>
-  </data>
-  <data name="Create new user" xml:space="preserve">
-    <value>Opprett ny bruker</value>
-  </data>
   <data name="Delete" xml:space="preserve">
     <value>Slett</value>
-  </data>
-  <data name="Details" xml:space="preserve">
-    <value>Detaljer</value>
-  </data>
-  <data name="Duration of use the last year" xml:space="preserve">
-    <value>Brukstid det siste året</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Endre</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>Epost</value>
+  <data name="Preview:" xml:space="preserve">
+    <value>Forhåndsvisning:</value>
   </data>
-  <data name="Lent by" xml:space="preserve">
-    <value>Utlånt av</value>
-  </data>
-  <data name="Log" xml:space="preserve">
-    <value>Logg</value>
-  </data>
-  <data name="Number of times lent" xml:space="preserve">
-    <value>Antall ganger utlånt</value>
-  </data>
-  <data name="On loan" xml:space="preserve">
-    <value>Utlånt</value>
-  </data>
-  <data name="Overview" xml:space="preserve">
-    <value>Oversikt</value>
-  </data>
-  <data name="Percentage of time lent" xml:space="preserve">
-    <value>Andel av tid utlånt</value>
-  </data>
-  <data name="Recent loans" xml:space="preserve">
-    <value>Nylige utlån </value>
-  </data>
-  <data name="Report message" xml:space="preserve">
-    <value>Rapport-melding</value>
-  </data>
-  <data name="Reports" xml:space="preserve">
-    <value>Rapporter</value>
-  </data>
-  <data name="se the whole log" xml:space="preserve">
-    <value>se hele loggen</value>
-  </data>
-  <data name="Search users" xml:space="preserve">
-    <value>Søk i brukere</value>
-  </data>
-  <data name="Tendered" xml:space="preserve">
-    <value>Innlevert</value>
-  </data>
-  <data name="There are no reports to show..." xml:space="preserve">
-    <value>Ingen rapporter å vise...</value>
-  </data>
-  <data name="There are none active alarms..." xml:space="preserve">
-    <value>Ingen alarmer å vise...</value>
-  </data>
-  <data name="Tool" xml:space="preserve">
-    <value>Verktøy</value>
-  </data>
-  <data name="Tool Usage Overview" xml:space="preserve">
-    <value>Sammendrag av Verktøysbruk</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Brukernavn</value>
-  </data>
-  <data name="Users" xml:space="preserve">
-    <value>Brukere</value>
-  </data>
-  <data name="Create New" xml:space="preserve">
-    <value>Lag ny</value>
-  </data>
-  <data name="Create several users" xml:space="preserve">
-    <value>Opprett mange brukere</value>
-  </data>
-  <data name="Mark as solved" xml:space="preserve">
-    <value>Merk som løst</value>
-  </data>
-  <data name="Mark as unsolved" xml:space="preserve">
-    <value>Merk som uløst</value>
-  </data>
-  <data name="Statuses" xml:space="preserve">
-    <value>Statuser</value>
-  </data>
-  <data name="Statuses-List" xml:space="preserve">
-    <value>Statusliste</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>Bruker</value>
+  <data name="Save" xml:space="preserve">
+    <value>Lagre</value>
   </data>
 </root>

@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace app.Models
 {
     public class Status {
@@ -17,8 +19,14 @@ namespace app.Models
         }
 
         public int Id { get; set; }
+
+        [DisplayName("Statusname")]
         public string StatusName { get; set; }
+
+        [DisplayName("Style")]
         public string Style { get; set; }
+
+        [DisplayName("Glyphicon")]
         public string Glyphicon { get; set; }
         public bool IsDeleteable { get; set; } = true;
     }

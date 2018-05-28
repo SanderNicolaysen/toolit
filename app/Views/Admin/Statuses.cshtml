@@ -1,7 +1,7 @@
 @model IEnumerable<app.Models.Status>
 
 @{
-    ViewData["Title"] = "Statuses-List";
+    ViewData["Title"] = Localizer["Statuses-List"];
     ViewData.AddActivePage(ManageNavPages.Statuses);
 }
 
@@ -14,7 +14,7 @@
 </head>
 <body>
 <p>
-    <a asp-controller="Statuses" asp-action="Create">Create New</a>
+    <a asp-controller="Statuses" asp-action="Create">@Localizer["Create New"]</a>
 </p>
 <table class="table">
     <thead>
@@ -45,8 +45,8 @@
                         <span class="more-dot"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a asp-controller="Statuses" asp-action="Edit" asp-route-id="@item.Id">Edit</a></li>
-                        @if(item.IsDeleteable) {<li><a asp-controller="Statuses" asp-action="Delete" asp-route-id="@item.Id">Delete</a></li>}
+                        <li><a asp-controller="Statuses" asp-action="Edit" asp-route-id="@item.Id">@Localizer["Edit"]</a></li>
+                        @if(item.IsDeleteable) {<li><a asp-controller="Statuses" asp-action="Delete" asp-route-id="@item.Id">@Localizer["Delete"]</a></li>}
                     </ul>
                 </div>
             </td>

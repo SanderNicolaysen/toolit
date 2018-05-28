@@ -1,7 +1,7 @@
 @model app.Models.Status
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = Localizer["Create"];
     string[] statusStyles = {"color: #8EE783",
     "color: #F6D846",
     "color: #FA7D12",
@@ -26,7 +26,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
+    <title>@Localizer["Create"]</title>
 </head>
 <body>
 
@@ -67,12 +67,14 @@
                 <span asp-validation-for="Glyphicon" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" /> <br>
-                Preview:<br>
-
+                @Localizer["Preview:"]
                 <h3><i :style="style" :class="glyphicon"></i> {{statusname}}</h3>
                 <h4><i :style="style" :class="glyphicon"></i> {{statusname}}</h4>
                 <i :style="style" :class="glyphicon"></i> {{statusname}}
+
+                </br>
+                </br>
+                <input type="submit" value="@Localizer["Create"]" class="btn btn-default" />
                 
             </div>
         </form>
@@ -80,7 +82,7 @@
 </div>
 
 <div>
-    <a asp-controller="Admin" asp-action="Statuses">Back to List</a>
+    <a asp-controller="Admin" asp-action="Statuses">@Localizer["Back to list"]</a>
 </div>
 
 </body>

@@ -70,11 +70,19 @@ namespace app.Data
             // Add dummy data here
             var tools = new List<Tool>
             {
+<<<<<<< HEAD
                 new Tool("Skrujern", statusAvailable, new List<Report>(new Report[] { new Report(1, "It misses a handle!", admin.Id), new Report(1, "Should be replaced.", user1.Id), new Report(1, "It doesn't work", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,11)), new Alarm("Årskontroll", new DateTime(2018,4,15))}), "playboy"),
                 new Tool("Hammer", statusAvailable, new List<Report>() { new Report(2, "How does it work?", user3.Id) }, new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,13))}), "banger"),
                 new Tool("Sag", statusUnavailible, new List<Report>(), new List<Alarm>(), "cutter"),
                 new Tool("Vater", statusBusy, new List<Report>(new Report[] { new Report(4, "Random report.", admin.Id), new Report(4, "What is this thing?", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Årskontroll", new DateTime(2018,4,12))}), "måler"),
                 new Tool("Kniv", statusAvailable, new List<Report>() { new Report(5, "Test", user1.Id) }, new List<Alarm>(), "stikker")
+=======
+                new Tool("Skrujern", statusAvailable, new List<Report>(new Report[] { new Report(1, "It misses a handle!", admin.Id), new Report(1, "Should be replaced.", user1.Id), new Report(1, "It doesn't work", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,11)), new Alarm("Årskontroll", new DateTime(2018,4,15))}), "playboy", "1"),
+                new Tool("Hammer", statusAvailable, new List<Report>() { new Report(2, "How does it work?", user3.Id) }, new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,13))}), "banger", "2"),
+                new Tool("Sag", statusBooked, new List<Report>(), new List<Alarm>(), "cutter", "3"),
+                new Tool("Vater", statusBusy, new List<Report>(new Report[] { new Report(4, "Random report.", admin.Id), new Report(4, "What is this thing?", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Årskontroll", new DateTime(2018,4,12))}), "måler", "4"),
+                new Tool("Kniv", statusAvailable, new List<Report>() { new Report(5, "Test", user1.Id) }, new List<Alarm>(), "stikker", "5")
+>>>>>>> Comitted shelf system
             };
 
             var toolRFIDcode = 100;

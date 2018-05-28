@@ -8,13 +8,14 @@ namespace app.Models
     {
         public Tool() { }
 
-        public Tool(string name, Status status, List<Report> reports, List<Alarm> alarms, string alias)
+        public Tool(string name, Status status, List<Report> reports, List<Alarm> alarms, string alias, string shelf)
         {
             Name = name;
             StatusId = status.Id;
             Reports = reports;
             Alarms = alarms;
             Alias = alias;
+            Shelf = shelf;
             CurrentOwnerId = "No owner";
         }
 
@@ -28,8 +29,12 @@ namespace app.Models
         public List<Report> Reports { get; set; }
         public List<Alarm> Alarms { get; set; }
         public string Alias { get; set; }
+<<<<<<< HEAD
 
         [DisplayName("RFID code")]
         public string ToolIdentifierCode { get; set; }
+=======
+        public string Shelf { get; set; }
+>>>>>>> Comitted shelf system
     }
 }

@@ -35,6 +35,12 @@
             </template>
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.Shelf)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Shelf)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Reports)
         </dt>
         @if (!Model.Reports.Any())

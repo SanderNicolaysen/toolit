@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<app.Models.Favorite>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = Localizer["Home Page"];
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -9,13 +9,13 @@
 <div class="row">
     <div class="col-md-4 col-xs-12">
         <a href="/tool" class="home-button">
-            <span>Tool-List</span>
+            <span>@Localizer["Tools"]</span>
         </a>
     </div>
 
     <div class="col-md-4 col-xs-12">
         <a asp-action="Calendar" class="home-button">
-            <span>Calendar</span>
+            <span>@Localizer["Calendar"]</span>
         </a>
     </div>
 
@@ -23,13 +23,13 @@
     {
         <div class="col-md-4 col-xs-12">
             <a asp-controller="Admin" asp-action="Index" class="home-button">
-                <span>Administrasjon</span>
+                <span>@Localizer["Administration"]</span>
             </a>
         </div>
     }
 </div>
 
-<h3>Favoritter</h3>
+<h3>@Localizer["Favourites"]</h3>
 <div id="favorites" class="clearfix row">
 @foreach (var fav in Model)
 {
@@ -56,12 +56,8 @@
 {
     <text>
     <div class="alert alert-info">
-        <p>Du har ingen favoritter!</p>
-        <p>
-            Legg til favoritter ved å trykke på favoritt-ikonet
-            (<span class="glyphicon glyphicon-star-empty" style="font-size: 1em;"></span>)
-            på verktøysiden.
-        </p>
+        <p>@Localizer["You don't have any favourites"]!</p>
+        <p>@HtmlLocalizer["Add favourites by clicking the favourites-icon (<span class='glyphicon glyphicon-star-empty' style='font-size: 1em;'></span>) on the Tools page"]</p>
     </div>
     </text>
 }

@@ -1,12 +1,12 @@
 @model app.Models.ToolViewModels.EditViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = Localizer["Edit"];
 }
 
-<h2>Edit</h2>
+<h2>@Localizer["Edit"]</h2>
 
-<h4>Tool</h4>
+<h4>@Localizer["Tool"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -35,7 +35,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label class="control-label">Legg til eller endre bilde</label>
+                <label class="control-label">@Localizer["Add or edit picture"]</label>
                 @if (Model.Tool.Image != null) 
                 {
                     <div><img src="~/@Model.Tool.Image" alt="@Model.Tool.Name"></div>
@@ -65,5 +65,5 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@Localizer["Back to list"]</a>
 </div>

@@ -1,1 +1,6 @@
 ﻿@using app.Views.Admin
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+
+@inject IHtmlLocalizer<app.Controllers.AdminController> HtmlLocalizer
+@inject IStringLocalizer<app.Controllers.AdminController> Localizer

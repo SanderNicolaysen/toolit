@@ -18,6 +18,7 @@ using app.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Options;
 
 namespace app
@@ -47,7 +48,8 @@ namespace app
             services.AddMvc().AddJsonOptions(options => {
                 // This option prevents infinite reference loops in your models when serializing to Json
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                })  .AddDataAnnotationsLocalization();
+                })  .AddDataAnnotationsLocalization()
+                    .AddViewLocalization();
 
             // Adds resource path for language files and enables localization
             services.AddLocalization(opts => { opts.ResourcesPath = "LanguageResources"; });

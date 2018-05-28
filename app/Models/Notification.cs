@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace app.Models
@@ -21,14 +22,21 @@ namespace app.Models
 
         [Required]
         public string UserId { get; set; }
+
+        [DisplayName("User")]
         public ApplicationUser User { get; set; }
 
         [Required]
+        [DisplayName("Message")]
         public string Message { get; set; }
+
         [Required]
+        [DisplayName("Time")]
         public DateTime Time { get; set; }
+
         [Required]
         public bool IsRead { get; set; }
+        
         [Required]
         public string ActionUrl { get; set; }
     }

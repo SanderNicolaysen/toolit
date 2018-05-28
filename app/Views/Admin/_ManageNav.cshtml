@@ -1,12 +1,12 @@
 ﻿@using app.Views.Admin
 
 <ul class="nav nav-pills nav-stacked">
-    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Oversikt</a></li>
-    <li class="@ManageNavPages.UsersNavClass(ViewContext)"><a asp-action="Users">Brukere</a></li>
-    <li class="@ManageNavPages.AlarmsNavClass(ViewContext)"><a asp-action="Alarms">Alarmer</a></li>
-    <li class="@ManageNavPages.ReportsNavClass(ViewContext)"><a asp-action="Reports">Rapporter</a></li>
+    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">@Localizer["Overview"]</a></li>
+    <li class="@ManageNavPages.UsersNavClass(ViewContext)"><a asp-action="Users">@Localizer["Users"]</a></li>
+    <li class="@ManageNavPages.AlarmsNavClass(ViewContext)"><a asp-action="Alarms">@Localizer["Alarms"]</a></li>
+    <li class="@ManageNavPages.ReportsNavClass(ViewContext)"><a asp-action="Reports">@Localizer["Reports"]</a></li>
     <li class="@ManageNavPages.APINavClass(ViewContext)"><a asp-action="API">API</a></li>
-    <li class="@ManageNavPages.LogNavClass(ViewContext)"><a asp-action="Log">Logg</a></li>
-    <li class="@ManageNavPages.StatusesNavClass(ViewContext)"><a asp-action="Statuses">Statuser</a></li>
+    <li class="@ManageNavPages.LogNavClass(ViewContext)"><a asp-action="Log">@Localizer["Log"]</a></li>
+    <li class="@ManageNavPages.StatusesNavClass(ViewContext)"><a asp-action="Statuses">@Localizer["Statuses"]</a></li>
 </ul>
 

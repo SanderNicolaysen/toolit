@@ -117,10 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Tool" xml:space="preserve">
-    <value>Verktøy</value>
+  <data name="Alarms" xml:space="preserve">
+    <value>Alarmer</value>
   </data>
-  <data name="User" xml:space="preserve">
-    <value>Bruker</value>
+  <data name="Image" xml:space="preserve">
+    <value>Bilde</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Navn</value>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Rapporter</value>
+  </data>
+  <data name="RFID code" xml:space="preserve">
+    <value>RFID-kode</value>
   </data>
 </root>

@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 
 using app.Data;
 using app.Models;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
 
 namespace app.Controllers
 {
@@ -40,6 +42,18 @@ namespace app.Controllers
         public IActionResult Calendar()
         {
             return View();
+        }
+        
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)  
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
         }
 
         public IActionResult Error()

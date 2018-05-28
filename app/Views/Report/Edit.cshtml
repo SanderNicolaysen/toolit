@@ -1,12 +1,12 @@
 @model app.Models.Report
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = Localizer["Edit"];
 }
 
-<h2>Edit</h2>
+<h2>@Localizer["Edit"]</h2>
 
-<h4>Report</h4>
+<h4>@Localizer["Report"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,13 +19,13 @@
                 <span asp-validation-for="Error" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="@Localizer["Save"]" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-controller="Tool" asp-action="Index">Back to List</a>
+    <a asp-controller="Admin" asp-action="Reports">@Localizer["Back to list"]</a>
 </div>
 

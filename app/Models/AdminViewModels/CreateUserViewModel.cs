@@ -6,7 +6,7 @@ namespace app.Models.AdminViewModels
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Epost")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
         
         [Required]

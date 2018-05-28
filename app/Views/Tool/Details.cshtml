@@ -3,12 +3,12 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Localizer["Details"];
 
     var isAdmin = User.IsInRole("Admin") ? "true" : "false";
 }
 
-<h2>Detaljer</h2>
+<h2>@Localizer["Details"]</h2>
 
 <div id="app" v-cloak>
     <h4 style="display: inline-block;">@Model.Name</h4>
@@ -57,9 +57,9 @@
                     - @report.Error
                     @if (@report.UserId == @UserManager.GetUserId(User) || User.IsInRole("Admin"))
                     {
-                        <a asp-controller="Report" asp-action="Edit" asp-route-id="@report.Id">Edit</a> @Html.Raw("|")
-                        <a asp-controller="Report" asp-action="Details" asp-route-id="@report.Id">Details</a> @Html.Raw("|")
-                        <a asp-controller="Report" asp-action="Delete" asp-route-id="@report.Id">Delete</a> 
+                        <a asp-controller="Report" asp-action="Edit" asp-route-id="@report.Id">@Localizer["Edit"]</a> @Html.Raw("|")
+                        <a asp-controller="Report" asp-action="Details" asp-route-id="@report.Id">@Localizer["Details"]</a> @Html.Raw("|")
+                        <a asp-controller="Report" asp-action="Delete" asp-route-id="@report.Id">@Localizer["Delete"]</a> 
                     }
                     </dd>
                 }
@@ -80,9 +80,9 @@
                     - @alarm.Name: @alarm.Date
                     @if (User.IsInRole("Admin"))
                     {
-                        <a asp-controller="Alarms" asp-action="Edit" asp-route-id="@alarm.Id">Edit</a> @Html.Raw("|")
-                        <a asp-controller="Alarms" asp-action="Details" asp-route-id="@alarm.Id">Details</a> @Html.Raw("|")
-                        <a asp-controller="Alarms" asp-action="Delete" asp-route-id="@alarm.Id">Delete</a>
+                        <a asp-controller="Alarms" asp-action="Edit" asp-route-id="@alarm.Id">@Localizer["Edit"]</a> @Html.Raw("|")
+                        <a asp-controller="Alarms" asp-action="Details" asp-route-id="@alarm.Id">@Localizer["Details"]</a> @Html.Raw("|")
+                        <a asp-controller="Alarms" asp-action="Delete" asp-route-id="@alarm.Id">@Localizer["Delete"]</a>
                     }
                 </dd>
             }
@@ -92,41 +92,41 @@
     <div class="buttons">
         <!-- Button to trigger reservation dialog to popup -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reservationDialog">
-            Reservér
+            @Localizer["Reserve"]
         </button>
         
         <button type="button" class="btn btn-success" v-on:click="checkIn(@Model.Id)" 
                 v-if="currentOwnerId == '@UserManager.GetUserId(User)'">
-            Sjekk inn
+            @Localizer["Check in"]
         </button>
         
         <button type="button" class="btn btn-danger" v-on:click="checkOut(@Model.Id)" 
                 v-if="currentOwnerId == 'No owner'">
-            Sjekk ut
+            @Localizer["Check out"]
         </button>
 
-        <a href="/Report/Create/@Model.Id" class="btn btn-warning">Rapporter feil</a>
+        <a href="/Reports/Create/@Model.Id" class="btn btn-warning">@Localizer["Report fault"] </a>
 
         @if (User.IsInRole("Admin"))
         {
-            <a href="/Alarms/Create/@Model.Id" class="btn btn-info">Registrer alarm</a>
+            <a href="/Alarms/Create/@Model.Id" class="btn btn-info">@Localizer["Registrer alarm"]</a>
         }
     </div>
 
     <br>
-    <a asp-action="Index">Tilbake til verktøyliste</a>
+    <a asp-action="Index">@Localizer["Back to list"]</a>
     
     <hr />
     <div id="calendar"></div>
     <hr />
 
-    <h3>Logg</h3>
+    <h3>@Localizer["Log"]</h3>
     <table class="table table-hover table-striped">
         <thead>
             <tr>
-                <th>Brukt av</th>
+                <th>@Localizer["Used by"]</th>
                 <th>Start</th>
-                <th>Slutt</th>
+                <th>@Localizer["End"]</th>
             </tr>
         </thead>
         <tbody>
@@ -456,15 +456,15 @@ var app = new Vue({
                     var toDate = new Date(reservation.toDate);    
                     var fromDate = new Date(reservation.fromDate);    
 
-                    // If a user tries to check out a tool, but the tool is currently reserved for someone else, he/she gets a warning
-                    if (currentDate.getTime() <= toDate.getTime() 
-                    && currentDate.getTime() >= fromDate.getTime())
-                    {       
-                            var options = {
-                                title: 'Advarsel',
-                                message: 'Dette verktøyet er reservert av ' + reservation.user.userName + '. Er du sikker på at du vil sjekke ut verktøyet?'
-                            }
-
+                // If a user tries to check out a tool, but the tool is currently reserved for someone else, he/she gets a warning
+                if (currentDate.getTime() <= toDate.getTime() 
+                && currentDate.getTime() >= fromDate.getTime())
+                {       
+                        var options = {
+                            title: '@Localizer["Warning"]',
+                            message: '@Localizer["This tool is reserved by"] ' + reservation.user.userName + '. @Localizer["Are you sure you want to check out this tool?"]'
+                        }
+                        
                             ConfirmDialog(options, function(){
                                 self.checkOutTool(id);
                             })

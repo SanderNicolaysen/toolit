@@ -1,24 +1,24 @@
 @model IEnumerable<app.Models.Tool>
 
 @{
-    ViewData["Title"] = "Tool-List";
+    ViewData["Title"] = Localizer["Tools"];
 }
 
 <div id="app" v-cloak>
 
-<h2>Tool-List</h2>
+<h2>@Localizer["Tools"]</h2>
 
 @if (User.IsInRole("Admin"))
 {
-    <p><a asp-action="Create">Add Tool</a></p>
+    <p><a asp-action="Create">@Localizer["Add Tool"]</a></p>
 
-    <hr></hr>
+    <hr />
 }
 
 <!--Search tools-->
 <form v-on:submit.prevent="onSubmit" class="form-inline" role="form">
   <div class="form-group has-feedback">
-    <input type="text" class="form-control" id="search" placeholder="Search tools" v-model="search" autocomplete="off" autofocus>
+    <input type="text" class="form-control" id="search" placeholder="@Localizer["Search tools"]" v-model="search" autocomplete="off" autofocus>
     <span class="glyphicon glyphicon-search form-control-feedback"></span>
   </div>
 </form>
@@ -64,10 +64,16 @@
                             <span class="more-dot"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a v-bind:href="'Tool/Edit/' + tool.id">Edit</a></li>
-                            <li><a v-bind:href="'Tool/Delete/' + tool.id">Delete</a></li>
+                            <li><a v-bind:href="'Tool/Edit/' + tool.id">@Localizer["Edit"]</a></li>
+                            <li><a v-bind:href="'Tool/Delete/' + tool.id">@Localizer["Delete"]</a></li>
                         </ul>
                     </div>
+                </td>
+            }
+            else 
+            {
+                <td>
+                    <a class="btn btn-primary btn-sm" v-bind:href="'Tool/Details/' + tool.id">@Localizer["Details"]</a>
                 </td>
             }
         </tr>

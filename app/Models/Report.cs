@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace app.Models
 {
@@ -20,6 +21,7 @@ namespace app.Models
         
         public Tool Tool { get; set; }
         public string Error { get; set; }
+        
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
         public bool isResolved { get; set; }

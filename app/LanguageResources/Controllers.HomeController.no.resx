@@ -117,10 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Tool" xml:space="preserve">
+  <data name="Add favourites by clicking the favourites-icon (&lt;span class='glyphicon glyphicon-star-empty' style='font-size: 1em;'&gt;&lt;/span&gt;) on the Tools page" xml:space="preserve">
+    <value>Legg til favoritter ved å trykke på favoritt-ikonet (&lt;span class='glyphicon glyphicon-star-empty' style='font-size: 1em;'&gt;&lt;/span&gt;) på verktøysiden</value>
+  </data>
+  <data name="Administration" xml:space="preserve">
+    <value>Administrasjon</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Kalender</value>
+  </data>
+  <data name="Favourites" xml:space="preserve">
+    <value>Favoritter</value>
+  </data>
+  <data name="Home Page" xml:space="preserve">
+    <value>Hjemmeside</value>
+  </data>
+  <data name="on the Tools page" xml:space="preserve">
+    <value> på verktøysiden</value>
+  </data>
+  <data name="Tools" xml:space="preserve">
     <value>Verktøy</value>
   </data>
-  <data name="User" xml:space="preserve">
-    <value>Bruker</value>
+  <data name="You don't have any favourites" xml:space="preserve">
+    <value>Du har ingen favoritter</value>
+  </data>
+  <data name="Admin panel" xml:space="preserve">
+    <value>Administrasjonspanel</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Hei</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Hjem</value>
+  </data>
+  <data name="Log in" xml:space="preserve">
+    <value>Logg inn</value>
+  </data>
+  <data name="Log out" xml:space="preserve">
+    <value>Logg ut</value>
+  </data>
+  <data name="Toggle navigation" xml:space="preserve">
+    <value>Bytt navigering</value>
+  </data>
+  <data name="Tools List" xml:space="preserve">
+    <value>Verktøyliste</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lagre</value>
+  </data>
+  <data name="Select Language:" xml:space="preserve">
+    <value>Velg Språk:</value>
   </data>
 </root>

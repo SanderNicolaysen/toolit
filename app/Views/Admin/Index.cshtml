@@ -6,7 +6,7 @@
 @using Newtonsoft.Json;
 
 @{
-    ViewData["Title"] = "Administrasjonspanel";
+    ViewData["Title"] = Localizer["Administration panel"];
     ViewData.AddActivePage(ManageNavPages.Index);
 
     // Create data and label arrays for the graphs
@@ -17,11 +17,11 @@
     var dataUsagePercent = JsonConvert.SerializeObject(Model.ToolUsage.Take(10).Select(t => t.UsagePercent));
 }
 
-<h2>Sammendrag av verktøysbruk</h2>
+<h2>@Localizer["Tool Usage Overview"]</h2>
 
 <div class="row">
     <div class="col-md-6">
-        <h3>Antall ganger utlånt</h3>
+        <h3>@Localizer["Number of times lent"]</h3>
 
         <div>
             <canvas id="ToolUseCountChart" style="height: 170px;"></canvas>
@@ -30,8 +30,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Verktøy</th>
-                    <th>Antall ganger utlånt</th>
+                    <th>@Localizer["Tool"]</th>
+                    <th>@Localizer["Number of times lent"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,7 +47,7 @@
     </div>
 
     <div class="col-md-6">
-        <h3>Andel av tid utlånt</h3>
+        <h3>@Localizer["Percentage of time lent"]</h3>
 
         <div>
             <canvas id="ToolUsagePercentChart" style="height: 170px;"></canvas>
@@ -56,8 +56,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Verktøy</th>
-                    <th>Brukstid det siste året (%)</th>
+                    <th>@Localizer["Tool"]</th>
+                    <th>@Localizer["Duration of use the last year"] (%)</th>
                 </tr>
             </thead>
             <tbody>
@@ -77,15 +77,15 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h3>Nylige utlån <sub><a asp-action="Log">se hele loggen</a></sub></h3>
+        <h3>@Localizer["Recent loans"] <sub><a asp-action='Log'>@Localizer["se the whole log"]</a></sub></h3>
 
         <table class="table table-condensed table-hover table-striped" id="tool-log">
             <thead>
                 <tr>
-                    <th>Utlånt av</th>
-                    <th>Utlånt</th>
-                    <th>Verktøy</th>
-                    <th class="fit">Innlevert</th>
+                    <th>@Localizer["Lent by"]</th>
+                    <th>@Localizer["On loan"]</th>
+                    <th>@Localizer["Tool"]</th>
+                    <th class="fit">@Localizer["Tendered"]</th>
                 </tr>
             </thead>
             <tbody>

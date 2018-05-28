@@ -1,7 +1,7 @@
 @model IEnumerable<app.Models.Report>
 
 @{
-    ViewData["Title"] = "Rapporter";
+    ViewData["Title"] = Localizer["Reports"];
     ViewData.AddActivePage(ManageNavPages.Reports);
 }
 
@@ -10,13 +10,13 @@
         <thead>
             <tr>
                 <th>
-                    Rapport-melding
+                    @Localizer["Report message"]
                 </th>
                 <th>
-                    Verktøy
+                    @Localizer["Tool"]
                 </th>
                 <th>
-                    Bruker
+                    @Localizer["User"]
                 </th>
                 <th>
                     Løst
@@ -36,12 +36,12 @@
                     {{ r.user.userName }}
                 </td>
                 <td>
-                    <button type="button" class="btn btn-default" title="Merk som løst"
+                    <button type="button" class="btn btn-default" title="@Localizer["Mark as solved"]"
                     v-on:click="markAsResolved(r.id, false, r.error)" v-if="!r.isResolved">
                     <span class="glyphicon glyphicon-remove"></span>
                     </button>
 
-                    <button type="button" class="btn btn-default" title="Merk som uløst" 
+                    <button type="button" class="btn btn-default" title="@Localizer["Mark as unsolved"]" 
                     v-on:click="markAsResolved(r.id, true, r.error)" v-else>
                     <span class="glyphicon glyphicon-ok-sign"></span>
                     </button>
@@ -54,9 +54,9 @@
                             <span class="more-dot"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a v-bind:href="'/Report/Edit/' + r.id">Edit</a></li>
-                            <li><a v-bind:href="'/Report/Details/' + r.id">Details</a></li>
-                            <li><a v-bind:href="'/Report/Delete/' + r.id">Delete</a></li>
+                            <li><a v-bind:href="'/Report/Edit/' + r.id">@Localizer["Edit"]</a></li>
+                            <li><a v-bind:href="'/Report/Details/' + r.id">@Localizer["Details"]</a></li>
+                            <li><a v-bind:href="'/Report/Delete/' + r.id">@Localizer["Delete"]</a></li>
                         </ul>
                     </div>
                 </td>
@@ -65,7 +65,7 @@
         @if (Model.Count() == 0)
         {
             <tr>
-                <td colspan="2">Ingen rapporter å vise...</td>
+                <td colspan="2">@Localizer["There are no reports to show..."]</td>
             </tr>
         }
         </tbody>

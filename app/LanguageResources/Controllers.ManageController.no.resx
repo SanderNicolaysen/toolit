@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Add another service to log in." xml:space="preserve">
+    <value>Legg til en annen tjeneste for å logge inn.</value>
+  </data>
+  <data name="Add authenticator app" xml:space="preserve">
+    <value>Legg til autentiseringsapplikasjon</value>
+  </data>
+  <data name="and" xml:space="preserve">
+    <value>og</value>
+  </data>
+  <data name="Authenticator app" xml:space="preserve">
+    <value>Autentiserinsapplikasjon</value>
+  </data>
+  <data name="Change password" xml:space="preserve">
+    <value>Endre passord</value>
+  </data>
+  <data name="Change your account settings" xml:space="preserve">
+    <value>Endre kontoinstillinger</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Lukk</value>
+  </data>
+  <data name="Configure authenticator app" xml:space="preserve">
+    <value>Konfigurer autentiseringsapplikasjon</value>
+  </data>
+  <data name="Disable 2FA" xml:space="preserve">
+    <value>Deaktiver 2FA</value>
+  </data>
+  <data name="Disable two-factor authentication (2FA)" xml:space="preserve">
+    <value>Deaktiver totrinnsverifisering (2FA)</value>
+  </data>
+  <data name="Disabling 2FA does not change the keys used in authenticator apps. If you wish to change the key&#xD;&#xA;        used in an authenticator app you should &lt;a asp-action=&quot;ResetAuthenticatorWarning&quot;&gt;reset your&#xD;&#xA;        authenticator keys.&lt;/a&gt;" xml:space="preserve">
+    <value>Deaktivering av 2FA endrer ikke nøkklene som brukes i autentiseringsapplikasjoner. Hvis du ønsker å endre nøkkelen som brukes i en autentiseringsapplikasjon bør du &lt;a asp-action="ResetAuthenticatorWarning"&gt; tilbakestille dine autentiseringsnøkkler. &lt;/a&gt;</value>
+  </data>
+  <data name="Download a two-factor authenticator app like Microsoft Authenticator for" xml:space="preserve">
+    <value>Last ned en totrinnsautentiseringsapp som Microsoft Authenticator for</value>
+  </data>
+  <data name="Enable authenticator" xml:space="preserve">
+    <value>Aktiver autentisering</value>
+  </data>
+  <data name="External logins" xml:space="preserve">
+    <value>Eksterne innlogginger</value>
+  </data>
+  <data name="If you lose your device and don't have the recovery codes you will lose access to your account." xml:space="preserve">
+    <value>Hvis du mister enheten og ikke har gjenopprettingskoder, mister du tilgang til kontoen din.</value>
+  </data>
+  <data name="If you reset your authenticator key your authenticator app will not work until you reconfigure it." xml:space="preserve">
+    <value>Hvis du tilbakestiller autentiseringsnøkkelen, vil autentiseringsprogrammet ditt ikke virke før du omkonfigurerer det.</value>
+  </data>
+  <data name="Log in using your @provider.DisplayName account" xml:space="preserve">
+    <value>Logg inn ved hjelp av din @provider.DisplayName konto</value>
+  </data>
+  <data name="Manage your account" xml:space="preserve">
+    <value>Administrer kontoen din</value>
+  </data>
+  <data name="Manage your external logins" xml:space="preserve">
+    <value>Administrer dine eksterne pålogginger</value>
+  </data>
+  <data name="Once you have scanned the QR code or input the key above, your two factor authentication app will provide you&#xD;&#xA;                            with a unique code. Enter the code in the confirmation box below." xml:space="preserve">
+    <value>Når du har skannet QR-koden eller tastet den inn ovenfor, vil din totrinnsautentiseringsapp gi deg
+                            en unik kode. Skriv inn koden i bekreftelsesboksen nedenfor.</value>
+  </data>
+  <data name="or" xml:space="preserve">
+    <value>eller</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Passord</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="Put these codes in a safe place." xml:space="preserve">
+    <value>Sett disse kodene på et trygt sted.</value>
+  </data>
+  <data name="Recovery codes" xml:space="preserve">
+    <value>Gjennopprettingskoder</value>
+  </data>
+  <data name="Registered Logins" xml:space="preserve">
+    <value>Registrerte innlogginger</value>
+  </data>
+  <data name="Reset authenticator key" xml:space="preserve">
+    <value>Tilbakestill autentiseringsnøkkel</value>
+  </data>
+  <data name="Reset recovery codes" xml:space="preserve">
+    <value>Tilbakestill gjenopprettingskoder</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lagre</value>
+  </data>
+  <data name="Scan the QR Code or enter this key &lt;kbd&gt;@Model.SharedKey&lt;/kbd&gt; into your two factor authenticator app. Spaces and casing do not matter." xml:space="preserve">
+    <value>Skann QR koden eller skriv inn denne koden &lt;kbd&gt;@Model.SharedKey&lt;/kbd&gt; i totrinnsautentiserings-applikasjonen. Skiller ikke mellom små, store bokstaver og mellomrom.</value>
+  </data>
+  <data name="Send verification email" xml:space="preserve">
+    <value>Send verifikasjonsepost</value>
+  </data>
+  <data name="Set password" xml:space="preserve">
+    <value>Sett passord</value>
+  </data>
+  <data name="Set your password" xml:space="preserve">
+    <value>Sett ditt passord</value>
+  </data>
+  <data name="This action only disables 2FA" xml:space="preserve">
+    <value>Denne handlingen slår av 2FA</value>
+  </data>
+  <data name="This process disables 2FA until you verify your authenticator app and will also reset your 2FA recovery codes. If you do not complete your authenticator app configuration you may lose access to your account." xml:space="preserve">
+    <value>Denne prosessen deaktiverer 2FA til du bekrefter autentiseringsapplikasjonen din, og vil også nullstille 2FA-gjenopprettingskoder. Hvis du ikke fullfører autentiseringsapplikasjons-konfigurasjonen, kan du miste tilgangen til kontoen din.</value>
+  </data>
+  <data name="To enable QR code generation please read our &lt;a href='https://go.microsoft.com/fwlink/?Linkid=852423'&gt;documentation&lt;/a&gt;." xml:space="preserve">
+    <value>For å aktivere QR-kodegenerering, vennligst les vår &lt;a href='https://go.microsoft.com/fwlink/?Linkid=852423'&gt;dokumentasjon&lt;/a&gt;.</value>
+  </data>
+  <data name="To use an authenticator app go through the following steps:" xml:space="preserve">
+    <value>For å bruke en autentiseringsapp, gå gjennom følgende trinn:</value>
+  </data>
+  <data name="Two-factor authentication" xml:space="preserve">
+    <value>Totrinnsverifisering</value>
+  </data>
+  <data name="Update password" xml:space="preserve">
+    <value>Oppdater passord</value>
+  </data>
+  <data name="Verification Code" xml:space="preserve">
+    <value>Verifiseringskode</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Verifiser</value>
+  </data>
+  <data name="You can &lt;a asp-action=&quot;GenerateRecoveryCodes&quot;&gt;generate a new set of recovery codes&lt;/a&gt;." xml:space="preserve">
+    <value>Du kan &lt;a asp-action="GenerateRecoveryCodes"&gt;generere et nytt sett med gjenopprettingskoder&lt;/a&gt;.</value>
+  </data>
+  <data name="You do not have a local username/password for this site. Add a local account so you can log in without an external login." xml:space="preserve">
+    <value>Du har ikke et lokalt brukernavn/passord for dette nettstedet. Legg til en lokal konto slik at du kan logge deg på uten ekstern pålogging.</value>
+  </data>
+  <data name="You have 1 recovery code left" xml:space="preserve">
+    <value>Du har 1 gjenopprettingskode igjen</value>
+  </data>
+  <data name="You have @Model.RecoveryCodesLeft recovery codes left." xml:space="preserve">
+    <value>Du har @Model.RecoveryCodesLeft gjenopprettingskoder igjen.</value>
+  </data>
+  <data name="You have no recovery codes left" xml:space="preserve">
+    <value>Du har ingen gjenopprettingskoder igjen</value>
+  </data>
+  <data name="You must &lt;a asp-action=&quot;GenerateRecoveryCodes&quot;&gt;generate a new set of recovery codes&lt;/a&gt; before you can log in with a recovery code." xml:space="preserve">
+    <value>Du må &lt;a asp-action="GenerateRecoveryCodes"&gt;generere et nytt sett med gjenopprettingskoder&lt;/a&gt; før du kan logge inn med en gjenopprettingskode.</value>
+  </data>
+  <data name="You should &lt;a asp-action=&quot;GenerateRecoveryCodes&quot;&gt;generate a new set of recovery codes&lt;/a&gt;." xml:space="preserve">
+    <value>Du burde &lt;a asp-action="GenerateRecoveryCodes"&gt;generere et nytt sett med gjenopprettingskoder&lt;/a&gt;.</value>
+  </data>
+</root>

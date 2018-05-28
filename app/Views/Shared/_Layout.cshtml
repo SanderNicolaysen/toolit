@@ -30,20 +30,20 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Index">@LocalizerShared["Home"]</a></li>
 
                             @if (User.IsInRole("Admin"))
                             {
-                                <li><a asp-area="" asp-controller="Admin" asp-action="Index">Admin panel</a></li>
+                                <li><a asp-area="" asp-controller="Admin" asp-action="Index">@LocalizerShared["Admin panel"]</a></li>
                             }
-                            <li><a asp-area="" asp-controller="Tool" asp-action="Index">Tool-List</a></li>
+                            <li><a asp-area="" asp-controller="Tool" asp-action="Index">@LocalizerShared["Tools List"]</a></li>
                         </ul>
                         @await Html.PartialAsync("_LoginPartial")
                     </div>
                 </div>
                 <div class="col-sm-1 col-xs-6">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
+                        <span class="sr-only">@LocalizerShared["Toggle navigation"]</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -57,6 +57,7 @@
         @RenderBody()
         <hr />
         <footer>
+            @await Html.PartialAsync("_SelectLanguagePartial")
             <p>&copy; 2018 - toolit</p>
         </footer>
     </div>

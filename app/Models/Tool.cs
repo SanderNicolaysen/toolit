@@ -20,14 +20,23 @@ namespace app.Models
         }
 
         public int Id { get; set; }
+
+        [DisplayName("Name")]
         public string Name { get; set; }
+
+        [DisplayName("Image")]
         public string Image { get; set; }
         public string Thumbnail { get; set; }
         public int StatusId { get; set; }
         public Status Status { get; set; }
         public string CurrentOwnerId { get; set; }
+
+        [DisplayName("Reports")]
         public List<Report> Reports { get; set; }
+
+        [DisplayName("Alarms")]
         public List<Alarm> Alarms { get; set; }
+        
         public string Alias { get; set; }
         public string Shelf { get; set; }
 

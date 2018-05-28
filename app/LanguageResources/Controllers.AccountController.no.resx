@@ -121,7 +121,7 @@
     <value>Ingen tilgang</value>
   </data>
   <data name="Confirm email" xml:space="preserve">
-    <value>Bekreft epost adresse</value>
+    <value>Bekreft epost-adresse</value>
   </data>
   <data name="Reset password" xml:space="preserve">
     <value>Tilbakestill passord</value>
@@ -130,7 +130,7 @@
     <value>Skriv inn din autentiserings kode nedenfor</value>
   </data>
   <data name="Enter your email" xml:space="preserve">
-    <value>Skriv inn din epost adresse</value>
+    <value>Skriv inn din epost-adresse</value>
   </data>
   <data name="Forgot password confirmation" xml:space="preserve">
     <value>Passordbekreftelse</value>
@@ -216,5 +216,11 @@
   </data>
   <data name="Your password has been reset. Please" xml:space="preserve">
     <value>Ditt passord har blitt tilbakestillt. Vennligst</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Epost</value>
+  </data>
+  <data name="Forgot your password?" xml:space="preserve">
+    <value>Glemt passord?</value>
   </data>
 </root>

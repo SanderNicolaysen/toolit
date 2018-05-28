@@ -1,19 +1,19 @@
 @{
-    ViewData["Title"] = "Brukere";
+    ViewData["Title"] = Localizer["Users"];
     ViewData.AddActivePage(ManageNavPages.Users);
 }
 
 <div id="app">
 
-<a asp-action="CreateUser" class="btn btn-default">Opprett ny bruker</a>
-<a asp-action="CreateManyUsers" class="btn btn-default">Opprett mange brukere</a>
+<a asp-action="CreateUser" class="btn btn-default">@Localizer["Create new user"]</a>
+<a asp-action="CreateManyUsers" class="btn btn-default">@Localizer["Create several users"]</a>
 
 <hr />
 
 <!--Search users-->
 <form v-on:submit.prevent class="form-inline" role="form">
   <div class="form-group has-feedback">
-    <input type="text" class="form-control" id="search" placeholder="Search users" v-model="search" autofocus>
+    <input type="text" class="form-control" id="search" placeholder="@Localizer["Search users"]" v-model="search" autofocus>
     <span class="glyphicon glyphicon-search form-control-feedback"></span>
   </div>
 </form>
@@ -21,9 +21,9 @@
 <table class="table table-hover table-striped">
     <thead>
         <tr>
-            <th>Brukernavn</th>
-            <th>E-post</th>
-            <th>Telefonnummer</th>
+            <th>@Localizer["Username"]</th>
+            <th>@Localizer["Email"]</th>
+            <th>@Localizer["Phonenumber"]</th>
             <th>Administrator</th>
             <th></th>
         </tr>
@@ -66,15 +66,15 @@
                     <ul class="dropdown-menu dropdown-menu-right">
                         @if (User.IsInRole("SuperAdmin"))
                         {
-                            <li><a v-bind:href="'/User/Edit/' + user.id">Endre</a></li>
-                            <li><a v-bind:href="'/User/Details/' + user.id">Detaljer</a></li>
-                            <li><a v-bind:href="'/User/Delete/' + user.id" v-if="!user.isSuperAdmin">Slett</a></li>
+                            <li><a v-bind:href="'/User/Edit/' + user.id">@Localizer["Edit"]</a></li>
+                            <li><a v-bind:href="'/User/Details/' + user.id">@Localizer["Details"]</a></li>
+                            <li><a v-bind:href="'/User/Delete/' + user.id" v-if="!user.isSuperAdmin">@Localizer["Delete"]</a></li>
                         }
                         else
                         {
-                            <li><a v-bind:href="'/User/Edit/' + user.id" v-if="!user.isSuperAdmin && !user.isAdmin">Endre</a></li>
-                            <li><a v-bind:href="'/User/Details/' + user.id">Detaljer</a></li>
-                            <li><a v-bind:href="'/User/Delete/' + user.id" v-if="!user.isSuperAdmin && !user.isAdmin">Slett</a></li>
+                            <li><a v-bind:href="'/User/Edit/' + user.id" v-if="!user.isSuperAdmin && !user.isAdmin">@Localizer["Edit"]</a></li>
+                            <li><a v-bind:href="'/User/Details/' + user.id">@Localizer["Details"]</a></li>
+                            <li><a v-bind:href="'/User/Delete/' + user.id" v-if="!user.isSuperAdmin && !user.isAdmin">@Localizer["Delete"]</a></li>
                         }
                     </ul>
                 </div>

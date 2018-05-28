@@ -117,10 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Tool" xml:space="preserve">
-    <value>Verktøy</value>
+  <data name="Email" xml:space="preserve">
+    <value>Epost</value>
   </data>
-  <data name="User" xml:space="preserve">
-    <value>Bruker</value>
+  <data name="Phone number" xml:space="preserve">
+    <value>Telefonnummer</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Brukernavn</value>
   </data>
 </root>

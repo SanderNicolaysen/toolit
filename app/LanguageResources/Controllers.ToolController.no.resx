@@ -117,10 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add or edit picture" xml:space="preserve">
+    <value>Legg til eller endre bilde</value>
+  </data>
+  <data name="Add Tool" xml:space="preserve">
+    <value>Legg til verktøy</value>
+  </data>
+  <data name="Are you sure you want to check out this tool?" xml:space="preserve">
+    <value>Er du sikker på at du vil sjekke ut verktøyet?</value>
+  </data>
+  <data name="Are you sure you want to delete this reservation?" xml:space="preserve">
+    <value>Er du sikker på at du vil slette reservasjonen?</value>
+  </data>
+  <data name="Are you sure you want to delete this?" xml:space="preserve">
+    <value>Er du sikker på at du vil slette dette?</value>
+  </data>
+  <data name="Back to list" xml:space="preserve">
+    <value>Tilbake til listen</value>
+  </data>
+  <data name="Check in" xml:space="preserve">
+    <value>Sjekk inn</value>
+  </data>
+  <data name="Check out" xml:space="preserve">
+    <value>Sjekk ut</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Opprett</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Slett</value>
+  </data>
+  <data name="Delete reservation" xml:space="preserve">
+    <value>Slett reservasjon</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detaljer</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Endre</value>
+  </data>
+  <data name="End" xml:space="preserve">
+    <value>Slutt</value>
+  </data>
+  <data name="Log" xml:space="preserve">
+    <value>Logg</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Bilde</value>
+  </data>
+  <data name="Register alarm" xml:space="preserve">
+    <value>Registrer alarm</value>
+  </data>
+  <data name="Report fault" xml:space="preserve">
+    <value>Rapporter feil</value>
+  </data>
+  <data name="Reservations" xml:space="preserve">
+    <value>Reservasjoner</value>
+  </data>
+  <data name="Reserve" xml:space="preserve">
+    <value>Reservér</value>
+  </data>
+  <data name="Reserved by" xml:space="preserve">
+    <value>Reservert av</value>
+  </data>
+  <data name="Search tools" xml:space="preserve">
+    <value>Søk etter verktøy</value>
+  </data>
+  <data name="This tool is reserved by" xml:space="preserve">
+    <value>Dette verktøyet er reservert av</value>
+  </data>
   <data name="Tool" xml:space="preserve">
     <value>Verktøy</value>
   </data>
-  <data name="User" xml:space="preserve">
-    <value>Bruker</value>
+  <data name="Tools" xml:space="preserve">
+    <value>Verktøy</value>
+  </data>
+  <data name="Used by" xml:space="preserve">
+    <value>Brukt av</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Advarsel</value>
   </data>
 </root>

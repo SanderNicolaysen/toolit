@@ -31,6 +31,8 @@ namespace app.Data
                         new Status { StatusName = "Ikke tilgjengelig", Style = "color: #F6D846", Glyphicon = "glyphicon glyphicon-minus-sign", IsDeleteable = false, Id = Status.UNAVAILABLE  }
                     });
                 }
+                
+                db.SaveChanges();
                 return;
             }
 

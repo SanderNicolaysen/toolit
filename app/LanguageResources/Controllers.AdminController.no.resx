@@ -159,7 +159,7 @@
   <data name="Overview" xml:space="preserve">
     <value>Oversikt</value>
   </data>
-  <data name="Percentage of time lent" xml:space="preserve">
+  <data name="Percentage of time lent out" xml:space="preserve">
     <value>Andel av tid utlånt</value>
   </data>
   <data name="Recent activity" xml:space="preserve">

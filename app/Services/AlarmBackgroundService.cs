@@ -12,7 +12,7 @@ using app.Models;
 
 namespace app.Services
 {
-    internal class AlarmBackgroundService : IHostedService, IDisposable
+    internal class AlarmBackgroundService : IHostedService
     {
         private IServiceProvider _ServiceProvider;
         private Timer _timer;
@@ -20,11 +20,6 @@ namespace app.Services
         public AlarmBackgroundService(IServiceProvider ServiceProvider)
         {
             _ServiceProvider = ServiceProvider;
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -71,7 +66,7 @@ namespace app.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }

@@ -31,22 +31,22 @@
         <dd>
             @if (Model.isSuperAdmin)
             {
-                @Html.Raw("Localizer["Yes"]")
+                @Html.Raw(Localizer["Yes"])
             }
             else
             {
-                @Html.Raw("Localizer["No"]")
+                @Html.Raw(Localizer["No"])
             }
         </dd>
         <dt>Administrator</dt>
         <dd>
             @if (Model.isAdmin)
             {
-                @Html.Raw("Localizer["Yes"]")
+                @Html.Raw(Localizer["Yes"])
             }
             else
             {
-                @Html.Raw("Localizer["No"])
+                @Html.Raw(Localizer["No"])
             }
         </dd>
         <dt>

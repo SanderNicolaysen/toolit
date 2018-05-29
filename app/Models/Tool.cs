@@ -38,6 +38,8 @@ namespace app.Models
         public List<Alarm> Alarms { get; set; }
         
         public string Alias { get; set; }
+
+        [DisplayName("Shelf")]
         public string Shelf { get; set; }
 
         [DisplayName("RFID code")]

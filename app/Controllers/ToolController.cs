@@ -95,7 +95,7 @@ namespace app.Controllers
                 tool.Image = imgs.image;
                 tool.Thumbnail = imgs.thumbnail;
             }
-
+            tool.CurrentOwnerId = "No owner";
             _context.Add(tool);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -164,8 +164,8 @@ namespace app.Controllers
             {
                 tool.Image = pTool.Image;
                 tool.Thumbnail = pTool.Thumbnail;
-                tool.CurrentOwnerId = pTool.CurrentOwnerId;
             }
+            tool.CurrentOwnerId = pTool.CurrentOwnerId;
 
             try
             {

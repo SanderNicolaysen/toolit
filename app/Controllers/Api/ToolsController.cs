@@ -27,9 +27,23 @@ namespace app.Controllers_Api
 
         // GET: api/Tools
         [HttpGet]
-        public IEnumerable<Tool> GetTools()
+        public IEnumerable<Object> GetTools()
         {
-            return _context.Tools.Include(tool => tool.Reports).Include(tool => tool.Status);
+            var n = _context.Tools
+            .Include(tool => tool.Status)
+            .GroupJoin(
+                _context.Users, 
+                t => t.CurrentOwnerId, 
+                u => u.Id, 
+                (t, u) => new { Tool = t, User = u})
+            .SelectMany(
+                u => u.User.DefaultIfEmpty(),
+                (t, u) => new {
+                    Tool = t.Tool, User = u
+                }
+            );
+
+            return n;
         }
 
         // GET: api/Tools/5

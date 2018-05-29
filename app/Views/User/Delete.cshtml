@@ -1,29 +1,29 @@
 @model app.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = Localizer["Delete"];
 }
 
-<h2>Slett</h2>
+<h2>@Localizer["Delete"]</h2>
 
-<h3>Er du sikker på at du vil slette denne brukeren?</h3>
+<h3>@Localize["Are you sure you want to delete this user?"]</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Brukernavn
+            @Localizer["Username"]
         </dt>
         <dd>
             @Html.DisplayFor(model => model.UserName)
         </dd>
         <dt>
-            E-post
+            @Localizer["Email"]
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt>
-            Telefonnummer
+            @Localizer["Phone number"]
         </dt>
         <dd>
             @Html.DisplayFor(model => model.PhoneNumber)
@@ -32,26 +32,26 @@
         <dd>
             @if (Model.isSuperAdmin)
             {
-                @Html.Raw("Ja")
+                @Html.Raw("Localizer["Yes"]")
             }
             else
             {
-                @Html.Raw("Nei")
+                @Html.Raw("Localizer["No"]")
             }
         </dd>
         <dt>Administrator</dt>
         <dd>
             @if (Model.isAdmin)
             {
-                @Html.Raw("Ja")
+                @Html.Raw("Localizer["Yes"]")
             }
             else
             {
-                @Html.Raw("Nei")
+                @Html.Raw("Localizer["No"]")
             }
         </dd>
         <dt>
-            RFID-kode
+            @Localizer["RFID code"]
         </dt>
         <dd>
             @Html.DisplayFor(model => model.UserIdentifierCode)
@@ -60,7 +60,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Slett" class="btn btn-default" /> |
-        <a asp-controller="Admin" asp-action="Users">Tilbake til Liste</a>
+        <input type="submit" value="@Localizer["Delete"] class="btn btn-default" /> |
+        <a asp-controller="Admin" asp-action="Users">@Localizer["Back to list"]</a>
     </form>
 </div>

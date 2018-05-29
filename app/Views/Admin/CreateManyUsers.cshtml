@@ -1,7 +1,7 @@
 @model app.Models.AdminViewModels.CreateManyUsersViewModel
 
 @{
-    ViewData["Title"] = "Opprett ny bruker";
+    ViewData["Title"] = Localizer["Create new user"];
     ViewData.AddActivePage(ManageNavPages.Users);
 }
 
@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label asp-for="Email"></label>
                 <textarea asp-for="Email" class="form-control" rows="4" 
-                placeholder="email 1\nemail 2\nemail 3\netc...">
+                placeholder="@HtmlLocalizer["email 1\\nemail 2\\nemail 3\\netc..."]">
                 </textarea>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>

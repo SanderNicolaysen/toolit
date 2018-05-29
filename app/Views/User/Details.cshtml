@@ -1,28 +1,28 @@
 @model app.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Localizer["Details"];
 }
 
-<h2>Detaljer</h2>
+<h2>@Localizer["Details"]</h2>
 
 <div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Brukernavn
+            @Localizer["Username"]
         </dt>
         <dd>
             @Html.DisplayFor(model => model.UserName)
         </dd>
         <dt>
-            E-post
+            @Localizer["Email"]
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt>
-            Telefonnummer
+            @Localizer["Phone number"]
         </dt>
         <dd>
             @Html.DisplayFor(model => model.PhoneNumber)
@@ -31,26 +31,26 @@
         <dd>
             @if (Model.isSuperAdmin)
             {
-                @Html.Raw("Ja")
+                @Html.Raw("Localizer["Yes"]")
             }
             else
             {
-                @Html.Raw("Nei")
+                @Html.Raw("Localizer["No"]")
             }
         </dd>
         <dt>Administrator</dt>
         <dd>
             @if (Model.isAdmin)
             {
-                @Html.Raw("Ja")
+                @Html.Raw("Localizer["Yes"]")
             }
             else
             {
-                @Html.Raw("Nei")
+                @Html.Raw("Localizer["No"])
             }
         </dd>
         <dt>
-            RFID-kode
+            @Localizer["RFID code"]
         </dt>
         <dd>
             @Html.DisplayFor(model => model.UserIdentifierCode)
@@ -58,5 +58,5 @@
     </dl>
 </div>
 <div>
-    <a asp-controller="Admin" asp-action="Users">Tilbake til Liste</a>
+    <a asp-controller="Admin" asp-action="Users">@Localizer["Back to list"]</a>
 </div>

@@ -147,16 +147,13 @@
   <data name="Email" xml:space="preserve">
     <value>Epost</value>
   </data>
-  <data name="Lent by" xml:space="preserve">
-    <value>Utlånt av</value>
-  </data>
   <data name="Log" xml:space="preserve">
     <value>Logg</value>
   </data>
-  <data name="Number of times lent" xml:space="preserve">
+  <data name="Number of times lent out" xml:space="preserve">
     <value>Antall ganger utlånt</value>
   </data>
-  <data name="On loan" xml:space="preserve">
+  <data name="Date" xml:space="preserve">
     <value>Utlånt</value>
   </data>
   <data name="Overview" xml:space="preserve">
@@ -165,7 +162,7 @@
   <data name="Percentage of time lent" xml:space="preserve">
     <value>Andel av tid utlånt</value>
   </data>
-  <data name="Recent loans" xml:space="preserve">
+  <data name="Recent activity" xml:space="preserve">
     <value>Nylige utlån </value>
   </data>
   <data name="Report message" xml:space="preserve">
@@ -180,7 +177,7 @@
   <data name="Search users" xml:space="preserve">
     <value>Søk i brukere</value>
   </data>
-  <data name="Tendered" xml:space="preserve">
+  <data name="Checked in" xml:space="preserve">
     <value>Innlevert</value>
   </data>
   <data name="There are no reports to show..." xml:space="preserve">

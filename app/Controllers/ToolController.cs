@@ -81,11 +81,8 @@ namespace app.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-<<<<<<< HEAD
-        public async Task<IActionResult> Create([Bind("Id,Name,StatusId,Alias,ToolIdentifierCode")] Tool tool, IFormFile image, [FromServices] IResizeImage _ri)
-=======
-        public async Task<IActionResult> Create([Bind("Id,Name,StatusId,Alias,Shelf")] Tool tool, IFormFile image, [FromServices] IResizeImage _ri)
->>>>>>> Comitted shelf system
+        public async Task<IActionResult> Create([Bind("Id,Name,StatusId,Alias,ToolIdentifierCode,Shelf")] Tool tool, IFormFile image, [FromServices] IResizeImage _ri)
+
         {
             if (!ModelState.IsValid)
             {
@@ -132,11 +129,7 @@ namespace app.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-<<<<<<< HEAD
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StatusId,Alias,ToolIdentifierCode")] Tool tool, IFormFile image, [FromServices] IResizeImage _ri)
-=======
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StatusId,Alias,Shelf")] Tool tool, IFormFile image, [FromServices] IResizeImage _ri)
->>>>>>> Comitted shelf system
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StatusId,Alias,ToolIdentifierCode,Shelf")] Tool tool, IFormFile image, [FromServices] IResizeImage _ri)
         {
             if (id != tool.Id)
             {

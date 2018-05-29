@@ -29,12 +29,9 @@ namespace app.Models
         public List<Report> Reports { get; set; }
         public List<Alarm> Alarms { get; set; }
         public string Alias { get; set; }
-<<<<<<< HEAD
+        public string Shelf { get; set; }
 
         [DisplayName("RFID code")]
         public string ToolIdentifierCode { get; set; }
-=======
-        public string Shelf { get; set; }
->>>>>>> Comitted shelf system
     }
 }

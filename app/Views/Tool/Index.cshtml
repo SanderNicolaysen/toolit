@@ -13,8 +13,7 @@
 
     <h3>Admin tools</h3>
     <p><a asp-action="Create">Add Tool</a></p>
-    
-    <button v-on:click="isHidden = !isHidden">Toggle shelf numbers</button>
+
     <hr></hr>
 }
 
@@ -32,6 +31,7 @@
             <th></th>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
             <th>@Html.DisplayNameFor(model => model.Status)</th>
+            <th>@Html.DisplayNameFor(model => model.Shelf)</th>
             <th></th>
         </tr>
     </thead>
@@ -42,8 +42,7 @@
             </td>
             <td><a v-bind:href="'Tool/Details/' + tool.id">{{ tool.name }}</a></td>
             <td><i :style="tool.status.style" :class="tool.status.glyphicon"></i> {{ tool.status.statusName }}</td>
-            <td><p v-if="isHidden">Shelf: {{ tool.shelf }}</p></td>
-            <td><p v-else=no></td>
+            <td>{{ tool.shelf }}</td>
             <td>
                 <span class="glyphicon" style="font-size:17px" aria-hidden="true"
                     v-on:click="toggleFavorite(tool)"
@@ -76,7 +75,6 @@
 var app = new Vue({
     el: '#app',
     data: {
-        isHidden: false,
         tools: [],
         search: ''
     },

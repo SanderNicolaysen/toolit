@@ -16,6 +16,7 @@ using app.Models;
 using app.Models.AccountViewModels;
 using app.Services;
 using app.Data;
+using Microsoft.Extensions.Localization;
 
 namespace app.Controllers
 {
@@ -27,19 +28,22 @@ namespace app.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly ApplicationDbContext _context;
+        private readonly IStringLocalizer<app.Controllers.AccountController> _Localizer;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            IStringLocalizer<app.Controllers.AccountController> Localizer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _context = context;
+            _Localizer= Localizer;
         }
 
         [TempData]
@@ -71,7 +75,7 @@ namespace app.Controllers
 
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, _Localizer["Invalid login attempt."]);
                     return View(model);
                 }
 
@@ -101,7 +105,7 @@ namespace app.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, _Localizer["Invalid login attempt."]);
                     return View(model);
                 }
             }

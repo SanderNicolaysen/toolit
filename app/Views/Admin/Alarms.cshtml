@@ -7,6 +7,7 @@
 
 <table class="table">
     <thead>
+        <a asp-action="CreateAlarm" class="btn btn-default">Opprett alarm</a>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -30,7 +31,7 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @item.Tool.Name
+                <a href="/Tool/Details/@item.Tool.Id">@item.Tool.Name</a>
             </td>
             <td class="fit">
                 <div class="dropdown">

@@ -1,27 +1,37 @@
-@model app.Models.AlarmViewModels.CreateViewModel
+@model app.Models.AdminViewModels.CreateAlarmViewModel
 
 @{
-    ViewData["Title"] = Localizer["Create"];
+    ViewData["Title"] = Localizer["Alarm"];
+    ViewData.AddActivePage(ManageNavPages.Alarms);
 }
 
-<h2>@Localizer["Create"]</h2>
+<h2>Opprett Alarm</h2>
 
-<h4>@Localizer["Alarm"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="CreateAlarm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Alarm.ToolId" class="control-label">Verktøy</label>
+                <select asp-for="Alarm.ToolId" class="form-control"/>
+                    @foreach(Tool tool in Model.Tools)
+                    {
+                        <option value="@tool.Id">@tool.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="Alarm.Tool.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Alarm.Name" class="control-label">Navn på alarm</label>
-                <select asp-for="Alarm.Name" class="form-control" />
+                <input asp-for="Alarm.Name" class="form-control" />
                 <span asp-validation-for="Alarm.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Alarm.Date" class="control-label"></label>
                 <input asp-for="Alarm.Date" class="form-control" />
                 <span asp-validation-for="Alarm.Date" class="text-danger"></span>
-            </div>
+            </div>            
             <div class="form-group">
                 <label class="control-label">Status etter utløpsdato</label>
                 <select name="Alarm.StatusId" class="form-control">
@@ -37,8 +47,3 @@
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-controller="Tool" asp-action="Index">@Localizer["Back to List"]</a>
-</div>
-

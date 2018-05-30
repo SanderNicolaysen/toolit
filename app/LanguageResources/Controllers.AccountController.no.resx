@@ -223,4 +223,13 @@
   <data name="Forgot your password?" xml:space="preserve">
     <value>Glemt passord?</value>
   </data>
+  <data name="Invalid login attempt." xml:space="preserve">
+    <value>Ugyldig brukernavn eller passord.</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Passord</value>
+  </data>
+  <data name="Username or email" xml:space="preserve">
+    <value>Brukernavn eller epost</value>
+  </data>
 </root>

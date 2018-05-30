@@ -132,4 +132,7 @@
   <data name="RFID code" xml:space="preserve">
     <value>RFID-kode</value>
   </data>
+  <data name="Shelf" xml:space="preserve">
+    <value>Hylle</value>
+  </data>
 </root>

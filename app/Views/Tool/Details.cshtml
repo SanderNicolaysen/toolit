@@ -78,12 +78,6 @@
             {
                 <dd>
                     - @alarm.Name: @alarm.Date
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a asp-controller="Alarms" asp-action="Edit" asp-route-id="@alarm.Id">@Localizer["Edit"]</a> @Html.Raw("|")
-                        <a asp-controller="Alarms" asp-action="Details" asp-route-id="@alarm.Id">@Localizer["Details"]</a> @Html.Raw("|")
-                        <a asp-controller="Alarms" asp-action="Delete" asp-route-id="@alarm.Id">@Localizer["Delete"]</a>
-                    }
                 </dd>
             }
         }

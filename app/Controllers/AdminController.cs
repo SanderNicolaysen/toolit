@@ -167,6 +167,41 @@ namespace app.Controllers
             return View(await _context.Alarms.Include(a => a.Tool).ToListAsync());
         }
 
+        // GET: Admin/CreateAlarm
+        public async Task<IActionResult> CreateAlarm()
+        {
+            var statuslist = await _context.Statuses.ToListAsync();
+            var toollist = await _context.Tools.ToListAsync();
+            var vm = new CreateAlarmViewModel();
+            vm.Alarm = new Alarm { Tool = new Tool(), Status = new Status() };
+            vm.Tools = toollist;
+            vm.Statuses = statuslist;
+            return View(vm);
+        }
+
+        // POST: 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAlarm([Bind("Name,Date,StatusId,ToolId")] Alarm alarm)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(alarm);
+
+                var tool = await _context.Tools.Include(t => t.Alarms).SingleOrDefaultAsync(m => m.Id == alarm.ToolId);
+                if (tool == null)
+                {
+                    return NotFound();
+                }
+
+                tool.Alarms.Add(alarm);
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(AdminController.Alarms), "Admin");
+            }
+            return View(alarm);
+        }
+
         public async Task<IActionResult> Reports()
         {
             return View(await _context.Reports.Include(r => r.Tool).ToListAsync());

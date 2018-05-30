@@ -219,6 +219,9 @@
   <data name="User" xml:space="preserve">
     <value>Bruker</value>
   </data>
+  <data name="Create new users" xml:space="preserve">
+    <value>Opprett nye brukere</value>
+  </data>
   <data name="email 1\nemail 2\nemail 3\netc..." xml:space="preserve">
     <value>e-post 1\ne-post 2\ne-post 3\nosv...</value>
   </data>

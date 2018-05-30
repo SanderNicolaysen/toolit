@@ -15,7 +15,6 @@
 
 <h3>@Localizer["Are you sure you want to delete this?"]</h3>
 <div>
-    <h4>Status</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -37,51 +36,57 @@
             @Html.DisplayFor(model => model.Status.Glyphicon)
         </dd>
     </dl>
-    
-    @if(Model.Tools.Any())
-    {
-        <h4>@Localizer["The following tools currently have this as their status"]:</h4>
-        foreach(Tool tool in Model.Tools)
-        {
-            @tool.Name <br>
-        }
-        
-    }
-    @if(Model.Alarms.Any())
-    {
-        <h4>@Localizer["The following alarms currently have this as their status"]:</h4>
-        foreach(Alarm alarm in Model.Alarms)
-        {
-            @alarm.Name <br>
-        }
-    }
-    @if(Model.Tools.Any() || Model.Alarms.Any())
-    {
-        <h4>@Localizer["You will either have to change their statuses manually, or select a new status for all of the items mentioned above"]</h4>
-    }
-
-    <form asp-action="Delete">
+</div>
+<div class="row">
+    <div class="col-md-5">
         @if(Model.Tools.Any())
         {
-        <div class="form-group">
-            <label class="control-label">@Localizer["Change affected items to"]:</label>
-            <select name="NewStatus" class="form-control">
-                @foreach(Status status in Model.Statuses)
-                {
-                    if(status.Id != Model.Status.Id)
-                    {                    
-                    <option value="@status.Id">@status.StatusName</option>
-                    }
-                }
-            </select>
-        </div>
+            <h4>@Localizer["The following tools currently have this as their status"]:</h4>
+            <ul>
+            @foreach(Tool tool in Model.Tools)
+            {
+                <li> @tool.Name </li>
+            }
+            </ul>
         }
-        <div class="form-group">
-            <input type="hidden" asp-for="Status.Id" />
-            <input type="submit" value="@Localizer["Delete"]" class="btn btn-default" /> |
-            <a asp-controller="Admin" asp-action="Statuses">@Localizer["Back to list"]</a>
-        </div>
-    </form>
+        @if(Model.Alarms.Any())
+        {
+            <h4>@Localizer["The following alarms currently have this as their status"]:</h4>
+            <ul>
+            @foreach(Alarm alarm in Model.Alarms)
+            {
+                <li>@alarm.Name</li>
+            }
+            </ul>
+        }
+        @if(Model.Tools.Any() || Model.Alarms.Any())
+        {
+            <h4>@Localizer["You will either have to change their statuses manually, or select a new status for all of the items mentioned above"]</h4>
+        }
+
+        <form asp-action="Delete">
+            @if(Model.Tools.Any())
+            {
+            <div class="form-group">
+                <label class="control-label">@Localizer["Change affected items to"]:</label>
+                <select name="NewStatus" class="form-control">
+                    @foreach(Status status in Model.Statuses)
+                    {
+                        if(status.Id != Model.Status.Id)
+                        {                    
+                        <option value="@status.Id">@status.StatusName</option>
+                        }
+                    }
+                </select>
+            </div>
+            }
+            <div class="form-group">
+                <input type="hidden" asp-for="Status.Id" />
+                <input type="submit" value="@Localizer["Delete"]" class="btn btn-default" /> |
+                <a asp-controller="Admin" asp-action="Statuses">@Localizer["Back to list"]</a>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
 </html>

@@ -19,6 +19,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">@Localizer["Edit"]</a> |
-    <a asp-controller="Admin" asp-action="Reports">@Localizer["Back to list"]</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" asp-route-returnurl="@ViewData["ReturnUrl"]">@Localizer["Edit"]</a> |
+    <a href="@ViewData["ReturnUrl"]">Tilbake</a>
 </div>

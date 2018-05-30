@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = Localizer["Reports"];
     ViewData.AddActivePage(ManageNavPages.Reports);
+
+    var returnurl = System.Net.WebUtility.UrlEncode("/Admin/Reports");
 }
 
 <div id="app" v-cloak>
@@ -54,9 +56,9 @@
                             <span class="more-dot"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a v-bind:href="'/Report/Edit/' + r.id">@Localizer["Edit"]</a></li>
-                            <li><a v-bind:href="'/Report/Details/' + r.id">@Localizer["Details"]</a></li>
-                            <li><a v-bind:href="'/Report/Delete/' + r.id">@Localizer["Delete"]</a></li>
+                            <li><a v-bind:href="'/Report/Edit/' + r.id + '?returnurl=@returnurl'">@Localizer["Edit"]</a></li>
+                            <li><a v-bind:href="'/Report/Details/' + r.id + '?returnurl=@returnurl'">@Localizer["Details"]</a></li>
+                            <li><a v-bind:href="'/Report/Delete/' + r.id + '?returnurl=@returnurl'">@Localizer["Delete"]</a></li>
                         </ul>
                     </div>
                 </td>

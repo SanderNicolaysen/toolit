@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" asp-route-returnurl="@ViewData["ReturnUrl"]">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Alarm.Id" />
             <div class="form-group">
@@ -40,6 +40,6 @@
 </div>
 
 <div>
-    <a asp-controller="Admin" asp-action="Alarms">Tilbake til alarmoversikt</a>
+    <a href="@ViewData["ReturnUrl"]">Tilbake</a>
 </div>
 

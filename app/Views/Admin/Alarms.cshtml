@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = Localizer["Alarms"];
     ViewData.AddActivePage(ManageNavPages.Alarms);
+
+    var returnurl = System.Net.WebUtility.UrlEncode("/Admin/Alarms");
 }
 
 <table class="table">
@@ -42,9 +44,8 @@
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="/Alarms/Edit/@item.Id">@Localizer["Edit"]</a></li>
-                        <li><a href="/Alarms/Details/@item.Id">@Localizer["Details"]</a></li>
-                        <li><a href="/Alarms/Delete/@item.Id">@Localizer["Delete"]</a></li>
+                        <li><a href="/Alarms/Edit/@item.Id?returnurl=@returnurl">@Localizer["Edit"]</a></li>
+                        <li><a href="/Alarms/Delete/@item.Id?returnurl=@returnurl">@Localizer["Delete"]</a></li>
                     </ul>
                 </div>
             </td>

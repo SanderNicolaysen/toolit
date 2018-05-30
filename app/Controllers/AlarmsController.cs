@@ -23,27 +23,11 @@ namespace app.Controllers
             _context = context;
         }
 
-        // GET: Alarms/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var alarm = await _context.Alarms
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (alarm == null)
-            {
-                return NotFound();
-            }
-
-            return View(alarm);
-        }
-
         // GET: Alarms/Create
-        public async Task<IActionResult> Create(int id)
+        public async Task<IActionResult> Create(int id, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
+
             var statuslist = await _context.Statuses.ToListAsync();
             var vm = new CreateViewModel();
             vm.Alarm.ToolId = id;
@@ -56,8 +40,9 @@ namespace app.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int id, [Bind("Name,Date,StatusId")] Alarm alarm)
+        public async Task<IActionResult> Create(int id, [Bind("Name,Date,StatusId")] Alarm alarm, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 _context.Add(alarm);
@@ -71,14 +56,19 @@ namespace app.Controllers
                 tool.Alarms.Add(alarm);
 
                 await _context.SaveChangesAsync();
+                
+                if (Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+
                 return RedirectToAction(nameof(AdminController.Alarms), "Admin");
             }
             return View(alarm);
         }
 
         // GET: Alarms/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             if (id == null)
             {
                 return NotFound();
@@ -101,8 +91,9 @@ namespace app.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Date,StatusId")] Alarm alarm)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Date,StatusId")] Alarm alarm, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             if (id != alarm.Id)
             {
                 return NotFound();
@@ -130,14 +121,19 @@ namespace app.Controllers
                         throw;
                     }
                 }
+
+                if (Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+
                 return RedirectToAction(nameof(AdminController.Alarms), "Admin");
             }
             return View(alarm);
         }
 
         // GET: Alarms/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             if (id == null)
             {
                 return NotFound();
@@ -156,11 +152,16 @@ namespace app.Controllers
         // POST: Alarms/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             var alarm = await _context.Alarms.SingleOrDefaultAsync(m => m.Id == id);
             _context.Alarms.Remove(alarm);
             await _context.SaveChangesAsync();
+            
+            if (Url.IsLocalUrl(returnUrl))
+                return Redirect(returnUrl);
+
             return RedirectToAction(nameof(AdminController.Alarms), "Admin");
         }
 

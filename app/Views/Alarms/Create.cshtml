@@ -10,11 +10,11 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" asp-route-returnurl="@ViewData["ReturnUrl"]">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Alarm.Name" class="control-label">Navn på alarm</label>
-                <select asp-for="Alarm.Name" class="form-control" />
+                <input asp-for="Alarm.Name" class="form-control" />
                 <span asp-validation-for="Alarm.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -39,6 +39,5 @@
 </div>
 
 <div>
-    <a asp-controller="Tool" asp-action="Index">@Localizer["Back to List"]</a>
+    <a href="@ViewData["ReturnUrl"]">Tilbake</a>
 </div>
-

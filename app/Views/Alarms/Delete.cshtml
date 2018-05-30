@@ -25,9 +25,9 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-route-returnurl="@ViewData["ReturnUrl"]" asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-controller="Tool" asp-action="Index">@Localizer["Back to List"]</a>
+        <a href="@ViewData["ReturnUrl"]">Tilbake</a>
     </form>
 </div>

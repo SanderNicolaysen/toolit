@@ -6,6 +6,8 @@
     ViewData["Title"] = Localizer["Details"];
 
     var isAdmin = User.IsInRole("Admin") ? "true" : "false";
+
+    var returnurl = System.Net.WebUtility.UrlEncode("/Tool/Details/" + Model.Id);
 }
 
 <h2>@Localizer["Details"]</h2>
@@ -57,9 +59,9 @@
                     - @report.Error
                     @if (@report.UserId == @UserManager.GetUserId(User) || User.IsInRole("Admin"))
                     {
-                        <a asp-controller="Report" asp-action="Edit" asp-route-id="@report.Id">@Localizer["Edit"]</a> @Html.Raw("|")
-                        <a asp-controller="Report" asp-action="Details" asp-route-id="@report.Id">@Localizer["Details"]</a> @Html.Raw("|")
-                        <a asp-controller="Report" asp-action="Delete" asp-route-id="@report.Id">@Localizer["Delete"]</a> 
+                        <a asp-controller="Report" asp-action="Edit" asp-route-id="@report.Id" asp-route-returnurl="/Tool/Details/@Model.Id">@Localizer["Edit"]</a> @Html.Raw("|")
+                        <a asp-controller="Report" asp-action="Details" asp-route-id="@report.Id" asp-route-returnurl="/Tool/Details/@Model.Id">@Localizer["Details"]</a> @Html.Raw("|")
+                        <a asp-controller="Report" asp-action="Delete" asp-route-id="@report.Id" asp-route-returnurl="/Tool/Details/@Model.Id">@Localizer["Delete"]</a> 
                     }
                     </dd>
                 }
@@ -78,6 +80,11 @@
             {
                 <dd>
                     - @alarm.Name: @alarm.Date
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="Alarms" asp-action="Edit" asp-route-id="@alarm.Id" asp-route-returnurl="/Tool/Details/@Model.Id">@Localizer["Edit"]</a> @Html.Raw("|")
+                        <a asp-controller="Alarms" asp-action="Delete" asp-route-id="@alarm.Id" asp-route-returnurl="/Tool/Details/@Model.Id">@Localizer["Delete"]</a>
+                    }
                 </dd>
             }
         }
@@ -99,11 +106,11 @@
             @Localizer["Check out"]
         </button>
 
-        <a href="/Report/Create/@Model.Id" class="btn btn-warning">@Localizer["Report fault"] </a>
+        <a href="/Report/Create/@Model.Id?returnurl=@returnurl" class="btn btn-warning">@Localizer["Report fault"] </a>
 
         @if (User.IsInRole("Admin"))
         {
-            <a href="/Alarms/Create/@Model.Id" class="btn btn-info">@Localizer["Registrer alarm"]</a>
+            <a href="/Alarms/Create/@Model.Id?returnurl=@returnurl" class="btn btn-info">@Localizer["Registrer alarm"]</a>
         }
     </div>
 

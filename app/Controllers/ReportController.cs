@@ -26,8 +26,9 @@ namespace app.Controllers
         }
 
         // GET: Reports/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             if (id == null)
             {
                 return NotFound();
@@ -50,8 +51,9 @@ namespace app.Controllers
         }
 
         // GET: Reports/Create
-        public IActionResult Create(int id)
+        public IActionResult Create(int id, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
@@ -60,8 +62,9 @@ namespace app.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int id, [Bind("Error")] Report report)
+        public async Task<IActionResult> Create(int id, [Bind("Error")] Report report, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 report.UserId = _um.GetUserId(User);
@@ -76,14 +79,19 @@ namespace app.Controllers
                 tool.Reports.Add(report);
 
                 await _context.SaveChangesAsync();
+                
+                if (Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+                    
                 return RedirectToAction(nameof(ToolController.Details), "Tool", new { id });
             }
             return View(report);
         }
 
         // GET: Reports/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             if (id == null)
             {
                 return NotFound();
@@ -109,8 +117,9 @@ namespace app.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id, Error")] Report report)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Error")] Report report, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             if (id != report.Id)
             {
                 return NotFound();
@@ -139,14 +148,19 @@ namespace app.Controllers
                         throw;
                     }
                 }
+
+                if (Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+
                 return RedirectToAction(nameof(ToolController.Details), "Tool", new { id = pReport.ToolId });
             }
             return View(report);
         }
 
         // GET: Reports/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             if (id == null)
             {
                 return NotFound();
@@ -171,11 +185,16 @@ namespace app.Controllers
         // POST: Reports/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             var report = await _context.Reports.SingleOrDefaultAsync(m => m.Id == id);
             _context.Reports.Remove(report);
             await _context.SaveChangesAsync();
+
+            if (Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+
             return RedirectToAction(nameof(ToolController.Details), "Tool", new { id = report.ToolId });
         }
 

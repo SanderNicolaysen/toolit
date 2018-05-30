@@ -1,4 +1,4 @@
-@model app.Models.Status
+@model app.Models.StatusesViewModels.DeleteViewModel
 
 @{
     ViewData["Title"] = Localizer["Delete"];
@@ -19,29 +19,68 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.StatusName)
+            @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.StatusName)
+            @Html.DisplayFor(model => model.Status.StatusName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Style)
+            @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Style)
+            @Html.DisplayFor(model => model.Status.Style)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Glyphicon)
+            @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Glyphicon)
+            @Html.DisplayFor(model => model.Status.Glyphicon)
         </dd>
     </dl>
     
+    @if(Model.Tools.Any())
+    {
+        <h4>The following tools currently have this as their status:</h4>
+        foreach(Tool tool in Model.Tools)
+        {
+            @tool.Name <br>
+        }
+        
+    }
+    @if(Model.Alarms.Any())
+    {
+        <h4>The following alarms currently have this as their status:</h4>
+        foreach(Alarm alarm in Model.Alarms)
+        {
+            @alarm.Name <br>
+        }
+    }
+    @if(Model.Tools.Any() || Model.Alarms.Any())
+    {
+        <h4>You will either have to change their statuses manually, or select a new status for all of the items mentioned above</h4>
+    }
+
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="@Localizer["Delete"]" class="btn btn-default" /> |
-        <a asp-controller="Admin" asp-action="Statuses">@Localizer["Back to list"]</a>
+        @if(Model.Tools.Any())
+        {
+        <div class="form-group">
+            <label class="control-label">Change affected tools to:</label>
+            <select name="NewStatus" class="form-control">
+                @foreach(Status status in Model.Statuses)
+                {
+                    if(status.Id != Model.Status.Id)
+                    {                    
+                    <option value="@status.Id">@status.StatusName</option>
+                    }
+                }
+            </select>
+        </div>
+        }
+        <div class="form-group">
+            <input type="hidden" asp-for="Status.Id" />
+            <input type="submit" value="@Localizer["Delete"]" class="btn btn-default" /> |
+            <a asp-controller="Admin" asp-action="Statuses">@Localizer["Back to list"]</a>
+        </div>
     </form>
 </div>
 </body>

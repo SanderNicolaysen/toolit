@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using app.Data;
 using app.Models;
 using Microsoft.AspNetCore.Authorization;
+using app.Models.StatusesViewModels;
 
 namespace app.Controllers
 {
@@ -116,18 +117,50 @@ namespace app.Controllers
                 return NotFound();
             }
 
-            return View(status);
+            var vm = new DeleteViewModel();
+
+            vm.Status = status;
+
+            vm.Statuses = await _context.Statuses.ToListAsync();
+
+            vm.Tools = await _context.Tools.Where(t => t.Status.Id == status.Id).ToListAsync();
+
+            vm.Alarms = await _context.Alarms.Where(a => a.Status.Id == status.Id).ToListAsync();
+
+            return View(vm);
         }
 
         // POST: Statuses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, int newStatus)
         {
-            var status = await _context.Statuses.SingleOrDefaultAsync(m => m.Id == id);
-            if (!status.IsDeleteable){
-                return BadRequest("Can't delete undeleteable status");
+            if (id == newStatus)
+            {
+                return BadRequest("Can't assign status flagged for deletion.");
             }
+            var status = await _context.Statuses.SingleOrDefaultAsync(m => m.Id == id);
+            if (!status.IsDeleteable)
+            {
+                return BadRequest("Can't delete undeleteable status.");
+            }
+            
+
+            foreach(Tool tool in _context.Tools)
+            {
+                if (tool.StatusId == id)
+                {
+                    tool.StatusId = newStatus;
+                }
+            }
+            foreach(Alarm alarm in _context.Alarms)
+            {
+                if (alarm.StatusId == id)
+                {
+                    alarm.StatusId = newStatus;
+                }
+            }
+
             _context.Statuses.Remove(status);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(AdminController.Statuses), "Admin");

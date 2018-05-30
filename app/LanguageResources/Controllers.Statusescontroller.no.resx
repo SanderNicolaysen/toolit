@@ -138,4 +138,16 @@
   <data name="Save" xml:space="preserve">
     <value>Lagre</value>
   </data>
+  <data name="The following tools currently have this as their status">
+    <value>Følgende verktøy har dette som sin status</value>
+  </data>
+  <data name="You will either have to change their statuses manually, or select a new status for all of the items mentioned above">
+    <value>Du må enten endre deres statuser manuelt, eller velge en ny status for alle elementene nevnt ovenfor</value>
+  </data>
+  <data name="The following alarms currently have this as their status">
+    <value>Følgende alarmer har dette som sin status</value>
+  </data>
+  <data name="Change affected items to">
+    <value>Endre påvirkede elementer til</value>
+  </data>
 </root>

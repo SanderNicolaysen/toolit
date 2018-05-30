@@ -40,7 +40,7 @@
     
     @if(Model.Tools.Any())
     {
-        <h4>The following tools currently have this as their status:</h4>
+        <h4>@Localizer["The following tools currently have this as their status"]:</h4>
         foreach(Tool tool in Model.Tools)
         {
             @tool.Name <br>
@@ -49,7 +49,7 @@
     }
     @if(Model.Alarms.Any())
     {
-        <h4>The following alarms currently have this as their status:</h4>
+        <h4>@Localizer["The following alarms currently have this as their status"]:</h4>
         foreach(Alarm alarm in Model.Alarms)
         {
             @alarm.Name <br>
@@ -57,14 +57,14 @@
     }
     @if(Model.Tools.Any() || Model.Alarms.Any())
     {
-        <h4>You will either have to change their statuses manually, or select a new status for all of the items mentioned above</h4>
+        <h4>@Localizer["You will either have to change their statuses manually, or select a new status for all of the items mentioned above"]</h4>
     }
 
     <form asp-action="Delete">
         @if(Model.Tools.Any())
         {
         <div class="form-group">
-            <label class="control-label">Change affected tools to:</label>
+            <label class="control-label">@Localizer["Change affected items to"]:</label>
             <select name="NewStatus" class="form-control">
                 @foreach(Status status in Model.Statuses)
                 {

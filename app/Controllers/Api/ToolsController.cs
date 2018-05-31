@@ -156,7 +156,7 @@ namespace app.Controllers_Api
                 return BadRequest("Tool is already checked out.");
             }
 
-            tool.StatusId = Status.BUSY;
+            tool.StatusId = (await _context.Statuses.SingleOrDefaultAsync(s => s.Id == Status.BUSY)).Id;
 
             var userId = (await um.GetUserAsync(User)).Id;
             tool.CurrentOwnerId = userId;
@@ -185,7 +185,7 @@ namespace app.Controllers_Api
                 return NotFound();
             }
 
-            tool.StatusId = Status.AVAILABLE;
+            tool.StatusId = (await _context.Statuses.SingleOrDefaultAsync(s => s.Id == Status.AVAILABLE)).Id;
 
             var userId = (await um.GetUserAsync(User)).Id;
             if (tool.CurrentOwnerId != userId)

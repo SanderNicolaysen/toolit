@@ -165,8 +165,8 @@
   <data name="If you reset your authenticator key your authenticator app will not work until you reconfigure it." xml:space="preserve">
     <value>Hvis du tilbakestiller autentiseringsnøkkelen, vil autentiseringsprogrammet ditt ikke virke før du omkonfigurerer det.</value>
   </data>
-  <data name="Log in using your @provider.DisplayName account" xml:space="preserve">
-    <value>Logg inn ved hjelp av din @provider.DisplayName konto</value>
+  <data name="Log in using your {0} account" xml:space="preserve">
+    <value>Logg inn ved hjelp av din {0} konto</value>
   </data>
   <data name="Manage your account" xml:space="preserve">
     <value>Administrer kontoen din</value>
@@ -205,8 +205,8 @@
   <data name="Save" xml:space="preserve">
     <value>Lagre</value>
   </data>
-  <data name="Scan the QR Code or enter this key &lt;kbd&gt;@Model.SharedKey&lt;/kbd&gt; into your two factor authenticator app. Spaces and casing do not matter." xml:space="preserve">
-    <value>Skann QR koden eller skriv inn denne koden &lt;kbd&gt;@Model.SharedKey&lt;/kbd&gt; i totrinnsautentiserings-applikasjonen. Skiller ikke mellom små, store bokstaver og mellomrom.</value>
+  <data name="Scan the QR Code or enter this key &lt;kbd&gt;{0}&lt;/kbd&gt; into your two factor authenticator app. Spaces and casing do not matter." xml:space="preserve">
+    <value>Skann QR koden eller skriv inn denne koden &lt;kbd&gt;{0}&lt;/kbd&gt; i totrinnsautentiserings-applikasjonen. Skiller ikke mellom små, store bokstaver og mellomrom.</value>
   </data>
   <data name="Send verification email" xml:space="preserve">
     <value>Send verifikasjonsepost</value>

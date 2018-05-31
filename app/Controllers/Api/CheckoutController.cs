@@ -120,6 +120,7 @@ namespace app.Controllers_Api
             _context.Add(logEntry);
 
             tool.CurrentOwnerId = user.Id;
+            tool.StatusId = Status.BUSY;;
             _context.Update(tool);
 
             await _context.SaveChangesAsync();
@@ -137,6 +138,7 @@ namespace app.Controllers_Api
             var date = DateTime.Now;
 
             tool.CurrentOwnerId = "No owner";
+            tool.StatusId = Status.AVAILABLE;
             _context.Update(tool);
 
             var logEntry = await _context.Logs.Where(l => l.ToolId == tool.Id).OrderByDescending(l => l.Id).FirstAsync();

@@ -34,7 +34,7 @@
 @foreach (var fav in Model)
 {
     <div class="favorite pull-left col-md-3 col-xs-12">
-        <a asp-controller="tool" asp-action="details" asp-route-id="@fav.ToolId">
+        <a asp-controller="tool" asp-action="details" asp-route-id="@fav.ToolId"  style="height: 90px">
             <div class="clearfix favorite-head">
                 <span class="favorite-name">
                     @fav.Tool.Name

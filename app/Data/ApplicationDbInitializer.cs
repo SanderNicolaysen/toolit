@@ -66,17 +66,28 @@ namespace app.Data
             var statusBusy = new Status { StatusName = "Utlånt", Style = "color: #FA7D12", Glyphicon = "glyphicon glyphicon-remove-sign", IsDeleteable = false, Id = Status.BUSY };
             db.Add(statusBusy);
 
-            var statusUnavailible = new Status { StatusName = "Ikke tilgjengelig", Style = "color: #F6D846", Glyphicon = "glyphicon glyphicon-minus-sign", IsDeleteable = false, Id = Status.UNAVAILABLE };
-            db.Add(statusUnavailible);
+            var statusUnavailable = new Status { StatusName = "Ikke tilgjengelig", Style = "color: #F6D846", Glyphicon = "glyphicon glyphicon-minus-sign", IsDeleteable = false, Id = Status.UNAVAILABLE };
+            db.Add(statusUnavailable);
 
             // Add dummy data here
             var tools = new List<Tool>
             {
-                new Tool("Skrujern", statusAvailable, new List<Report>(new Report[] { new Report(1, "It misses a handle!", admin.Id), new Report(1, "Should be replaced.", user1.Id), new Report(1, "It doesn't work", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,11)), new Alarm("Årskontroll", new DateTime(2018,4,15))}), "playboy", "1"),
-                new Tool("Hammer", statusAvailable, new List<Report>() { new Report(2, "How does it work?", user3.Id) }, new List<Alarm>(new Alarm[] { new Alarm("Sertifisering", new DateTime(2018,4,13))}), "banger", "2"),
-                new Tool("Sag", statusUnavailible, new List<Report>(), new List<Alarm>(), "cutter", "3"),
-                new Tool("Vater", statusBusy, new List<Report>(new Report[] { new Report(4, "Random report.", admin.Id), new Report(4, "What is this thing?", user2.Id) }), new List<Alarm>(new Alarm[] { new Alarm("Årskontroll", new DateTime(2018,4,12))}), "måler", "4"),
-                new Tool("Kniv", statusAvailable, new List<Report>() { new Report(5, "Test", user1.Id) }, new List<Alarm>(), "stikker", "5")
+
+                new Tool("Hjelm med visir", statusAvailable, new List<Report>() { new Report(9, "Sprekk i visir.", user1.Id) }, new List<Alarm>(), "", "B1"),
+                new Tool("Fallsele 1", statusAvailable, new List<Report>() { new Report(8, "Trenger snart et utbytte.", user1.Id) }, new List<Alarm>(), "", "B2"),
+                new Tool("Fallsele 2", statusAvailable, new List<Report>(), new List<Alarm>(), "", "B3"),
+                new Tool("C-presstang", statusAvailable, new List<Report>(), new List<Alarm>(), "", "B4"),
+                new Tool("Termografisk kamera", statusAvailable, new List<Report>(), new List<Alarm>() {new Alarm("Kalibrering", new DateTime(2018,8,22))}, "apparat, kartlegging", "B5"),
+                new Tool("Kabelskotang", statusAvailable, new List<Report>(), new List<Alarm>(), "", "B6"),
+                new Tool("Nitetang", statusAvailable, new List<Report>(), new List<Alarm>(new Alarm[] { new Alarm("Fornye sertifikat", new DateTime(2018,9,13))}), "", "B7"),
+                new Tool("AUS Koffert", statusAvailable, new List<Report>() { new Report(6, "Mangler 2 klypetenger.", user1.Id) }, new List<Alarm>(), "", "C1"),
+                new Tool("Støvsuger", statusUnavailable, new List<Report>(), new List<Alarm>(), "", "C2"),
+                new Tool("Presstang AL 240mm", statusAvailable, new List<Report>(), new List<Alarm>(), "", "C3"),
+                new Tool("Skrujern", statusAvailable, new List<Report>(new Report[] { new Report(1, "Slitt skruhode.", admin.Id), new Report(1, "Sprekk i håndtak", user2.Id) }), new List<Alarm>(), "stjernejern", "A"),
+                new Tool("Hammer", statusAvailable, new List<Report>() { new Report(2, "Håndtaket holder på å dette av.", user3.Id) }, new List<Alarm>(), "", "A"),
+                new Tool("Sag", statusAvailable, new List<Report>(), new List<Alarm>(), "", "A"),
+                new Tool("Vater", statusBusy, new List<Report>(), new List<Alarm>(), "måleutstyr", "A"),
+                new Tool("Kniv", statusAvailable, new List<Report>(), new List<Alarm>(), "tapetkniv", "A")
             };
 
             var toolRFIDcode = 100;

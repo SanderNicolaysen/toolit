@@ -30,7 +30,7 @@
             <th>@Html.DisplayNameFor(model => model.Name)</th>
             <th>@Html.DisplayNameFor(model => model.Status)</th>
             <th>@Html.DisplayNameFor(model => model.Shelf)</th>
-            <th>@Localizer["Checked out by"]</th>
+            <th class="hidden-xs">@Localizer["Checked out by"]</th>
             <th></th>
             <th></th>
         </tr>
@@ -43,9 +43,9 @@
                 </a>
             </td>
             <td><a v-bind:href="'Tool/Details/' + tool.id">{{ tool.name }}</a></td>
-            <td><i :style="tool.status.style" :class="tool.status.glyphicon"></i> {{ tool.status.statusName }}</td>
+            <td><i :style="tool.status.style" :class="tool.status.glyphicon"></i> <span class="hidden-xs">{{ tool.status.statusName }}</span></td>
             <td>{{ tool.shelf }}</td>
-            <td>
+            <td class="hidden-xs">
                 <span v-if="tool.user != undefined">{{tool.user.userName}}</span>
             </td>
             <td>
@@ -63,7 +63,7 @@
                             <span class="more-dot"></span>
                             <span class="more-dot"></span>
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-menu-right">
                             <li><a v-bind:href="'Tool/Edit/' + tool.id">@Localizer["Edit"]</a></li>
                             <li><a v-bind:href="'Tool/Delete/' + tool.id">@Localizer["Delete"]</a></li>
                         </ul>

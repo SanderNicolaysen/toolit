@@ -23,7 +23,7 @@ namespace app.Services
         {
             // Generate a random filename and find destination path
             var filename = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
-            var path = Path.Combine(_hostingEnvironment.WebRootPath, "images\\uploads\\" + filename + ".jpg");
+            var path = Path.Combine(_hostingEnvironment.WebRootPath, "images/uploads/" + filename + ".jpg");
 
             // Resize the image to 100 pixels wide and save it
             using (Image<Rgba32> img = Image.Load(image.OpenReadStream()))

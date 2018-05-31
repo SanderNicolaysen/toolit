@@ -22,8 +22,8 @@
     <thead>
         <tr>
             <th>@Localizer["Username"]</th>
-            <th>@Localizer["Email"]</th>
-            <th>@Localizer["Phone number"]</th>
+            <th class="hidden-xs">@Localizer["Email"]</th>
+            <th class="hidden-xs">@Localizer["Phone number"]</th>
             <th>Administrator</th>
             <th></th>
         </tr>
@@ -31,8 +31,8 @@
     <tbody>
         <tr v-for="user in filteredUsers" v-cloak>
             <td>{{ user.userName }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.phoneNumber }}</td>
+            <td class="hidden-xs">{{ user.email }}</td>
+            <td class="hidden-xs">{{ user.phoneNumber }}</td>
             <td>
                 <p v-if="user.isSuperAdmin">Super-Administrator</p>
 

@@ -462,8 +462,8 @@ var app = new Vue({
                 && currentDate.getTime() >= fromDate.getTime())
                 {       
                         var options = {
-                            title: '@Localizer["Warning"]',
-                            message: '@Localizer["This tool is reserved by"] ' + reservation.user.userName + '. @Localizer["Are you sure you want to check out this tool?"]'
+                            title: '@HtmlLocalizer["Warning"]',
+                            message: '@HtmlLocalizer["This tool is reserved by"] ' + reservation.user.userName + '. @HtmlLocalizer["Are you sure you want to check out this tool?"]'
                         }
                         
                             ConfirmDialog(options, function(){

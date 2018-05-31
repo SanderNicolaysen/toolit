@@ -171,8 +171,8 @@
   <data name="Reports" xml:space="preserve">
     <value>Rapporter</value>
   </data>
-  <data name="se the whole log" xml:space="preserve">
-    <value>se hele loggen</value>
+  <data name="view more..." xml:space="preserve">
+    <value>se mer...</value>
   </data>
   <data name="Search users" xml:space="preserve">
     <value>Søk i brukere</value>

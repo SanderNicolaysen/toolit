@@ -30,7 +30,7 @@ if (__name__ == "__main__"):
     apikey = f.readline().strip()
   
   # validate key with server
-  r = requests.post('http://159.89.1.137/api/echo', json = {'key': apikey})
+  r = requests.post('http://tool-it.no/api/echo', json = {'key': apikey})
   printresponse(r)
 
   # if key is invalid, inform user on how to get a proper key, then exit program
@@ -56,7 +56,7 @@ if (__name__ == "__main__"):
     while (r == None or r.status_code != 200):
       printlcd("ToolIt Solutions", LCD_LINE_1)
       userId = inputlcd("Please scan card", LCD_LINE_2)
-      r = requests.post('http://159.89.1.137/api/checkuser', json = {
+      r = requests.post('http://tool-it.no/api/checkuser', json = {
         'key': apikey,
         'userIdentifierCode': userId})
       printresponse(r)
@@ -71,13 +71,13 @@ if (__name__ == "__main__"):
     while time.time() < t + 60 and (r == None or r.status_code != 200):
       printlcd("Hello, " + username, LCD_LINE_1)
       toolId = inputlcd("Please scan tool", LCD_LINE_2)
-      r = requests.post('http://159.89.1.137/api/checktool', json={
+      r = requests.post('http://tool-it.no/api/checktool', json={
         'key': apikey,
         'toolIdentifierCode': toolId})
       printresponse(r)
       if r.status_code == 200:
         # send checkout request
-        r = requests.post('http://159.89.1.137/api/checkout', json = {
+        r = requests.post('http://tool-it.no/api/checkout', json = {
           'key': apikey,
           'userIdentifierCode': userId,
           'toolIdentifierCode': toolId

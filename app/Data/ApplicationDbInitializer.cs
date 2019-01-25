@@ -12,8 +12,8 @@ namespace app.Data
     {
         public static void Initialize(ApplicationDbContext db, UserManager<ApplicationUser> um, RoleManager<IdentityRole> rm, bool isDevelopment, INotificationManager nm)
         {
-            if (!isDevelopment)
-            {
+            //if (!isDevelopment)
+            //{
                 if (db.Database.EnsureCreated())
                 {
                     // Add roles
@@ -34,7 +34,7 @@ namespace app.Data
                 
                 db.SaveChanges();
                 return;
-            }
+            //}
 
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();

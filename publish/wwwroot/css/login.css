@@ -1,0 +1,87 @@
+#login-body {
+    background-color: #252425;
+    color: #ccc;
+    text-align: center;
+}
+
+#login-body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+  }
+  
+#particle-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+#login-body .container {
+    z-index: 100;
+    width: 380px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#login-body a {
+    color: #ff6600;
+}
+
+#login-body a:hover, #login-body a:active {
+    color: #ddd;
+}
+
+img {
+    height: 4.5em;
+}
+
+#password-forgot {
+    display: block;
+    width: 100%;
+    margin-top: 0.3em;
+    text-align: right;
+    font-size: 0.85em;
+}
+
+#custom-checkbox {
+    color: #ff6600;
+    float: left;
+    display: block;
+    margin-top: 0.3em;
+    font-size: 0.85em;
+    margin-left: 2em;
+}
+
+#login-body button[type=submit] {
+    background: rgba(255, 102, 0, 0.05);
+    border-color: #ff6600;
+    border-radius: 0;
+    color: #DDD;
+    margin-left: 1em;
+    padding: 6px 2.6em;
+    float: right;
+}
+
+#login-body button[type=submit]:hover, #login-body button[type=submit]:focus {
+    background: rgba(255, 102, 0, 0.2);
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(255, 102, 0, 0.6)    
+}
+
+#login-body button[type=submit] {
+    transition: background-color .3s ease;
+}
+
+#login-body input:focus {
+    border-color: #ff6600;
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(255, 102, 0, 0.6)
+}
+
+#login-body hr {
+    border-color: #ff6600;
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(255, 102, 0, 0.6)
+}

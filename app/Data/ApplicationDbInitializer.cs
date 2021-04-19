@@ -32,8 +32,8 @@ namespace app.Data
                     });
                 }
                 
-                db.SaveChanges();
-                return;
+               // db.SaveChanges();
+               // return;
             //}
 
             db.Database.EnsureDeleted();

@@ -1,0 +1,299 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+nav.navbar {
+    background: #f0f0f0;
+    border-bottom: 1px solid #ff6600;
+}
+
+nav.navbar img {
+    height: 40px;
+    margin: 5px 0;
+}
+
+nav.navbar a, nav.navbar button {
+    color: #666;
+}
+
+nav.navbar a:hover, nav.navbar button:hover {
+    color: #ff6600;
+}
+
+nav.navbar .navbar-toggle:hover {
+    background-color: #e8e8e8;
+}
+
+nav.navbar .navbar-toggle .icon-bar {
+    border: 1px solid #ff6600;
+}
+
+[v-cloak] {
+	display: none;
+}
+
+#tool-table td {
+    line-height: 50px !important;
+}
+
+/* Favorites star! */
+.glyphicon-star {
+    color: #ff6600;
+}
+
+.glyphicon-star:hover {
+    text-shadow: rgba(255, 102, 00, 0.4) 0px 0px 6px;
+}
+
+.glyphicon-star-empty:hover {
+    color: #ff6600;
+}
+
+.glyphicon-star, .glyphicon-star-empty {
+    vertical-align: text-bottom;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+/* Favorites on home page */
+#favorites .favorite a {
+    display: inline-block;
+    padding: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    box-shadow: 0px 1px 1px rgba(0,0,0,0.05);
+}
+
+#favorites .favorite a:hover {
+    background: #f5f5f5;
+}
+
+#favorites .favorite a .favorite-head {
+    height: 35px;
+    color: #ff6600;
+    font-size: 1.4em;
+}
+
+#favorites .favorite a:hover .favorite-head {
+    color: #666;
+}
+
+#favorites .favorite .favorite-thumbnail {
+    height: 35px;
+    padding-left: 1em;
+}
+
+#favorites .favorite img {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+}
+
+#favorites .favorite a:hover img {
+    box-shadow: 0px 1px 1px rgba(0,0,0,0.2);
+}
+
+#favorites .favorite .favorite-status i {
+    color: #888;
+}
+
+/* Make table column fit the widht of the content */
+.table td.fit, .table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}
+
+/* Dropdown for notifications */
+.dropdown-toggle.navbar-btn {
+    background: none;
+    border: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    float: right;
+}
+
+.dropdown-toggle.navbar-btn .glyphicon {
+    vertical-align: bottom;
+    font-size: 1.15em;
+}
+
+.dropdown-menu.notifications {
+    width: auto;
+    max-height: 300px;
+    overflow: auto;
+}
+
+.notifications a.notification {
+    width: 350px;
+    word-wrap: normal;
+    display: block;
+    padding: 7px 15px;
+}
+
+.notifications .row:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.notifications a.notification:hover {
+    color: #666;
+    text-decoration: none;
+    background: #f5f5f5;
+}
+
+.notifications .row {
+    margin: 0;
+}
+
+.notifications-badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 5px;
+    margin-left: -5px;
+    margin-bottom: -5px;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #777;
+    border-radius: 10px;
+}
+
+/* Ok-remove-button */
+.glyphicon-ok-sign {
+	color: green;
+}
+
+.glyphicon-remove {
+	color: red;
+}
+
+/* Dropdown menu / More button */
+#more-btn {
+	background-color: transparent;
+    	border: none;
+    	line-height: normal;
+    	outline: none;
+    	cursor: pointer;
+	box-shadow: none;
+}
+
+.more-dot {
+	background-color: #777;
+    	margin: auto;
+    	display: inline-block;
+    	width: 7px;
+    	height: 7px;
+    	margin-right: 1px;
+    	border-radius: 50%;
+    	transition: background-color 0.3s;
+}
+
+#more-btn:hover .more-dot, #more-btn:focus .more-dot {
+  	background-color: #ff6600;
+}
+/* BIG home main navigation buttons */
+.home-button {
+    display: block;
+    padding: 18px 0;
+    margin-bottom: 15px;
+
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+
+    font-size: 2em;
+    color: inherit;
+    text-align: center;
+    text-decoration: none;
+    background: linear-gradient(
+        -135deg,
+        #ff6600 0px,
+        #ff6600 15px,
+        #f9f9f9 25px
+    );
+}
+
+.home-button:hover {
+    text-decoration: underline;
+    box-shadow: 1px 1px 3px 1px rgba(50, 50, 0, 0.2);
+}
+
+/* NAVIGATION PILLS (LEFT SIDE NAV) */
+/* Overwriting bootstrap default styling */
+.nav-pills {
+    background: #f9f9f9;
+}
+
+#toolit .nav-pills > li.active > a,
+#toolit .nav-pills > li.active > a:hover,
+#toolit .nav-pills > li.active > a:focus {
+    background: linear-gradient(
+        90deg,
+        #f60 0px,
+        #f0f0f0 200%
+    );
+    border-radius: 0;
+    margin-left: -4px;
+    margin-right: -4px;
+    box-shadow: 0px 1px 2px #888;
+}
+
+.glyphdesignerdiv input + .glyphdesignercontainer {
+    display: inline-block;
+    position: relative;
+    padding-top: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 1px;
+    margin-bottom: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 2px solid transparent;
+}
+
+.glyphdesignerdiv input:hover + .glyphdesignercontainer {
+    background-color: #ccc;
+}
+
+.glyphdesignerdiv input:checked + .glyphdesignercontainer {
+    /*background-color: #666;*/
+    border: 2px #666 solid;
+}
+
+.glyphdesignerdiv input {
+    position: absolute;
+    opacity: 0;
+}
+/* Admin panel specific styles */
+#tool-log .glyphicon-ok {
+    color: rgb(73, 185, 73);
+    width: 100%;
+    text-align: right;
+}
+
+.undeleteable {
+    background-color:#f3f3f3;
+}
+#toolit code.api-key-field {
+    cursor: pointer;
+}
+
+#toolit code.api-key-field:hover {
+    background: #fff;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
